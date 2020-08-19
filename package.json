@@ -1,0 +1,40 @@
+{
+  "name": "perfecto-cypress-sdk",
+  "version": "0.0.1",
+  "description": "Run Cypress tests in Perfecto cloud",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "test": "mocha -r @babel/register",
+    "lint": "eslint .",
+    "compile": "./node_modules/.bin/babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerfectoCode/perfecto-cypress-sdk.git"
+  },
+  "keywords": [
+    "Cypress",
+    "Perfecto",
+    "tests",
+    "integration-tests"
+  ],
+  "author": "elhaya@perfectomobile.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PerfectoCode/perfecto-cypress-sdk/issues"
+  },
+  "homepage": "https://github.com/PerfectoCode/perfecto-cypress-sdk#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/eslint-parser": "^7.11.3",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
+    "chai": "^4.2.0",
+    "eslint": "^7.7.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "mocha": "^8.1.1"
+  }
+}

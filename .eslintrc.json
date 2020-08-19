@@ -1,0 +1,46 @@
+{
+  "parser"  : "@babel/eslint-parser",
+
+  "extends" : [
+    "eslint:recommended"
+  ],
+  "plugins" : [
+    "node",
+    "import"
+  ],
+  "env"     : {
+    "mocha": true,
+    "node": true,
+    "es6": true,
+    "browser" : false
+  },
+  "settings": {
+    "import/parser": "@babel/eslint-parser",
+    "ecmascript": 6
+  },
+
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "globalReturn": false
+    }
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["./test/*.spec.js"],
+        "optionalDependencies": false,
+        "peerDependencies": true
+      }
+    ],
+    "import/default": "error",
+    "import/no-unresolved": "warn",
+    "import/named": "error",
+    "import/namespace": "error",
+    "import/export": "error",
+    "import/no-duplicates": "error",
+    "import/imports-first": "error"
+  }
+}
