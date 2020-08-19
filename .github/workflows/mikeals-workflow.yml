@@ -1,4 +1,4 @@
-on: [pull_request]
+on: [push, pull_request]
 name: Build, Test and maybe Publish
 jobs:
   test:
@@ -19,9 +19,11 @@ jobs:
       with:
         path: node_modules
         key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
-    - name: Build
+    - name: Install
       if: steps.cache-modules.outputs.cache-hit != 'true'
-      run: npm install
+      run: npm ci
+    - name: Build
+      run: npm build
     - name: Test
       run: npm_config_yes=true npx best-test@latest
   publish:
@@ -46,5 +48,5 @@ jobs:
     - name: Publish
       uses: mikeal/merge-release@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
