@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha -r @babel/register",
     "lint": "eslint .",
-    "compile": "./node_modules/.bin/babel src --out-dir lib"
+    "build": "./node_modules/.bin/babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
