@@ -29,3 +29,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Automated releases for npm packages.
       uses: mikeal/merge-release@v4.0.7
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
