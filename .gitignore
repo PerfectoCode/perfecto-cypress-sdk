@@ -105,3 +105,7 @@ dist
 
 lib/
 .idea/
+
+# generated and development files
+**/perfecto-config.json
+**/perfecto-cypress.zip
