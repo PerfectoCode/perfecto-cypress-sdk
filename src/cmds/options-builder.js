@@ -1,7 +1,7 @@
 import fs from "fs";
+import { CONFIG_DEFAULT_PATH } from '../common/consts';
 
 const reportingDocLink = 'https://developers.perfectomobile.com/display/PD/Download+the+Reporting+SDK'
-const CONFIG_DEFAULT_PATH = './perfecto-config.json';
 const cypressDocLink = '' // TODO: (Elhay) Add a documentation link
 
 const reportingGroupName = 'Reporting options (will override config file) ' + reportingDocLink;

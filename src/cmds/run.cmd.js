@@ -14,8 +14,8 @@ export const builder = {
   ...configOptions
 };
 
-export const handler = (argv) => {
+export const handler = async (argv) => {
   const configObject = mergeConfigWithParams(argv);
 
-  runCommand(configObject)
+  await runCommand(configObject)
 };

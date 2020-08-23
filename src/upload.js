@@ -9,7 +9,7 @@ const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-weba
 export default async (archive, folderType, temporary, {cloud, securityToken}) => {
   console.log('start uploading archive:', archive);
 
-  const archiveFile = fs.readFileSync(path.resolve(archive));//, {encoding: 'buffer'});
+  const archiveFile = fs.readFileSync(path.resolve(archive));
 
   const parsedPath = path.parse(archive);
 
@@ -17,7 +17,12 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
     throw 'Only zip files allowed as tests archive, actual file ext is: ' + parsedPath.ext;
   }
 
-  const artifactId = parsedPath.name + parsedPath.ext;
+  let artifactId = parsedPath.name + parsedPath.ext;
+
+  if (temporary) {
+    artifactId = new Date().getTime() + '_' + artifactId;
+  }
+
   const requestPart = {
     contentType: 'zip',
     artifactType: 'GENERAL',
