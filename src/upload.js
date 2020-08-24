@@ -7,7 +7,7 @@ const DEFAULT_ARTIFACT_VERSION = 'v1';
 const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts';
 
 export default async (archive, folderType, temporary, {cloud, securityToken}) => {
-  console.log('start uploading archive:', archive);
+  console.log('Start uploading archive:', archive);
 
   const archiveFile = fs.readFileSync(path.resolve(archive));
 
@@ -22,6 +22,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   if (temporary) {
     artifactId = new Date().getTime() + '_' + artifactId;
   }
+  const artifactKeyIdentifier = folderType + ':' + artifactId;
 
   const requestPart = {
     contentType: 'zip',
@@ -50,6 +51,6 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
     throw 'Upload tests archive failed: ' + error.message + '\n' + error.response.data;
   }
 
-  console.log('Tests archive uploaded:', folderType + ':' + artifactId);
-  return requestPart;
+  console.log('Tests archive uploaded:', artifactKeyIdentifier);
+  return artifactKeyIdentifier;
 }

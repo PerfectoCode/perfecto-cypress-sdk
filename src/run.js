@@ -7,10 +7,14 @@ import { getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/consts';
 
 export default async ({credentials, tests, capabilities, reporting}) => {
-  const zipFilePath = await packCommand(tests.path, tests.ignore, DEFAULT_ARCHIVE_PATH);
-  await uploadCommand(zipFilePath, 'PRIVATE', true, credentials);
+  let artifactKey = tests.artifactKey;
 
-  fs.unlink(zipFilePath, () => {/* Nothing to do here, is is ok if it failed */});
+  if (!artifactKey) {
+    const zipFilePath = await packCommand(tests.path, tests.ignore, DEFAULT_ARCHIVE_PATH);
+    artifactKey = await uploadCommand(zipFilePath, 'PRIVATE', true, credentials);
+
+    fs.unlink(zipFilePath, () => {/* Nothing to do here, is is ok if it failed */});
+  }
 
   let session;
   try {
@@ -18,6 +22,7 @@ export default async ({credentials, tests, capabilities, reporting}) => {
     session = await axios.post('https://' + credentials.cloud + '.perfectomobile.com/nase/rest/v1/session', {
       capabilities,
       reporting,
+      artifactKey,
       framework: 'cypress',
       specs: tests.specs
     }, {
