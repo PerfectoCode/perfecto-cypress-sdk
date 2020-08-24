@@ -1,7 +1,7 @@
 import { configOptions, credentialsOptions } from './options-builder'
 import { mergeConfigWithParams } from './config-merge-util';
 import uploadCommand from '../upload';
-import { zipFileName } from '../common/consts';
+import { DEFAULT_ARCHIVE_PATH, zipFileName } from '../common/consts';
 
 
 export const command = 'upload';
@@ -12,7 +12,7 @@ export const builder = {
   archivePath: {
     alias: 'p',
     describe: 'Path to tests zip file',
-    default: './' + zipFileName
+    default: DEFAULT_ARCHIVE_PATH + zipFileName
   },
   temporary: {
     alias: 't',

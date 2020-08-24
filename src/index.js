@@ -6,7 +6,7 @@ import { CONFIG_DEFAULT_PATH, DEFAULT_ARCHIVE_PATH } from './common/consts';
 let configFilePath = '';
 const getConfigFile = () => {
   if (!configFilePath) {
-    return;
+    return {};
   }
 
   let config = {};
@@ -23,12 +23,12 @@ const perfectoCypress = {
   setConfigPath: (path) => {
     configFilePath = path;
   },
-  run: async ({credentials, tests, capabilities, reporting}, ) => {
+  run: async ({credentials, tests, capabilities, reporting}) => {
     const config = getConfigFile();
     return await runCommand({
       ...config,
       credentials: {
-        ...config.credentials,
+        ...config?.credentials,
         ...credentials
       },
       tests: {
@@ -44,12 +44,12 @@ const perfectoCypress = {
         },
       },
       capabilities: {
-        ...config.capabilities,
+        ...config?.capabilities,
         ...capabilities
       }
     });
   },
-  pack: async (pathRegex, ignoreRegexList, outPath, ) => {
+  pack: async (pathRegex, ignoreRegexList, outPath) => {
     const config = getConfigFile();
 
     return await packCommand(
@@ -58,7 +58,7 @@ const perfectoCypress = {
       outPath || DEFAULT_ARCHIVE_PATH
     );
   },
-  upload: async (archive, folderType, temporary, {cloud, securityToken}, ) => {
+  upload: async (archive, folderType, temporary, {cloud, securityToken}) => {
     const config = getConfigFile();
     const credentials = {
       cloud: cloud || config?.credentials?.cloud,

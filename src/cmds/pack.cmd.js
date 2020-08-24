@@ -1,6 +1,7 @@
 import packCommand from '../pack';
 import { configOptions, testsOptions } from './options-builder';
 import { mergeConfigWithParams } from './config-merge-util';
+import { DEFAULT_ARCHIVE_PATH } from '../common/consts';
 
 export const command = 'pack';
 
@@ -10,7 +11,7 @@ export const builder = {
   ...testsOptions,
   out: {
     describe: 'Output path for zip file',
-    default: './'
+    default: DEFAULT_ARCHIVE_PATH
   },
   ...configOptions
 };
