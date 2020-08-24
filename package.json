@@ -21,12 +21,20 @@
   ],
   "author": "elhaya@perfectomobile.com",
   "license": "MIT",
+  "bin": {
+    "perfecto-cypress": "./lib/bin.js"
+  },
   "bugs": {
     "url": "https://github.com/PerfectoCode/perfecto-cypress-sdk/issues"
   },
   "homepage": "https://github.com/PerfectoCode/perfecto-cypress-sdk#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "archiver": "^5.0.0",
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
