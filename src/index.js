@@ -2,6 +2,7 @@ import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import { CONFIG_DEFAULT_PATH, DEFAULT_ARCHIVE_PATH } from './common/consts';
+import { parseCustomFields } from './cmds/config-merge-util';
 
 let configFilePath = '';
 const getConfigFile = () => {
@@ -25,6 +26,8 @@ const perfectoCypress = {
   },
   run: async ({credentials, tests, capabilities, reporting}) => {
     const config = getConfigFile();
+    const customFields = parseCustomFields([...config?.reporting?.customFields, ...reporting?.customFields]);
+
     return await runCommand({
       ...config,
       credentials: {
@@ -38,10 +41,7 @@ const perfectoCypress = {
       reporting: {
         ...config?.reporting,
         ...reporting,
-        customFields: {
-          ...config?.reporting?.customFields,
-          ...reporting?.customFields
-        },
+        customFields,
       },
       capabilities: {
         ...config?.capabilities,

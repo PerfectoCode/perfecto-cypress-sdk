@@ -1,10 +1,6 @@
-const parseCustomFields = (fieldsArray, configValues) => {
+export const parseCustomFields = (fieldsArray) => {
   if (!fieldsArray?.length) return;
   return fieldsArray.reduce((acc, item) => {
-    if (typeof item !== 'string') {
-      return acc;
-    }
-
     const [key, value] = item?.split(',');
 
     if (!key || !value) {
@@ -12,25 +8,19 @@ const parseCustomFields = (fieldsArray, configValues) => {
     }
     acc[key] = value;
     return acc;
-  }, {...configValues});
+  }, {});
 };
 
 export const mergeConfigWithParams = (argv) => {
+  const customFields = parseCustomFields([...argv?.config.reporting?.customFields, ...argv?.reporting?.customFields]);
+
   return {
     ...argv.config,
     reporting: {
       ...argv?.reporting,
-      customFields: {
-        ...parseCustomFields(argv?.reporting?.customFields, argv.config?.reporting?.customFields)
-      }
+      customFields
     },
-    tests: {
-      ...argv.config?.tests,
-      ...argv?.tests
-    },
-    credentials: {
-      ...argv.config?.credentials,
-      ...argv?.credentials
-    }
+    tests: argv?.tests,
+    credentials: argv?.credentials
   };
 }

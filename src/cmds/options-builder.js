@@ -21,7 +21,7 @@ export const testsOptions = {
 };
 
 export const reportingOptions = {
-  'reporting.jobName': {alias: 'rjn', type: 'number', describe: 'reporting job name', group: reportingGroupName},
+  'reporting.jobName': {alias: 'rjn', type: 'string', describe: 'reporting job name', group: reportingGroupName},
   'reporting.jobNumber': {alias: 'rjNum', type: 'number', describe: 'reporting job number', group: reportingGroupName},
   'reporting.branch': {alias: 'rb', type: 'string', describe: 'reporting branch', group: reportingGroupName},
   'reporting.projectName': {alias: 'rpn', type: 'string', describe: 'reporting project name', group: reportingGroupName},
