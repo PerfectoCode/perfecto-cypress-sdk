@@ -1,5 +1,5 @@
 import fs from "fs";
-import { CONFIG_DEFAULT_PATH } from '../common/consts';
+import { DEFAULT_CONFIG_PATH, DEFAULT_TESTS_SPECS_EXT } from '../common/defaults';
 
 const reportingDocLink = 'https://developers.perfectomobile.com/display/PD/Download+the+Reporting+SDK'
 const cypressDocLink = '' // TODO: (Elhay) Add a documentation link
@@ -16,8 +16,8 @@ export const credentialsOptions = {
 export const testsOptions = {
   'tests.artifactKey': {alias: 'ta', type: 'string', describe: 'Repository artifact key', group: testGroupName},
   'tests.path': {alias: 'tp', type: 'string', describe: 'Root path for test to pack', group: testGroupName},
-  'tests.ignore': {alias: 'ti', type: 'string', describe: 'ignore files list', array: true, group: testGroupName},
-  'tests.specs': {alias: 'ts', type: 'string', describe: 'specs list', array: true, group: testGroupName}
+  'tests.ignore': {alias: 'ti', describe: 'ignore files list', array: true, group: testGroupName},
+  'tests.specsExt': {alias: 'ts', default: DEFAULT_TESTS_SPECS_EXT, describe: 'specs files extension', array: true, group: testGroupName}
 };
 
 export const reportingOptions = {

@@ -1,10 +1,27 @@
+import glob from 'glob';
 import axios from 'axios';
 import fs from 'fs';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import monitorSession from './monitor';
 import { getPerfectoHeaders } from './common/api';
-import { DEFAULT_ARCHIVE_PATH } from './common/consts';
+import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
+
+const getSpecs = (testsRoot, specExt) => {
+  const specsPattern = testsRoot + specExt;
+  let specs;
+  try {
+    specs = glob(specsPattern, {sync: true});
+  } catch (error) {
+    throw 'Failed to fined spec files: ' + error;
+  }
+
+  if (!specs?.length) {
+    throw 'No spec files found for: ' + specsPattern + '\nUse --help for more information';
+  }
+
+  return specs;
+}
 
 export default async ({credentials, tests, capabilities, reporting}) => {
   let artifactKey = tests.artifactKey;
@@ -16,6 +33,7 @@ export default async ({credentials, tests, capabilities, reporting}) => {
     fs.unlink(zipFilePath, () => {/* Nothing to do here, is is ok if it failed */});
   }
 
+  const specs = getSpecs(tests.path, tests.specsExt);
   let session;
   try {
     // TODO: (Elhay) get NASE service URL also from env var if provided
@@ -24,12 +42,12 @@ export default async ({credentials, tests, capabilities, reporting}) => {
       reporting,
       artifactKey,
       framework: 'cypress',
-      specs: tests.specs
+      specs
     }, {
       headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)
     });
   } catch (error)  {
-    throw 'Failed to create  session: ' + error.message + '\n' + error.response.data;
+    throw 'Failed to create  session: ' + error.message + '\n' + error?.response?.data;
   }
 
   monitorSession(session);

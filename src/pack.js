@@ -1,13 +1,13 @@
 import archiver from 'archiver';
 import path from 'path';
 import fs from 'fs';
-import { zipFileName } from './common/consts';
+import { DEFAULT_ARCHIVE_FILE_NAME } from './common/defaults';
 
 const globalIgnorePatterns = [
   '**/node_modules/**'
 ];
 
-export default async (pathRegex, ignoreRegexList, outPath) => {
+export default async (testsRoot, ignoreRegexList, outPath) => {
   const zipArchive = archiver('zip', {});
 
   const zipFilePath = path.normalize(outPath + '/' + DEFAULT_ARCHIVE_FILE_NAME);
@@ -49,7 +49,7 @@ export default async (pathRegex, ignoreRegexList, outPath) => {
 // pipe archive data to the file
   zipArchive.pipe(output);
 
-  zipArchive.glob(pathRegex, {ignore: [...ignoreRegexList, ...globalIgnorePatterns]});
+  zipArchive.glob(testsRoot + '**', {ignore: [...ignoreRegexList, ...globalIgnorePatterns]});
 
 
   await zipArchive.finalize();
