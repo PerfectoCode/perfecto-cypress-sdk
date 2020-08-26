@@ -41,7 +41,7 @@ export const configOptions = {
     alias: 'c',
     config: true,
     describe: 'Path to config file, see documentation: ' + cypressDocLink,
-    default: process.env['PERFECTO_CONFIG'] || CONFIG_DEFAULT_PATH,
+    default: process.env['PERFECTO_CONFIG'] || DEFAULT_CONFIG_PATH,
     // global: true,
     coerce: (configPath) => {
       return JSON.parse(fs.readFileSync(configPath, 'utf-8'))

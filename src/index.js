@@ -1,7 +1,13 @@
+import validator from 'argument-validator';
 import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';
-import { CONFIG_DEFAULT_PATH, DEFAULT_ARCHIVE_PATH } from './common/consts';
+import {
+  DEFAULT_CONFIG_PATH,
+  DEFAULT_ARCHIVE_PATH,
+  DEFAULT_ARCHIVE_FOLDER_TYPE,
+  DEFAULT_ARCHIVE_IS_TEMP, DEFAULT_TESTS_SPECS_EXT, DEFAULT_ARCHIVE_FILE_NAME
+} from './common/defaults';
 import { parseCustomFields } from './cmds/config-merge-util';
 
 let configFilePath = '';
@@ -12,7 +18,7 @@ const getConfigFile = () => {
 
   let config = {};
   try {
-    config = require(configFilePath || CONFIG_DEFAULT_PATH);
+    config = require(configFilePath || DEFAULT_CONFIG_PATH);
   } catch (error) {
     throw 'Config file not found: ' + error.message;
   }
@@ -28,13 +34,14 @@ const perfectoCypress = {
     const config = getConfigFile();
     const customFields = parseCustomFields([...config?.reporting?.customFields, ...reporting?.customFields]);
 
-    return await runCommand({
+    const mergedParams = {
       ...config,
       credentials: {
         ...config?.credentials,
         ...credentials
       },
       tests: {
+        ...{specsExt: DEFAULT_TESTS_SPECS_EXT},
         ...config?.tests,
         ...tests
       },
@@ -47,23 +54,50 @@ const perfectoCypress = {
         ...config?.capabilities,
         ...capabilities
       }
-    });
+    };
+
+    validator.string(mergedParams?.cloud, 'cloud');
+    validator.string(mergedParams?.securityToken, 'securityToken');
+    validator.string(mergedParams.tests?.path || mergedParams.tests?.artifactKey, 'tests.path | tests.artifactKey');
+    validator.string(mergedParams.tests?.specsExt, 'specsExt');
+    validator.array(mergedParams.capabilities, 'capabilities');
+    validator.objectOrEmpty(mergedParams.reporting, 'reporting');
+
+    return await runCommand(mergedParams);
   },
-  pack: async (pathRegex, ignoreRegexList, outPath) => {
+  pack: async (pathRegex, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
     const config = getConfigFile();
+    const mergedParams = {
+      pathRegex: pathRegex || config?.tests?.path,
+      ignore: ignoreRegexList || config?.tests?.ignore,
+      outPath: outPath || DEFAULT_ARCHIVE_PATH
+    };
+
+    validator.string(outPath, 'outPath');
+    validator.string(mergedParams.pathRegex, 'pathRegex');
+    validator.arrayOrEmpty(mergedParams.ignore, 'ignoreRegexList | tests.ignore');
 
     return await packCommand(
-      pathRegex || config?.tests?.path,
-      ignoreRegexList || config?.tests?.ignore,
-      outPath || DEFAULT_ARCHIVE_PATH
+      mergedParams.pathRegex,
+      mergedParams.ignore,
+      mergedParams.outPath
     );
   },
-  upload: async (archive, folderType, temporary, {cloud, securityToken}) => {
+  upload: async (
+    archive = DEFAULT_ARCHIVE_PATH + DEFAULT_ARCHIVE_FILE_NAME,
+    folderType = DEFAULT_ARCHIVE_FOLDER_TYPE,
+    temporary = DEFAULT_ARCHIVE_IS_TEMP,
+    {cloud, securityToken}
+  ) => {
     const config = getConfigFile();
     const credentials = {
       cloud: cloud || config?.credentials?.cloud,
       securityToken: securityToken || config?.credentials?.securityToken
     }
+    validator.string(credentials?.cloud, 'cloud');
+    validator.string(credentials?.securityToken, 'securityToken');
+    validator.string(archive, 'archive');
+    validator.boolean(temporary, 'temporary');
 
     return await uploadCommand(archive, folderType, temporary, credentials);
   }

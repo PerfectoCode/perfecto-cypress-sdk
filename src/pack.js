@@ -10,7 +10,7 @@ const globalIgnorePatterns = [
 export default async (pathRegex, ignoreRegexList, outPath) => {
   const zipArchive = archiver('zip', {});
 
-  const zipFilePath = path.normalize(outPath + '/' + zipFileName);
+  const zipFilePath = path.normalize(outPath + '/' + DEFAULT_ARCHIVE_FILE_NAME);
   const output = fs.createWriteStream(zipFilePath);
 
 // listen for all archive data to be written

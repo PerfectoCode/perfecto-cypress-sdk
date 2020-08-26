@@ -32,6 +32,8 @@
     "access": "public"
   },
   "dependencies": {
+    "archiver": "^5.0.0",
+    "argument-validator": "^0.1.0",
     "axios": "^0.20.0",
     "archiver": "^5.0.0",
     "yargs": "^15.4.1"

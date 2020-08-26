@@ -1,7 +1,12 @@
 import { configOptions, credentialsOptions } from './options-builder'
 import { mergeConfigWithParams } from './config-merge-util';
 import uploadCommand from '../upload';
-import { DEFAULT_ARCHIVE_PATH, zipFileName } from '../common/consts';
+import {
+  DEFAULT_ARCHIVE_PATH,
+  DEFAULT_ARCHIVE_FILE_NAME,
+  DEFAULT_ARCHIVE_FOLDER_TYPE,
+  DEFAULT_ARCHIVE_IS_TEMP
+} from '../common/defaults';
 
 
 export const command = 'upload';
@@ -12,18 +17,18 @@ export const builder = {
   archivePath: {
     alias: 'p',
     describe: 'Path to tests zip file',
-    default: DEFAULT_ARCHIVE_PATH + zipFileName
+    default: DEFAULT_ARCHIVE_PATH + DEFAULT_ARCHIVE_FILE_NAME
   },
   temporary: {
     alias: 't',
     describe: 'Upload tests archive as temp artifact',
-    default: false,
+    default: DEFAULT_ARCHIVE_IS_TEMP,
     boolean: false
   },
   folderType: {
     alias: 'f',
     describe: 'Set the location of tests archive in the repository',
-    default: 'PRIVATE',
+    default: DEFAULT_ARCHIVE_FOLDER_TYPE,
     choices: ['PRIVATE', 'PUBLIC', 'GROUP']
   },
   ...credentialsOptions,
