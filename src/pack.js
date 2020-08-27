@@ -2,12 +2,15 @@ import archiver from 'archiver';
 import path from 'path';
 import fs from 'fs';
 import { DEFAULT_ARCHIVE_FILE_NAME } from './common/defaults';
+import { validatePackOptions } from './common/option-validation';
 
 const globalIgnorePatterns = [
   '**/node_modules/**'
 ];
 
-export default async (testsRoot, ignoreRegexList, outPath) => {
+export default async (testsRoot, ignoreRegexList=[], outPath) => {
+  validatePackOptions(testsRoot, ignoreRegexList=[], outPath);
+
   const zipArchive = archiver('zip', {});
 
   const zipFilePath = path.normalize(outPath + '/' + DEFAULT_ARCHIVE_FILE_NAME);

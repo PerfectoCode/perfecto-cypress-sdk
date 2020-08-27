@@ -1,12 +1,13 @@
-import validator from 'argument-validator';
 import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import {
-  DEFAULT_CONFIG_PATH,
-  DEFAULT_ARCHIVE_PATH,
+  DEFAULT_ARCHIVE_FILE_NAME,
   DEFAULT_ARCHIVE_FOLDER_TYPE,
-  DEFAULT_ARCHIVE_IS_TEMP, DEFAULT_TESTS_SPECS_EXT, DEFAULT_ARCHIVE_FILE_NAME
+  DEFAULT_ARCHIVE_IS_TEMP,
+  DEFAULT_ARCHIVE_PATH,
+  DEFAULT_CONFIG_PATH,
+  DEFAULT_TESTS_SPECS_EXT
 } from './common/defaults';
 import { parseCustomFields } from './cmds/config-merge-util';
 
@@ -18,7 +19,7 @@ const getConfigFile = () => {
 
   let config = {};
   try {
-    config = require(configFilePath || DEFAULT_CONFIG_PATH);
+    config = require(configFilePath);
   } catch (error) {
     throw 'Config file not found: ' + error.message;
   }
@@ -27,7 +28,7 @@ const getConfigFile = () => {
 };
 
 const perfectoCypress = {
-  setConfigPath: (path) => {
+  withConfigFile: (path=DEFAULT_CONFIG_PATH) => {
     configFilePath = path;
   },
   run: async ({credentials, tests, capabilities, reporting}) => {
@@ -56,13 +57,6 @@ const perfectoCypress = {
       }
     };
 
-    validator.string(mergedParams?.cloud, 'cloud');
-    validator.string(mergedParams?.securityToken, 'securityToken');
-    validator.string(mergedParams.tests?.path || mergedParams.tests?.artifactKey, 'tests.path | tests.artifactKey');
-    validator.string(mergedParams.tests?.specsExt, 'specsExt');
-    validator.array(mergedParams.capabilities, 'capabilities');
-    validator.objectOrEmpty(mergedParams.reporting, 'reporting');
-
     return await runCommand(mergedParams);
   },
   pack: async (pathRegex, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
@@ -72,10 +66,6 @@ const perfectoCypress = {
       ignore: ignoreRegexList || config?.tests?.ignore,
       outPath: outPath || DEFAULT_ARCHIVE_PATH
     };
-
-    validator.string(outPath, 'outPath');
-    validator.string(mergedParams.pathRegex, 'pathRegex');
-    validator.arrayOrEmpty(mergedParams.ignore, 'ignoreRegexList | tests.ignore');
 
     return await packCommand(
       mergedParams.pathRegex,
@@ -94,10 +84,6 @@ const perfectoCypress = {
       cloud: cloud || config?.credentials?.cloud,
       securityToken: securityToken || config?.credentials?.securityToken
     }
-    validator.string(credentials?.cloud, 'cloud');
-    validator.string(credentials?.securityToken, 'securityToken');
-    validator.string(archive, 'archive');
-    validator.boolean(temporary, 'temporary');
 
     return await uploadCommand(archive, folderType, temporary, credentials);
   }

@@ -108,4 +108,4 @@ lib/
 
 # generated and development files
 **/perfecto-config.json
-**/perfecto-cypress.zip
+perfecto-cypress.zip

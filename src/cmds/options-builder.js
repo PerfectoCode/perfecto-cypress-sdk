@@ -17,7 +17,7 @@ export const testsOptions = {
   'tests.artifactKey': {alias: 'ta', type: 'string', describe: 'Repository artifact key', group: testGroupName},
   'tests.path': {alias: 'tp', type: 'string', describe: 'Root path for test to pack', group: testGroupName},
   'tests.ignore': {alias: 'ti', describe: 'ignore files list', array: true, group: testGroupName},
-  'tests.specsExt': {alias: 'ts', default: DEFAULT_TESTS_SPECS_EXT, describe: 'specs files extension', array: true, group: testGroupName}
+  'tests.specsExt': {alias: 'ts', default: DEFAULT_TESTS_SPECS_EXT, describe: 'specs files extension', type: 'string', group: testGroupName}
 };
 
 export const reportingOptions = {

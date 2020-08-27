@@ -5,6 +5,7 @@ import {
   DEFAULT_ARCHIVE_PATH,
   DEFAULT_ARCHIVE_FILE_NAME,
   DEFAULT_ARCHIVE_FOLDER_TYPE,
+  REPOSITORY_FOLDER_TYPES,
   DEFAULT_ARCHIVE_IS_TEMP
 } from '../common/defaults';
 
@@ -29,7 +30,7 @@ export const builder = {
     alias: 'f',
     describe: 'Set the location of tests archive in the repository',
     default: DEFAULT_ARCHIVE_FOLDER_TYPE,
-    choices: ['PRIVATE', 'PUBLIC', 'GROUP']
+    choices: REPOSITORY_FOLDER_TYPES
   },
   ...credentialsOptions,
   ...configOptions

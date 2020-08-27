@@ -6,6 +6,7 @@ import uploadCommand from './upload';
 import monitorSession from './monitor';
 import { getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
+import { validateRunOptions } from './common/option-validation';
 
 const getSpecs = (testsRoot, specExt) => {
   const specsPattern = testsRoot + specExt;
@@ -24,6 +25,8 @@ const getSpecs = (testsRoot, specExt) => {
 }
 
 export default async ({credentials, tests, capabilities, reporting}) => {
+  validateRunOptions({credentials, tests, capabilities, reporting})
+
   let artifactKey = tests.artifactKey;
 
   if (!artifactKey) {

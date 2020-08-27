@@ -12,7 +12,9 @@ export const parseCustomFields = (fieldsArray) => {
 };
 
 export const mergeConfigWithParams = (argv) => {
-  const customFields = parseCustomFields([...argv?.config.reporting?.customFields, ...argv?.reporting?.customFields]);
+  const configCustom = argv.config?.reporting?.customFields || [];
+  const optionsCustom = argv.reporting?.customFields  || [];
+  const customFields = parseCustomFields([...configCustom, ...optionsCustom]);
 
   return {
     ...argv.config,
