@@ -34,7 +34,7 @@
   "framework": "cypress",
   "tests": {
     "path": "test/",
-    "repositoryArtifactId": "",
+    "artifactKey": "",
     "ignore": [
       "tests/unit",
       "tests/license-checker"

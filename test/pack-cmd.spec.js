@@ -22,11 +22,11 @@ const triggerPackCommandMock = async (options) => {
   return packCommandStub;
 };
 
-describe('Pack - cli', () => {
+describe('Pack - cmd', () => {
   describe('default parameters', () => {
     it('should have default value for outPath', async () => {
       const options = {
-        config: 'test/resources/perfecto-config.json',
+        config: 'test/resources/empty-perfecto-config.json',
         'tests.path': 'archive-path/',
         'tests.ignore': 'ignore-path'
       };

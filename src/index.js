@@ -31,9 +31,9 @@ const perfectoCypress = {
   withConfigFile: (path=DEFAULT_CONFIG_PATH) => {
     configFilePath = path;
   },
-  run: async ({credentials, tests, capabilities, reporting}) => {
+  run: async ({credentials, tests, capabilities, reporting}={}) => {
     const config = getConfigFile();
-    const customFields = parseCustomFields([...config?.reporting?.customFields, ...reporting?.customFields]);
+    const customFields = parseCustomFields(config?.reporting?.customFields, reporting?.customFields);
 
     const mergedParams = {
       ...config,
@@ -51,10 +51,7 @@ const perfectoCypress = {
         ...reporting,
         customFields,
       },
-      capabilities: {
-        ...config?.capabilities,
-        ...capabilities
-      }
+      capabilities: capabilities || config?.capabilities || []
     };
 
     return await runCommand(mergedParams);
@@ -77,7 +74,7 @@ const perfectoCypress = {
     archive = DEFAULT_ARCHIVE_PATH + DEFAULT_ARCHIVE_FILE_NAME,
     folderType = DEFAULT_ARCHIVE_FOLDER_TYPE,
     temporary = DEFAULT_ARCHIVE_IS_TEMP,
-    {cloud, securityToken}
+    {cloud, securityToken} = {}
   ) => {
     const config = getConfigFile();
     const credentials = {

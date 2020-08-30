@@ -1,4 +1,5 @@
-export const parseCustomFields = (fieldsArray) => {
+export const parseCustomFields = (fieldsA, fieldsB) => {
+  const fieldsArray =  [...(fieldsA ||  []), ...(fieldsB || [])]
   if (!fieldsArray?.length) return;
   return fieldsArray.reduce((acc, item) => {
     const [key, value] = item?.split(',');
@@ -14,7 +15,7 @@ export const parseCustomFields = (fieldsArray) => {
 export const mergeConfigWithParams = (argv) => {
   const configCustom = argv.config?.reporting?.customFields || [];
   const optionsCustom = argv.reporting?.customFields  || [];
-  const customFields = parseCustomFields([...configCustom, ...optionsCustom]);
+  const customFields = parseCustomFields(configCustom, optionsCustom);
 
   return {
     ...argv.config,

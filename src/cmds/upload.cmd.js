@@ -24,7 +24,7 @@ export const builder = {
     alias: 't',
     describe: 'Upload tests archive as temp artifact',
     default: DEFAULT_ARCHIVE_IS_TEMP,
-    boolean: false
+    boolean: true
   },
   folderType: {
     alias: 'f',

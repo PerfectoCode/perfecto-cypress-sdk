@@ -45,6 +45,7 @@ export default async ({credentials, tests, capabilities, reporting}) => {
       reporting,
       artifactKey,
       framework: 'cypress',
+      specsExt: tests.specsExt,
       specs
     }, {
       headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)

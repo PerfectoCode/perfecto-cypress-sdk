@@ -14,7 +14,7 @@ const execCliCommand = (command='', params={}) => {
   ).toString()
 }
 
-describe('bin - cli', () => {
+describe('bin - cmd', () => {
   it('[sanity] add +x permissions to mock-bin file', () => {
     child_process.execSync('chmod +x src/bin.js');
   });
