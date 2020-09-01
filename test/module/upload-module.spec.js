@@ -6,9 +6,9 @@ import {
   DEFAULT_ARCHIVE_FOLDER_TYPE,
   DEFAULT_ARCHIVE_IS_TEMP,
   DEFAULT_ARCHIVE_PATH
-} from '../src/common/defaults';
+} from '../../src/common/defaults';
 
-const mockUploadCommand = (stub) => proxyquire('../src/index', {'./upload': {default: stub}}).default;
+const mockUploadCommand = (stub) => proxyquire('../../src/index', {'./upload': {default: stub}}).default;
 const triggerUploadCommandMock = async (...options) => {
   const stub = sinon.stub();
   const perfectoCypress = mockUploadCommand(stub);

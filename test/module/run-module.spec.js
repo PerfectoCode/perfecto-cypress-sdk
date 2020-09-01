@@ -3,9 +3,9 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import {
   DEFAULT_TESTS_SPECS_EXT
-} from '../src/common/defaults';
+} from '../../src/common/defaults';
 
-const mockRunCommand = (stub) => proxyquire('../src/index', {'./run': {default: stub}}).default;
+const mockRunCommand = (stub) => proxyquire('../../src/index', {'./run': {default: stub}}).default;
 const triggerRunCommandMock = async (options) => {
   const stub = sinon.stub();
   const perfectoCypress = mockRunCommand(stub);

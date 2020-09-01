@@ -2,16 +2,16 @@ import proxyquire from 'proxyquire';
 import yargs from 'yargs';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { objectToCliOptions } from './util/cli-util';
+import { objectToCliOptions } from '../util/cli-util';
 import {
   DEFAULT_ARCHIVE_FILE_NAME,
   DEFAULT_ARCHIVE_FOLDER_TYPE,
   DEFAULT_ARCHIVE_IS_TEMP,
   DEFAULT_ARCHIVE_PATH
-} from '../src/common/defaults';
+} from '../../src/common/defaults';
 
 const mockPackCommand = (stub) => {
-  return proxyquire('../src/cmds/upload.cmd', {'../upload': {default: stub}});
+  return proxyquire('../../src/cmds/upload.cmd', {'../upload': {default: stub}});
 };
 
 const triggerUploadCommandMock = async (options) => {

@@ -2,7 +2,7 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-const mockPackCommand = (stub) => proxyquire('../src/index', {'./pack': {default: stub}}).default;
+const mockPackCommand = (stub) => proxyquire('../../src/index', {'./pack': {default: stub}}).default;
 const triggerPackCommandMock = async (...options) => {
   const stub = sinon.stub();
   const perfectoCypress = mockPackCommand(stub);

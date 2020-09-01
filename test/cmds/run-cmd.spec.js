@@ -2,10 +2,10 @@ import proxyquire from 'proxyquire';
 import yargs from 'yargs';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { objectToCliOptions } from './util/cli-util';
+import { objectToCliOptions } from '../util/cli-util';
 
 const mockPackCommand = (stub) => {
-  return proxyquire('../src/cmds/run.cmd', {'../run': {default: stub}});
+  return proxyquire('../../src/cmds/run.cmd', {'../run': {default: stub}});
 };
 
 const triggerRunCommandMock = async (options) => {

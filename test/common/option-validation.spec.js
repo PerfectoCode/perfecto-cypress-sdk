@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { validatePackOptions, validateRunOptions, validateUploadOptions } from '../src/common/option-validation';
+import { validatePackOptions, validateRunOptions, validateUploadOptions } from '../../src/common/option-validation';
 
 const assertParam = (name, validator, type, invalidValue) => {
   try {
