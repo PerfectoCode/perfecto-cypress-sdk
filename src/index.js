@@ -10,8 +10,9 @@ import {
   DEFAULT_TESTS_SPECS_EXT
 } from './common/defaults';
 import { parseCustomFields } from './cmds/config-merge-util';
+import { getConfigPath, getSecurityToken } from './common/env';
 
-let configFilePath = '';
+let configFilePath = getConfigPath();
 const getConfigFile = () => {
   if (!configFilePath) {
     return {};
@@ -31,9 +32,14 @@ const perfectoCypress = {
   withConfigFile: (path=DEFAULT_CONFIG_PATH) => {
     configFilePath = path;
   },
-  run: async ({credentials, tests, capabilities, reporting}={}) => {
+  run: async ({credentials={}, tests, capabilities, reporting}={}) => {
     const config = getConfigFile();
     const customFields = parseCustomFields(config?.reporting?.customFields, reporting?.customFields);
+
+    const envSecurityToken = getSecurityToken();
+    if (envSecurityToken) {
+      credentials.securityToken = credentials?.securityToken || envSecurityToken;
+    }
 
     const mergedParams = {
       ...config,

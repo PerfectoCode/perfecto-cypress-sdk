@@ -5,11 +5,12 @@ import { DEFAULT_ARCHIVE_FILE_NAME } from './common/defaults';
 import { validatePackOptions } from './common/option-validation';
 
 const globalIgnorePatterns = [
-  '**/node_modules/**'
+  '**/node_modules/**',
+  '**/perfecto-cypress.zip'
 ];
 
 export default async (testsRoot, ignoreRegexList=[], outPath) => {
-  validatePackOptions(testsRoot, ignoreRegexList=[], outPath);
+  validatePackOptions(testsRoot, ignoreRegexList, outPath);
 
   const zipArchive = archiver('zip', {});
 

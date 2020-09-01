@@ -1,5 +1,6 @@
 import fs from "fs";
 import { DEFAULT_CONFIG_PATH, DEFAULT_TESTS_SPECS_EXT } from '../common/defaults';
+import { getConfigPath, getSecurityToken } from '../common/env';
 
 const reportingDocLink = 'https://developers.perfectomobile.com/display/PD/Download+the+Reporting+SDK'
 const cypressDocLink = '' // TODO: (Elhay) Add a documentation link
@@ -10,7 +11,7 @@ const testGroupName = 'Test options (will override config file)';
 
 export const credentialsOptions = {
   'credentials.cloud': {alias: 'cloud', type: 'string', describe: 'Cloud name', group: credentialsGroupName},
-  'credentials.securityToken': {alias: 'token', type: 'string', describe: 'Offline token', group: credentialsGroupName}
+  'credentials.securityToken': {alias: 'token', type: 'string', describe: 'Offline token', default: getSecurityToken(), group: credentialsGroupName}
 };
 
 export const testsOptions = {
@@ -41,7 +42,7 @@ export const configOptions = {
     alias: 'c',
     config: true,
     describe: 'Path to config file, see documentation: ' + cypressDocLink,
-    default: process.env['PERFECTO_CONFIG'] || DEFAULT_CONFIG_PATH,
+    default: getConfigPath() || DEFAULT_CONFIG_PATH,
     // global: true,
     coerce: (configPath) => {
       return JSON.parse(fs.readFileSync(configPath, 'utf-8'))

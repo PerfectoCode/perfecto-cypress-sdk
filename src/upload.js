@@ -51,7 +51,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   try {
     await axios.put(getUploadUrlRes.data.uploadUrl, archiveFile);
   } catch (error) {
-    throw 'Upload tests archive failed: ' + error.message + '\n' + error.response.data;
+    throw 'Upload tests archive failed: ' + error.message + '\n' + error?.response?.data || error;
   }
 
   console.log('Tests archive uploaded:', artifactKeyIdentifier);

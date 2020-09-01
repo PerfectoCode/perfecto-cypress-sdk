@@ -55,4 +55,5 @@ export default async ({credentials, tests, capabilities, reporting}) => {
   }
 
   monitorSession(session);
+  return session;
 }
