@@ -8,17 +8,17 @@ import { getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
 import { validateRunOptions } from './common/option-validation';
 
-const getSpecs = (testsRoot, specExt) => {
-  const specsPattern = testsRoot + specExt;
+export const getSpecs = (testsRoot, specExt) => {
+  const specsPattern = testsRoot + '/' + specExt;
   let specs;
   try {
     specs = glob(specsPattern, {sync: true});
   } catch (error) {
-    throw 'Failed to fined spec files: ' + error;
+    throw new Error('Failed to fined spec files: ' + error);
   }
 
   if (!specs?.length) {
-    throw 'No spec files found for: ' + specsPattern + '\nUse --help for more information';
+    throw new Error('No spec files found for: ' + specsPattern + '\nUse --help for more information');
   }
 
   return specs;
@@ -54,6 +54,5 @@ export default async ({credentials, tests, capabilities, reporting}) => {
     throw 'Failed to create  session: ' + error.message + '\n' + error?.response?.data;
   }
 
-  monitorSession(session);
-  return session;
+  return monitorSession(session);
 }

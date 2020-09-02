@@ -21,7 +21,7 @@ describe('Upload', () => {
     putStub = sinon.stub().resolves();
 
     uploadCommand = mockUploadCommand(postStub, putStub);
-  })
+  });
 
   it('Should throw an exception if archive not found', async () => {
     await expect(
