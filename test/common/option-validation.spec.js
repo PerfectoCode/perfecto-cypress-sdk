@@ -2,12 +2,7 @@ import { expect } from "chai";
 import { validatePackOptions, validateRunOptions, validateUploadOptions } from '../../src/common/option-validation';
 
 const assertParam = (name, validator, type, invalidValue) => {
-  try {
-    validator();
-    expect.fail('execute should failed without required parameter ' + name);
-  } catch (error) {
-    expect(error.message).to.contain(`Invalid ${type} value: ${invalidValue}\nArgument Name: ${name}`);
-  }
+  expect(validator).to.throw(`Invalid ${type} value: ${invalidValue}\nArgument Name: ${name}`);
 };
 
 const assertRequiredBooleanParam = (name, validator) => {
@@ -48,11 +43,7 @@ describe('Parameters validation', () => {
       assertEmptyStringParam('pathRegex', () => validatePackOptions('', [], ''));
     });
     it('should not throw exception for empty ignoreRegexList', () => {
-      try {
-        validatePackOptions('foo', [], 'bar');
-      } catch (error) {
-        expect.fail('ignoreRegexList should be optional. But found this error:\n' + error.message);
-      }
+      expect(() => validatePackOptions('foo', [], 'bar')).to.not.throw();
     });
     it('should throw exception for empty outPath', () => {
       assertEmptyStringParam('outPath', () => validatePackOptions('foo', ['bar'], ''));
@@ -73,12 +64,9 @@ describe('Parameters validation', () => {
       );
     });
     it('should throw exception illegal value in param: folderType', () => {
-      try {
-        validateUploadOptions('foo', 'SHARED', true, {cloud: '*', securityToken: '*'});
-        expect.fail('execute should failed for illegal value in parameter folderType');
-      } catch (error) {
-        expect(error.message).to.be.eq('Invalid string value: SHARED\nArgument Name: folderType.\nit has to be one of PRIVATE,PUBLIC,GROUP');
-      }
+      expect(
+        () => validateUploadOptions('foo', 'SHARED', true, {cloud: '*', securityToken: '*'})
+      ).to.throw('Invalid string value: SHARED\nArgument Name: folderType.\nit has to be one of PRIVATE,PUBLIC,GROUP');
     });
     it('should throw exception without required param: temporary', () => {
       assertRequiredBooleanParam(
@@ -119,8 +107,8 @@ describe('Parameters validation', () => {
   describe('Run command', () => {
 
     it('should throw exception without required param: tests.path', () => {
-      try {
-        validateRunOptions({
+      expect(
+        () => validateRunOptions({
           credentials: {cloud: '*', securityToken: '*'},
           tests: {
             artifactKey: '*',
@@ -128,8 +116,11 @@ describe('Parameters validation', () => {
           },
           capabilities: [{}],
           reporting: {}
-        });
-        validateRunOptions({
+        })
+      ).to.not.throw();
+
+      expect(
+        () => validateRunOptions({
           credentials: {cloud: '*', securityToken: '*'},
           tests: {
             path: '*',
@@ -138,9 +129,7 @@ describe('Parameters validation', () => {
           capabilities: [{}],
           reporting: {}
         })
-      } catch (error) {
-        expect.fail('only one of artifactKey and path is required. But found this error:\n' + error.message);
-      }
+      ).to.not.throw();
 
       assertRequiredStringParam(
         'tests.path',
@@ -182,18 +171,16 @@ describe('Parameters validation', () => {
       );
     });
     it('should throw exception without required param: reporting', () => {
-      try {
-        validateRunOptions({
+      expect(
+        () => validateRunOptions({
           credentials: {cloud: '*', securityToken: '*'},
           tests: {
             path: '*',
             specsExt: '*'
           },
           capabilities: [{}]
-        });
-      } catch (error) {
-        expect.fail('reporting should be optional. But found this error:\n' + error.message);
-      }
+        })
+      ).to.not.throw();
     });
     it('should throw exception without required param: credentials.cloud', () => {
       assertRequiredStringParam(
@@ -225,8 +212,8 @@ describe('Parameters validation', () => {
     });
 
     it('should throw exception for empty tests.path', () => {
-      try {
-        validateRunOptions({
+      expect(
+        () => validateRunOptions({
           credentials: {cloud: '*', securityToken: '*'},
           tests: {
             artifactKey: '*',
@@ -235,8 +222,11 @@ describe('Parameters validation', () => {
           },
           capabilities: [{}],
           reporting: {}
-        });
-        validateRunOptions({
+        })
+      ).to.not.throw();
+
+      expect(
+        () => validateRunOptions({
           credentials: {cloud: '*', securityToken: '*'},
           tests: {
             artifactKey: '',
@@ -246,9 +236,7 @@ describe('Parameters validation', () => {
           capabilities: [{}],
           reporting: {}
         })
-      } catch (error) {
-        expect.fail('only one of artifactKey and path is required. But found this error:\n' + error.message);
-      }
+      ).to.not.throw();
 
       assertEmptyStringParam('tests.path', () => validateRunOptions({
         credentials: {cloud: '*', securityToken: '*'},

@@ -8,7 +8,7 @@ import { DEFAULT_ARCHIVE_FILE_NAME } from '../src/common/defaults';
 
 describe('Pack', () => {
   let outPath;
-  const createUniqueOutPath = () => 'test/temp/'+ new Date().getTime();
+  const createUniqueOutPath = () => 'test/temp/' + new Date().getTime();
   afterEach(() => {
     if (!outPath) {
       return;
@@ -50,21 +50,15 @@ describe('Pack', () => {
   });
 
   it('should throw exception if testRoot is an empty folder', async () => {
-    try {
-      await packCommand('test/resources/empty', [], 'test/temp');
-      expect.fail('should throw exception');
-    } catch (error) {
-      expect(error.message).contain('Zip archive contain zero files');
-    }
+    await expect(
+      packCommand('test/resources/empty', [], 'test/temp')
+    ).to.be.rejectedWith('Zip archive contain zero files');
   });
 
   it('should throw exception if archive is empty', async () => {
     outPath = createUniqueOutPath();
-    try {
-      await packCommand('test/resources/archive-files', ['**/**'], outPath);
-      expect.fail('should throw exception');
-    } catch (error) {
-      expect(error.message).contain('Zip archive contain zero files');
-    }
+    await expect(
+      packCommand('test/resources/archive-files', ['**/**'], outPath)
+    ).to.be.rejectedWith('Zip archive contain zero files');
   });
 });

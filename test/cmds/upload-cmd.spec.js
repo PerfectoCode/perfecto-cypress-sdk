@@ -10,13 +10,13 @@ import {
   DEFAULT_ARCHIVE_PATH
 } from '../../src/common/defaults';
 
-const mockPackCommand = (stub) => {
+const mockUploadCommand = (stub) => {
   return proxyquire('../../src/cmds/upload.cmd', {'../upload': {default: stub}});
 };
 
 const triggerUploadCommandMock = async (options) => {
   const packCommandStub = sinon.stub();
-  const packCmdModule = mockPackCommand(packCommandStub);
+  const packCmdModule = mockUploadCommand(packCommandStub);
 
   const command = yargs.parserConfiguration({'camel-case-expansion': false}).command(packCmdModule,);
 

@@ -11,7 +11,7 @@ const execCliCommand = (command='', params={}) => {
   return child_process.execSync(
     babelExec + 'src/bin.js ' + command + paramsString,
     {stdio : 'pipe' }
-  ).toString()
+  ).toString();
 }
 
 describe('bin - cmd', () => {
@@ -20,14 +20,10 @@ describe('bin - cmd', () => {
   });
 
   it('should throw error if command not provided', () => {
-    try {
-      execCliCommand();
-      expect.fail('execute should failed without command');
-    } catch (error) {
-      expect(error.message).contain('You need at least one command before moving on');
-    }
+    expect(execCliCommand).to.throw('You need at least one command before moving on');
   }).timeout(CLI_EXEC_TIMEOUT);
 
   describe('help menu', () => {
+
   });
 });
