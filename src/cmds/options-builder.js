@@ -1,5 +1,6 @@
 import fs from "fs";
-import { CONFIG_DEFAULT_PATH } from '../common/consts';
+import { DEFAULT_CONFIG_PATH, DEFAULT_TESTS_SPECS_EXT } from '../common/defaults';
+import { getConfigPath, getSecurityToken } from '../common/env';
 
 const reportingDocLink = 'https://developers.perfectomobile.com/display/PD/Download+the+Reporting+SDK'
 const cypressDocLink = '' // TODO: (Elhay) Add a documentation link
@@ -10,18 +11,18 @@ const testGroupName = 'Test options (will override config file)';
 
 export const credentialsOptions = {
   'credentials.cloud': {alias: 'cloud', type: 'string', describe: 'Cloud name', group: credentialsGroupName},
-  'credentials.securityToken': {alias: 'token', type: 'string', describe: 'Offline token', group: credentialsGroupName}
+  'credentials.securityToken': {alias: 'token', type: 'string', describe: 'Offline token', default: getSecurityToken(), group: credentialsGroupName}
 };
 
 export const testsOptions = {
   'tests.artifactKey': {alias: 'ta', type: 'string', describe: 'Repository artifact key', group: testGroupName},
   'tests.path': {alias: 'tp', type: 'string', describe: 'Root path for test to pack', group: testGroupName},
-  'tests.ignore': {alias: 'ti', type: 'string', describe: 'ignore files list', array: true, group: testGroupName},
-  'tests.specs': {alias: 'ts', type: 'string', describe: 'specs list', array: true, group: testGroupName}
+  'tests.ignore': {alias: 'ti', describe: 'ignore files list', array: true, group: testGroupName},
+  'tests.specsExt': {alias: 'ts', default: DEFAULT_TESTS_SPECS_EXT, describe: 'specs files extension', type: 'string', group: testGroupName}
 };
 
 export const reportingOptions = {
-  'reporting.jobName': {alias: 'rjn', type: 'number', describe: 'reporting job name', group: reportingGroupName},
+  'reporting.jobName': {alias: 'rjn', type: 'string', describe: 'reporting job name', group: reportingGroupName},
   'reporting.jobNumber': {alias: 'rjNum', type: 'number', describe: 'reporting job number', group: reportingGroupName},
   'reporting.branch': {alias: 'rb', type: 'string', describe: 'reporting branch', group: reportingGroupName},
   'reporting.projectName': {alias: 'rpn', type: 'string', describe: 'reporting project name', group: reportingGroupName},
@@ -41,7 +42,7 @@ export const configOptions = {
     alias: 'c',
     config: true,
     describe: 'Path to config file, see documentation: ' + cypressDocLink,
-    default: process.env['PERFECTO_CONFIG'] || CONFIG_DEFAULT_PATH,
+    default: getConfigPath() || DEFAULT_CONFIG_PATH,
     // global: true,
     coerce: (configPath) => {
       return JSON.parse(fs.readFileSync(configPath, 'utf-8'))

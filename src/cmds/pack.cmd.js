@@ -1,7 +1,7 @@
 import packCommand from '../pack';
 import { configOptions, testsOptions } from './options-builder';
 import { mergeConfigWithParams } from './config-merge-util';
-import { DEFAULT_ARCHIVE_PATH } from '../common/consts';
+import { DEFAULT_ARCHIVE_PATH } from '../common/defaults';
 
 export const command = 'pack';
 

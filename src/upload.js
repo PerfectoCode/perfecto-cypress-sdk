@@ -2,11 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { getPerfectoHeaders, parseReportingError } from './common/api';
+import { validateUploadOptions } from './common/option-validation';
 
 const DEFAULT_ARTIFACT_VERSION = 'v1';
 const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts';
 
 export default async (archive, folderType, temporary, {cloud, securityToken}) => {
+  validateUploadOptions(archive, folderType, temporary, {cloud, securityToken});
+
   console.log('Start uploading archive:', archive);
 
   const archiveFile = fs.readFileSync(path.resolve(archive));
@@ -48,7 +51,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   try {
     await axios.put(getUploadUrlRes.data.uploadUrl, archiveFile);
   } catch (error) {
-    throw 'Upload tests archive failed: ' + error.message + '\n' + error.response.data;
+    throw 'Upload tests archive failed: ' + error.message + '\n' + error?.response?.data || error;
   }
 
   console.log('Tests archive uploaded:', artifactKeyIdentifier);
