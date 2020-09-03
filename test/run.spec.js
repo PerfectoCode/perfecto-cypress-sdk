@@ -19,6 +19,9 @@ const capabilities = [{
   "numOfDevices": 2
 }];
 const reporting = { jobName: 'some_job' };
+const framework = 'cypress';
+const defaultRunParams = {credentials, capabilities, reporting, framework};
+
 const mockPackResults = 'resolves-zipFilePath';
 const mockUploadResults = 'resolves-artifactKey';
 const mockSessionId = 'session-id';
@@ -51,7 +54,7 @@ describe('Run', () => {
 
   it('Should skip on pack an upload if artifactKey provided', async () => {
     const tests = {artifactKey: 'artifactKey.zip', path: 'test/resources/archive-files', specsExt: '*.text'};
-    await runCommand({credentials, tests, capabilities, reporting});
+    await runCommand({...defaultRunParams, tests});
 
     expect(packStub).to.not.called;
     expect(uploadStub).to.not.called;
@@ -71,7 +74,7 @@ describe('Run', () => {
 
   it('Validate create session request data', async () => {
     const tests = {path: 'test/resources/archive-files', specsExt: '*.text'};
-    await runCommand({credentials, tests, capabilities, reporting});
+    await runCommand({...defaultRunParams, tests});
 
     expect(packStub).to.calledOnceWithExactly(tests.path, undefined, DEFAULT_ARCHIVE_PATH);
     expect(uploadStub).to.calledOnceWithExactly(mockPackResults, 'PRIVATE', true, credentials);
@@ -83,7 +86,7 @@ describe('Run', () => {
         capabilities,
         reporting,
         artifactKey: mockUploadResults,
-        framework: 'cypress',
+        framework,
         specsExt: tests.specsExt
       }),
       {

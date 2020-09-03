@@ -1,5 +1,20 @@
-import { expect } from "chai";
-import { validatePackOptions, validateRunOptions, validateUploadOptions } from '../../src/common/option-validation';
+import { expect } from 'chai';
+import {
+  validateInitOptions,
+  validatePackOptions,
+  validateRunOptions,
+  validateUploadOptions
+} from '../../src/common/option-validation';
+
+const credentials = {cloud: '*', securityToken: '*'};
+const tests = {
+  path: '*',
+  specsExt: '*'
+};
+const framework = 'cypress';
+const capabilities = [{}];
+const reporting = {};
+const defaultRunParams = {credentials, tests, framework, capabilities, reporting};
 
 const assertParam = (name, validator, type, invalidValue) => {
   expect(validator).to.throw(`Invalid ${type} value: ${invalidValue}\nArgument Name: ${name}`);
@@ -109,37 +124,22 @@ describe('Parameters validation', () => {
     it('should throw exception without required param: tests.path', () => {
       expect(
         () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
-          tests: {
-            artifactKey: '*',
-            specsExt: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
-        })
-      ).to.not.throw();
-
-      expect(
-        () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
+          ...defaultRunParams,
           tests: {
             path: '*',
             specsExt: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          }
         })
       ).to.not.throw();
 
       assertRequiredStringParam(
         'tests.path',
         () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
+          ...defaultRunParams,
           tests: {
+            artifactKey: '*',
             specsExt: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          }
         })
       );
     });
@@ -147,12 +147,10 @@ describe('Parameters validation', () => {
       assertRequiredStringParam(
         'tests.specsExt',
         () => validateRunOptions(validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
+          ...defaultRunParams,
           tests: {
             path: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          }
         }))
       );
     });
@@ -160,12 +158,8 @@ describe('Parameters validation', () => {
       assertRequiredArrayParam(
         'capabilities',
         () => validateRunOptions(validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
-          tests: {
-            path: '*',
-            specsExt: '*'
-          },
-          reporting: {}
+          ...defaultRunParams,
+          capabilities: undefined
         })),
         false
       );
@@ -173,12 +167,8 @@ describe('Parameters validation', () => {
     it('should throw exception without required param: reporting', () => {
       expect(
         () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
-          tests: {
-            path: '*',
-            specsExt: '*'
-          },
-          capabilities: [{}]
+          ...defaultRunParams,
+          reporting: undefined
         })
       ).to.not.throw();
     });
@@ -186,13 +176,8 @@ describe('Parameters validation', () => {
       assertRequiredStringParam(
         'credentials.cloud',
         () => validateRunOptions({
-          credentials: {securityToken: '*'},
-          tests: {
-            specsExt: '*',
-            path: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          ...defaultRunParams,
+          credentials: {securityToken: '*'}
         })
       );
     });
@@ -200,98 +185,88 @@ describe('Parameters validation', () => {
       assertRequiredStringParam(
         'credentials.securityToken',
         () => validateRunOptions({
-          credentials: {cloud: '*'},
-          tests: {
-            specsExt: '*',
-            path: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          ...defaultRunParams,
+          credentials: {cloud: '*'}
+        })
+      );
+    });
+    it('should throw exception without required param: framework', () => {
+      assertRequiredStringParam(
+        'framework',
+        () => validateRunOptions({
+          ...defaultRunParams,
+          framework: undefined
         })
       );
     });
 
     it('should throw exception for empty tests.path', () => {
-      expect(
-        () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
-          tests: {
-            artifactKey: '*',
-            path: '',
-            specsExt: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
-        })
-      ).to.not.throw();
 
       expect(
         () => validateRunOptions({
-          credentials: {cloud: '*', securityToken: '*'},
+          ...defaultRunParams,
           tests: {
             artifactKey: '',
             path: '*',
             specsExt: '*'
-          },
-          capabilities: [{}],
-          reporting: {}
+          }
         })
       ).to.not.throw();
 
       assertEmptyStringParam('tests.path', () => validateRunOptions({
-        credentials: {cloud: '*', securityToken: '*'},
+        ...defaultRunParams,
         tests: {
-          artifactKey: '',
+          artifactKey: '*',
           path: '',
           specsExt: '*'
-        },
-        capabilities: [{}],
-        reporting: {}
+        }
       }));
     });
     it('should throw exception for empty tests.specsExt', () => {
       assertEmptyStringParam('tests.specsExt', () => validateRunOptions({
-        credentials: {cloud: '*', securityToken: '*'},
+        ...defaultRunParams,
         tests: {
           path: '*',
           specsExt: ''
-        },
-        capabilities: [{}],
-        reporting: {}
+        }
       }));
     });
     it('should throw exception for empty capabilities', () => {
       assertRequiredArrayParam('capabilities', () => validateRunOptions({
-        credentials: {cloud: '*', securityToken: '*'},
-        tests: {
-          path: '*',
-          specsExt: '*'
-        },
-        capabilities: [],
-        reporting: {}
+        ...defaultRunParams,
+        capabilities: []
       }), false, '');
     });
     it('should throw exception for empty credentials.cloud', () => {
       assertEmptyStringParam('credentials.cloud', () => validateRunOptions({
-        credentials: {cloud: '', securityToken: '*'},
-        tests: {
-          path: '*',
-          specsExt: '*'
-        },
-        capabilities: [{}],
-        reporting: {}
+        ...defaultRunParams,
+        credentials: {cloud: '', securityToken: '*'}
       }));
     });
     it('should throw exception for empty credentials.securityToken', () => {
       assertEmptyStringParam('credentials.securityToken', () => validateRunOptions({
-        credentials: {cloud: '*', securityToken: ''},
-        tests: {
-          path: '*',
-          specsExt: '*'
-        },
-        capabilities: [{}],
-        reporting: {}
+        ...defaultRunParams,
+        credentials: {cloud: '*', securityToken: ''}
+      }));
+    });
+    it('should throw exception for empty framework', () => {
+      assertEmptyStringParam('framework', () => validateRunOptions({
+        ...defaultRunParams,
+        framework: ''
       }));
     });
   });
+
+  describe('Init command', () => {
+    it('should throw exception without required param: tests.path', () => {
+      expect(
+        () => validateInitOptions('*')
+      ).to.not.throw();
+
+      assertRequiredStringParam(
+        'testsRoot',
+        () => validateInitOptions()
+      );
+    });
+  })
 });

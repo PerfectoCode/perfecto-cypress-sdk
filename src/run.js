@@ -24,8 +24,8 @@ export const getSpecs = (testsRoot, specExt) => {
   return specs;
 }
 
-export default async ({credentials, tests, capabilities, reporting}) => {
-  validateRunOptions({credentials, tests, capabilities, reporting})
+export default async ({credentials, tests, capabilities, reporting, framework}) => {
+  validateRunOptions({credentials, tests, capabilities, reporting, framework})
 
   let artifactKey = tests.artifactKey;
 
@@ -44,7 +44,7 @@ export default async ({credentials, tests, capabilities, reporting}) => {
       capabilities,
       reporting,
       artifactKey,
-      framework: 'cypress',
+      framework,
       specsExt: tests.specsExt,
       specs
     }, {

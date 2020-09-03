@@ -6,4 +6,8 @@ export const DEFAULT_ARCHIVE_FOLDER_TYPE = 'PRIVATE';
 
 export const DEFAULT_TESTS_SPECS_EXT = '*.spec.js';
 
+export const SUPPORTED_FRAMEWORKS = {
+  CYPRESS: 'cypress'
+};
+
 export const REPOSITORY_FOLDER_TYPES = ['PRIVATE', 'PUBLIC', 'GROUP']

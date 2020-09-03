@@ -1,6 +1,7 @@
 import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';
+import initCommand from './init';
 import {
   DEFAULT_ARCHIVE_FILE_NAME,
   DEFAULT_ARCHIVE_FOLDER_TYPE,
@@ -62,16 +63,16 @@ const perfectoCypress = {
 
     return await runCommand(mergedParams);
   },
-  pack: async (pathRegex, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
+  pack: async (testsRoot, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
     const config = getConfigFile();
     const mergedParams = {
-      pathRegex: pathRegex || config?.tests?.path,
+      testsRoot: testsRoot || config?.tests?.path,
       ignore: ignoreRegexList || config?.tests?.ignore,
       outPath: outPath || DEFAULT_ARCHIVE_PATH
     };
 
     return await packCommand(
-      mergedParams.pathRegex,
+      mergedParams.testsRoot,
       mergedParams.ignore,
       mergedParams.outPath
     );
@@ -89,6 +90,9 @@ const perfectoCypress = {
     }
 
     return await uploadCommand(archive, folderType, temporary, credentials);
+  },
+  init: (testsRoot, cypressProjectId, cloud, projectName) => {
+    initCommand(testsRoot, cypressProjectId, cloud, projectName);
   }
 };
 

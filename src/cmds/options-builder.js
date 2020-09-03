@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import { DEFAULT_CONFIG_PATH, DEFAULT_TESTS_SPECS_EXT } from '../common/defaults';
 import { getConfigPath, getSecurityToken } from '../common/env';
 

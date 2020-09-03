@@ -1,5 +1,5 @@
 import validator from 'argument-validator';
-import { REPOSITORY_FOLDER_TYPES } from './defaults';
+import { REPOSITORY_FOLDER_TYPES, SUPPORTED_FRAMEWORKS } from './defaults';
 
 const validateCredentials = (credentials) => {
   validator.string(credentials?.cloud, 'credentials.cloud');
@@ -14,10 +14,16 @@ export const validatePackOptions = (pathRegex, ignore, outPath) => {
 
 export const validateRunOptions = (mergedParams) => {
   validateCredentials(mergedParams.credentials);
-  validator.string(mergedParams.tests?.path || mergedParams.tests?.artifactKey, 'tests.path | tests.artifactKey');
+  validator.string(mergedParams.tests?.path, 'tests.path');
+  validator.string(mergedParams.tests?.path || mergedParams.tests?.artifactKey, 'tests.artifactKey');
+
   validator.string(mergedParams.tests?.specsExt, 'tests.specsExt');
   validator.array(mergedParams.capabilities, 'capabilities');
   validator.objectOrEmpty(mergedParams.reporting || {}, 'reporting');
+
+  if  (!Object.values(SUPPORTED_FRAMEWORKS).includes(mergedParams.framework)) {
+    throw new Error(`Invalid string value: ${mergedParams.framework}\nArgument Name: framework.\nit has to be one of ${Object.values(SUPPORTED_FRAMEWORKS)}`);
+  }
 };
 
 export const validateUploadOptions = (archive, folderType, temporary, credentials) => {
@@ -29,4 +35,11 @@ export const validateUploadOptions = (archive, folderType, temporary, credential
   if  (folderType && !REPOSITORY_FOLDER_TYPES.includes(folderType)) {
     throw new Error(`Invalid string value: ${folderType}\nArgument Name: folderType.\nit has to be one of ${REPOSITORY_FOLDER_TYPES}`);
   }
+};
+
+export const validateInitOptions = (testsRoot, cypressProjectId='', cloud='', projectName='') => {
+  validator.string(testsRoot, 'testsRoot');
+  validator.stringOrEmpty(cypressProjectId, 'cypressProjectId');
+  validator.stringOrEmpty(cloud, 'cloud');
+  validator.stringOrEmpty(projectName, 'projectName');
 };
