@@ -28,7 +28,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   const artifactKeyIdentifier = folderType + ':' + artifactId;
 
   const requestPart = {
-    contentType: 'zip',
+    contentType: 'application/zip',
     artifactType: 'GENERAL',
     folderType,
     keyDetails: {
@@ -36,7 +36,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
       artifactId: artifactId
     },
     temporary,
-    fileName: parsedPath.name
+    fileName: artifactId
   };
 
   let getUploadUrlRes;
