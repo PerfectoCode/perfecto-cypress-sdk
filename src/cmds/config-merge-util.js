@@ -23,6 +23,10 @@ export const mergeConfigWithParams = (argv) => {
       ...argv?.reporting,
       customFields
     },
+    env: {
+      ...argv.config.env,
+      ...argv.env
+    },
     tests: argv?.tests,
     credentials: argv?.credentials
   };
