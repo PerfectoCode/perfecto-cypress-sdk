@@ -4,7 +4,6 @@ import axios from 'axios';
 import { getPerfectoHeaders, parseReportingError } from './common/api';
 import { validateUploadOptions } from './common/option-validation';
 
-const DEFAULT_ARTIFACT_VERSION = 'v1';
 const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts';
 
 export default async (archive, folderType, temporary, {cloud, securityToken}) => {
@@ -32,7 +31,6 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
     artifactType: 'GENERAL',
     folderType,
     keyDetails: {
-      version: DEFAULT_ARTIFACT_VERSION,
       artifactId: artifactId
     },
     temporary,
