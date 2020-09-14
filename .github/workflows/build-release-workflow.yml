@@ -45,6 +45,11 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: Bump
+      uses: tool3/bump@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          unrelated: true
     - name: Publish
       uses: mikeal/merge-release@master
       env:

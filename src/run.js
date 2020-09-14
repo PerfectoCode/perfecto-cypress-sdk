@@ -8,6 +8,8 @@ import { getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
 import { validateRunOptions } from './common/option-validation';
 
+const sdkVersion = require('../package.json').version;
+
 export const getSpecs = (testsRoot, specExt) => {
   const specsPattern = testsRoot + '/' + specExt;
   let specs;
@@ -46,6 +48,7 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
       artifactKey,
       framework,
       env,
+      sdkVersion,
       specsExt: tests.specsExt,
       specs
     }, {
