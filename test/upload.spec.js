@@ -53,15 +53,14 @@ describe('Upload', () => {
     expect(postStub).to.calledOnceWithExactly(
       sinon.match('https://' + credentials.cloud + '.'),
       {
-      contentType: 'zip',
+      contentType: 'application/zip',
       artifactType: 'GENERAL',
       folderType,
       keyDetails: {
-        version: 'v1',
         artifactId: 'perfecto-cypress.zip'
       },
       temporary,
-      fileName: fileName.split('.')[0]
+      fileName: 'perfecto-cypress.zip'
     }, {
       headers: {
         'perfecto-tenantid': credentials.cloud,

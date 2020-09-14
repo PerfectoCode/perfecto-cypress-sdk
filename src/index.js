@@ -33,7 +33,7 @@ const perfectoCypress = {
   withConfigFile: (path=DEFAULT_CONFIG_PATH) => {
     configFilePath = path;
   },
-  run: async ({credentials={}, tests, capabilities, reporting}={}) => {
+  run: async ({credentials={}, tests, capabilities, reporting, env}={}) => {
     const config = getConfigFile();
     const customFields = parseCustomFields(config?.reporting?.customFields, reporting?.customFields);
 
@@ -47,6 +47,10 @@ const perfectoCypress = {
       credentials: {
         ...config?.credentials,
         ...credentials
+      },
+      env: {
+        ...config.env,
+        ...env
       },
       tests: {
         ...{specsExt: DEFAULT_TESTS_SPECS_EXT},

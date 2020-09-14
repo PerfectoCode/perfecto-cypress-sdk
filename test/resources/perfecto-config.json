@@ -31,6 +31,9 @@
       "numOfDevices": 1
     }
   ],
+  "env": {
+    "ENV_VAR_1": "VAR_1_VALUE"
+  },
   "framework": "cypress",
   "tests": {
     "path": "test/",

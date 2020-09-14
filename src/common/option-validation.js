@@ -17,6 +17,7 @@ export const validateRunOptions = (mergedParams) => {
   validator.string(mergedParams.tests?.path, 'tests.path');
   validator.string(mergedParams.tests?.path || mergedParams.tests?.artifactKey, 'tests.artifactKey');
 
+  validator.objectOrEmpty(mergedParams.env || {}, 'env');
   validator.string(mergedParams.tests?.specsExt, 'tests.specsExt');
   validator.array(mergedParams.capabilities, 'capabilities');
   validator.objectOrEmpty(mergedParams.reporting || {}, 'reporting');

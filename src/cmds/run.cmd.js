@@ -11,6 +11,7 @@ export const builder = {
   ...credentialsOptions,
   ...testsOptions,
   ...reportingOptions,
+  env: {alias: 'e', type: 'object', usage: '--env.CYPRESS_BASE_URL=https://google.com', describe: 'environment variables to attach to `cypress run` command'},
   ...configOptions
 };
 

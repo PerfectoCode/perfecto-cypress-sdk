@@ -30,6 +30,7 @@ describe('Run - module', () => {
 
       expect(stub).to.have.been.calledWithExactly({
         credentials: {},
+        env: {},
         tests: {specsExt: DEFAULT_TESTS_SPECS_EXT},
         reporting: {customFields: undefined},
         capabilities: []
@@ -45,6 +46,9 @@ describe('Run - module', () => {
         credentials: {
           cloud: 'cloud-name',
           securityToken: '*****'
+        },
+        env: {
+          ENV_VAR_1: 'VAR_1_VALUE'
         },
         tests: {
           path: 'test/',
@@ -105,6 +109,9 @@ describe('Run - module', () => {
           cloud: 'test-cloud-name',
           securityToken: 'test-*****'
         },
+        env: {
+          ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
+        },
         tests: {
           path: 'foo-test/',
           artifactKey: 'test-ArtifactId',
@@ -145,6 +152,9 @@ describe('Run - module', () => {
         credentials: {
           cloud: 'test-cloud-name',
           securityToken: 'test-*****'
+        },
+        env: {
+          ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
         },
         tests: {
           path: 'foo-test/',
@@ -187,7 +197,7 @@ describe('Run - module', () => {
     });
   });
   describe('without config file', () => {
-    it('should pass parameters to packCommand', async () => {
+    it('should pass parameters to runCommand', async () => {
       const params =  {
         credentials: {
           cloud: 'test-cloud-name',
@@ -232,6 +242,7 @@ describe('Run - module', () => {
 
       expect(stub).to.have.been.calledWithExactly({
         ...params,
+        env: {},
         reporting: {
           ...params.reporting,
           customFields: {

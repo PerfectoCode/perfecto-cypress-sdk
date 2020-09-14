@@ -9,8 +9,8 @@ const mockPackCommand = (stub) => {
 };
 
 const triggerRunCommandMock = async (options) => {
-  const packCommandStub = sinon.stub();
-  const packCmdModule = mockPackCommand(packCommandStub);
+  const runCommandStub = sinon.stub();
+  const packCmdModule = mockPackCommand(runCommandStub);
 
   const command = yargs.parserConfiguration({'camel-case-expansion': false}).command(packCmdModule,);
 
@@ -19,7 +19,7 @@ const triggerRunCommandMock = async (options) => {
   } catch (error) {
     return error;
   }
-  return packCommandStub;
+  return runCommandStub;
 };
 
 describe('Run - cmd', () => {
@@ -30,9 +30,10 @@ describe('Run - cmd', () => {
         'credentials.cloud': 'foo',
         'credentials.securityToken': 'bar'
       };
-      const packCommandStub = await triggerRunCommandMock(options);
+      const runCommandStub = await triggerRunCommandMock(options);
 
-      expect(packCommandStub).to.have.been.calledWith({
+      expect(runCommandStub).to.have.been.calledWith({
+        env: {},
         credentials: {cloud: 'foo', securityToken: 'bar'},
         reporting: {customFields: undefined},
         tests: {specsExt: '*.spec.js'}
@@ -45,13 +46,16 @@ describe('Run - cmd', () => {
       const options = {
         config: 'test/resources/perfecto-config.json'
       };
-      const packCommandStub = await triggerRunCommandMock(options);
+      const runCommandStub = await triggerRunCommandMock(options);
 
-      expect(packCommandStub).to.have.been.calledWithExactly(
+      expect(runCommandStub).to.have.been.calledWithExactly(
         {
           credentials: {
             cloud: 'cloud-name',
             securityToken: '*****'
+          },
+          env: {
+            ENV_VAR_1: 'VAR_1_VALUE'
           },
           tests: {
             path: 'test/',
@@ -114,6 +118,7 @@ describe('Run - cmd', () => {
         'credentials.cloud': 'test-cloud-name',
         'credentials.securityToken': 'test-*****',
         'tests.path': 'foo-test/',
+        'env.ENV_VAR_1': 'VAR_1_OVERRIDE_VALUE',
         'tests.artifactKey': 'test-ArtifactId',
         'tests.ignore': '1-tests/unit 2-tests/license-checker',
         'tests.specsExt': '**.spec1.js',
@@ -126,13 +131,16 @@ describe('Run - cmd', () => {
         'reporting.author': 'test-sdet1@awesomecompany.com',
         'reporting.tags': 'test-tag'
       };
-      const packCommandStub = await triggerRunCommandMock(options);
+      const runCommandStub = await triggerRunCommandMock(options);
 
-      expect(packCommandStub).to.have.been.calledWithExactly(
+      expect(runCommandStub).to.have.been.calledWithExactly(
         {
           credentials: {
             cloud: 'test-cloud-name',
             securityToken: 'test-*****'
+          },
+          env: {
+            ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
           },
           tests: {
             path: 'foo-test/',
@@ -190,12 +198,13 @@ describe('Run - cmd', () => {
   });
 
   describe('without config file', () => {
-    it('should pass parameters to packCommand', async () => {
+    it('should pass parameters to runCommand', async () => {
       const params = {
         'credentials.cloud': 'test-cloud-name',
         'credentials.securityToken': 'test-*****',
         'tests.path': 'foo-test/',
         'tests.artifactKey': 'test-ArtifactId',
+        'env.ENV_VAR_1': 'VAR_1_OVERRIDE_VALUE',
         'tests.ignore': '1-tests/unit 2-tests/license-checker',
         'tests.specsExt': '**.spec1.js',
         'reporting.jobName': 'test-some_job',
@@ -211,10 +220,13 @@ describe('Run - cmd', () => {
         config: 'test/resources/empty-perfecto-config.json',
         ...params
       };
-      const packCommandStub = await triggerRunCommandMock(options);
+      const runCommandStub = await triggerRunCommandMock(options);
 
-      expect(packCommandStub).to.have.been.calledWithExactly(
+      expect(runCommandStub).to.have.been.calledWithExactly(
         {
+          env: {
+            ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
+          },
           credentials: {
             cloud: 'test-cloud-name',
             securityToken: 'test-*****'
