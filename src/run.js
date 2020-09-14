@@ -47,7 +47,7 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
       reporting,
       artifactKey,
       framework,
-      env,
+      environmentVariables: env,
       sdkVersion,
       specsExt: tests.specsExt,
       specs

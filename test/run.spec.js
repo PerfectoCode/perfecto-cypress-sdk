@@ -20,7 +20,11 @@ const capabilities = [{
 }];
 const reporting = { jobName: 'some_job' };
 const framework = 'cypress';
-const defaultRunParams = {credentials, capabilities, reporting, framework};
+const sdkVersion = '0.0.1';
+const env = {
+  ENV_VAR_1: 'VAR_1_VALUE'
+};
+const defaultRunParams = {credentials, capabilities, reporting, framework, env};
 
 const mockPackResults = 'resolves-zipFilePath';
 const mockUploadResults = 'resolves-artifactKey';
@@ -28,6 +32,7 @@ const mockSessionId = 'session-id';
 
 const mockRunCommand = (pack, upload, monitor, post) => {
   return proxyquire('../src/run', {
+    '../package.json': {version: sdkVersion},
     'axios': {post},
     './pack': {default: pack},
     './upload': {default: upload},
@@ -85,6 +90,8 @@ describe('Run', () => {
       sinon.match({
         capabilities,
         reporting,
+        sdkVersion,
+        environmentVariables: env,
         artifactKey: mockUploadResults,
         framework,
         specsExt: tests.specsExt
