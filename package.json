@@ -1,6 +1,6 @@
 {
   "name": "perfecto-cypress-sdk",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Run Cypress tests in Perfecto cloud",
   "main": "lib/index.js",
   "module": "src/index.js",
