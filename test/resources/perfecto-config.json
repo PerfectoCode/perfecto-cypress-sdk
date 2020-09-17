@@ -32,7 +32,8 @@
     }
   ],
   "env": {
-    "ENV_VAR_1": "VAR_1_VALUE"
+    "ENV_VAR_1": "VAR_1_VALUE",
+    "ENV_VAR_2": "VAR_2_VALUE"
   },
   "framework": "cypress",
   "tests": {

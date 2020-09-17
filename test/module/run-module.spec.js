@@ -48,7 +48,8 @@ describe('Run - module', () => {
           securityToken: '*****'
         },
         env: {
-          ENV_VAR_1: 'VAR_1_VALUE'
+          ENV_VAR_1: 'VAR_1_VALUE',
+          ENV_VAR_2: 'VAR_2_VALUE'
         },
         tests: {
           path: 'test/',
@@ -154,7 +155,8 @@ describe('Run - module', () => {
           securityToken: 'test-*****'
         },
         env: {
-          ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
+          ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE',
+          ENV_VAR_2: 'VAR_2_VALUE'
         },
         tests: {
           path: 'foo-test/',
