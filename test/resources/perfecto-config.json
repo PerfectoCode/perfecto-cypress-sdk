@@ -1,0 +1,60 @@
+{
+  "credentials": {
+    "cloud": "cloud-name",
+    "securityToken": "*****"
+  },
+  "capabilities": [
+    {
+      "deviceType": "Web",
+      "platformName": "Windows",
+      "platformVersion": "10",
+      "browserName": "Chrome",
+      "browserVersion": "80",
+      "resolution": "1024x768",
+      "location": "US East",
+      "addHostsRecord": {
+        "localhost": "10.0.0.138"
+      },
+      "numOfDevices": 2
+    },
+    {
+      "deviceType": "Web",
+      "platformName": "Mac",
+      "platformVersion": "Catalina",
+      "browserName": "Chrome",
+      "browserVersion": "80",
+      "resolution": "1024x768",
+      "location": "US East",
+      "addHostsRecord": {
+        "localhost": "10.0.0.138"
+      },
+      "numOfDevices": 1
+    }
+  ],
+  "env": {
+    "ENV_VAR_1": "VAR_1_VALUE"
+  },
+  "framework": "cypress",
+  "tests": {
+    "path": "test/",
+    "artifactKey": "",
+    "ignore": [
+      "tests/unit",
+      "tests/license-checker"
+    ],
+    "specsExt": "**.spec.js"
+  },
+  "reporting": {
+    "jobName": "some_job",
+    "jobNumber": 1,
+    "branch": "some_branch",
+    "projectName": "My_Cypress_project",
+    "projectVersion": "v1.0",
+    "customFields": ["a,bbbb"],
+    "author": "sdet1@awesomecompany.com",
+    "tags": [
+      "cypress",
+      "plugin"
+    ]
+  }
+}
