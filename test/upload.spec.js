@@ -8,7 +8,7 @@ const mockUploadCommand = (post, put) => {
   return proxyquire('../src/upload', {'axios': {post, put}}).default;
 };
 
-const credentials = {cloud: 'cloud-name', securityToken: '***'};
+const credentials = {cloud: 'cloud-name-perfectomobile-com', securityToken: '***'};
 const mockUploadUrl = 'uploadUrl.s3.com';
 
 describe('Upload', () => {

@@ -65,7 +65,7 @@ describe('Run - module', () => {
           branch: 'some_branch',
           projectName: 'My_Cypress_project',
           projectVersion: 'v1.0',
-          customFields: {a: 'bbbb'},
+          customFields: [{name: 'a', value: 'bbbb'}],
           author: 'sdet1@awesomecompany.com',
           tags: [
             'cypress',
@@ -171,7 +171,7 @@ describe('Run - module', () => {
           branch: 'test-some_branch',
           projectName: 'test-My_Cypress_project',
           projectVersion: 'test-v1.0',
-          customFields: {a: 'bbbb', b: 'test-c'},
+          customFields: [{name: 'a', value: 'bbbb'}, {name: 'b', value: 'test-c'}],
           author: 'test-sdet1@awesomecompany.com',
           tags: [
             'test-tag'
@@ -245,9 +245,9 @@ describe('Run - module', () => {
         env: {},
         reporting: {
           ...params.reporting,
-          customFields: {
-            b: 'test-c'
-          }
+          customFields: [{
+            name: 'b', value: 'test-c'
+          }]
         }
       });
     });

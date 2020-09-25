@@ -1,15 +1,18 @@
 export const parseCustomFields = (fieldsA, fieldsB) => {
   const fieldsArray =  [...(fieldsA ||  []), ...(fieldsB || [])]
   if (!fieldsArray?.length) return;
-  return fieldsArray.reduce((acc, item) => {
+  const customFieldsMap = fieldsArray.reduce((acc, item) => {
     const [key, value] = item?.split(',');
 
     if (!key || !value) {
       throw 'reporting.customField should be a string with comma: fieldKey,fieldValue';
     }
-    acc[key] = value;
+
+    acc.set(key, {name: key, value});
     return acc;
-  }, {});
+  }, new Map());
+
+  return [...customFieldsMap.values()];
 };
 
 export const mergeConfigWithParams = (argv) => {

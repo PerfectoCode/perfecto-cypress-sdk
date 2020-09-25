@@ -4,7 +4,7 @@ import proxyquire from 'proxyquire';
 import { getSpecs } from '../src/run';
 import { DEFAULT_ARCHIVE_PATH } from '../src/common/defaults';
 
-const credentials = {cloud: 'cloud-name', securityToken: '***'};
+const credentials = {cloud: 'cloud-name-perfectomobile-com', securityToken: '***'};
 const capabilities = [{
   "deviceType": "Web",
   "platformName": "Windows",
