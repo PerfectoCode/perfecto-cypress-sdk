@@ -6,7 +6,10 @@ import { SUPPORTED_FRAMEWORKS } from './common/defaults';
 const getPackageObject = (projectName) => ({
   name: projectName || 'first-perfecto-cypress-project',
   version: '0.0.1',
-  dependencies: {},
+  dependencies: {
+    'cypress': 'latest',
+    'perfecto-cypress-reporter': 'latest'
+  },
   devDependencies: {}
 });
 
