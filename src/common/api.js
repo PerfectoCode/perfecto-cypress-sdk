@@ -1,5 +1,8 @@
+const cloudSuffix = '-perfectomobile-com';
+const normalizeCloudName = cloud => cloud.endsWith(cloudSuffix) ? cloud : cloud + cloudSuffix;
+
 export const getPerfectoHeaders = (cloud, securityToken) => ({
-  'perfecto-tenantid': cloud, // TODO: (Elhay) is it always -perfectomobile-con, do i need this part?
+  'perfecto-tenantid': normalizeCloudName(cloud),
   'Perfecto-Authorization': securityToken
 });
 
