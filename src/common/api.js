@@ -10,3 +10,9 @@ export const parseReportingError = (error) => {
   const data = error.data || (error.response && error.response.data) || error.message;
   return (data && data.length > 0 && data[0].userMessage) || data;
 }
+
+export const getBackendBaseUrl = (cloud='tenant') => {
+  const NASE_BACKEND_URL = process.env.NASE_BACKEND_URL;
+
+  return NASE_BACKEND_URL || 'https://' + cloud + '.app.perfectomobile.com/nase-webapp/v1'
+}

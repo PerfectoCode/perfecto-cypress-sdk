@@ -1,10 +1,11 @@
 import glob from 'glob';
 import axios from 'axios';
 import fs from 'fs';
+import path from 'path';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import monitorSession from './monitor';
-import { getPerfectoHeaders } from './common/api';
+import { getBackendBaseUrl, getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
 import { validateRunOptions } from './common/option-validation';
 
@@ -26,6 +27,18 @@ export const getSpecs = (testsRoot, specExt) => {
   return specs;
 }
 
+const getEnginesDetails = (testRoot) => {
+  let testsPackageJson;
+
+  try {
+    testsPackageJson = require(path.resolve(testRoot, 'package.json'));
+  } catch (error){
+      throw new Error('testRoot: ' + testRoot + ' must have package.json file');
+  }
+
+  return testsPackageJson.engines;
+};
+
 export default async ({credentials, tests, capabilities, reporting, framework, env}) => {
   validateRunOptions({credentials, tests, capabilities, reporting, framework, env})
 
@@ -41,21 +54,22 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
   const specs = getSpecs(tests.path, tests.specsExt);
   let session;
   try {
-    // TODO: (Elhay) get NASE service URL also from env var if provided
-    session = await axios.post('https://' + credentials.cloud + '.perfectomobile.com/nase/rest/v1/session', {
+    const enginesDetails = getEnginesDetails(tests.path);
+    session = await axios.post(getBackendBaseUrl(credentials.cloud) + '/sessions', {
       capabilities,
       reporting,
       artifactKey,
       framework,
       env,
       sdkVersion,
+      engines: enginesDetails,
       specsExt: tests.specsExt,
       specs
     }, {
       headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)
     });
   } catch (error)  {
-    throw 'Failed to create  session: ' + error.message + '\n' + error?.response?.data;
+    throw 'Failed to create  session: ' + error.message + '\n' + JSON.stringify(error?.response?.data, null, 2);
   }
 
   return monitorSession(session);
