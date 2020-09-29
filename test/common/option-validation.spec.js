@@ -11,7 +11,7 @@ const tests = {
   path: '*',
   specsExt: '*'
 };
-const framework = 'cypress';
+const framework = 'CYPRESS';
 const capabilities = [{}];
 const reporting = {};
 const defaultRunParams = {credentials, tests, framework, capabilities, reporting};

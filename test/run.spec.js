@@ -21,7 +21,7 @@ const capabilities = [{
   "numOfDevices": 2
 }];
 const reporting = { jobName: 'some_job' };
-const framework = 'cypress';
+const framework = 'CYPRESS';
 const defaultRunParams = {credentials, capabilities, reporting, framework, env};
 
 const mockPackResults = 'resolves-zipFilePath';
