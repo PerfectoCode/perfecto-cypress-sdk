@@ -42,6 +42,7 @@ perfecto-cypress init --tests.path=./tests
 1. package.json
 2. [perfecto-config.json][perfecto_cypress_doc_config]
 3. [cypress.json][cypress_doc_config]
+
 💡 This is the time to follow the instruction [here][perfecto_cypress_reporter]. This step is important to allow us creating the execution report.
 
 ###  Run command
