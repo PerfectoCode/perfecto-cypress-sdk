@@ -1,0 +1,1 @@
+require('perfecto-cypress-reporter');

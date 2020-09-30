@@ -1,0 +1,9 @@
+{
+  "name": "perfecto-cypress-example",
+  "version": "0.0.1",
+  "dependencies": {
+    "cypress": "latest",
+    "perfecto-cypress-reporter": "latest"
+  },
+  "devDependencies": {}
+}

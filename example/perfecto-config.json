@@ -1,0 +1,45 @@
+{
+  "credentials": {
+    "cloud": "<REPLACE_WITH_CLOUD_NAME>",
+    "securityToken": ""
+  },
+  "capabilities": [
+    {
+      "deviceType": "Web",
+      "platformName": "Windows",
+      "platformVersion": "10",
+      "browserName": "Chrome",
+      "browserVersion": "latest",
+      "resolution": "1024x768",
+      "location": "US East"
+    }
+  ],
+  "environmentVariables": {
+    "CYPRESS_PAGE_LOAD_TIMEOUT": "10000"
+  },
+  "framework": "CYPRESS",
+  "tests": {
+    "path": "./",
+    "artifactKey": "",
+    "ignore": [
+      "screenshots/**",
+      "video/**"
+    ],
+    "specsExt": "**_spec.js"
+  },
+  "reporting": {
+    "job": {
+      "name": "cypress_first_job",
+      "number": 1,
+      "branch": ""
+    },
+    "project": {
+      "name": "perfecto-cypress-exampl",
+      "version": "v1.0"
+    },
+    "customFields": [],
+    "tags": [
+      "cypress"
+    ]
+  }
+}

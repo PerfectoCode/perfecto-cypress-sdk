@@ -34,7 +34,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
   },
   framework: SUPPORTED_FRAMEWORKS.CYPRESS,
   tests: {
-    path: testsPath || 'test/',
+    path: './',
     artifactKey: '',
     ignore: [
       'screenshots/**',
@@ -43,13 +43,16 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
     specsExt: '**.spec.js'
   },
   reporting: {
-    jobName: 'cypress_first_job',
-    jobNumber: 1,
-    branch: '',
-    projectName: projectName || 'My_Cypress_project',
-    projectVersion: 'v1.0',
+    job: {
+      name: 'cypress_first_job',
+      number: 1,
+      branch: ''
+    },
+    project: {
+      name: projectName || 'My_Cypress_project',
+      version: 'v1.0'
+    },
     customFields: [],
-    author: '',
     tags: ['cypress']
   }
 });
@@ -73,7 +76,7 @@ export default (testsRoot, cypressProjectId, cloud, projectName) => {
     fs.writeFileSync(perfectoConfigPath, JSON.stringify(perfectoConfigObject, null, 2));
   }
 
-  const cypressConfigPath = path.join(testsRoot, 'cypress-config.json');
+  const cypressConfigPath = path.join(testsRoot, 'cypress.json');
   if (!fs.existsSync(cypressConfigPath)) {
     const cypressConfigObject = getCypressConfigObject(cypressProjectId);
     fs.writeFileSync(cypressConfigPath, JSON.stringify(cypressConfigObject, null, 2));

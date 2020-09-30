@@ -15,7 +15,7 @@ describe('Init', () => {
     const testsRoot = 'archive-path/';
     const testsPath = path.join(testsRoot, 'package.json');
     const perfectoConfigPath = path.join(testsRoot, 'perfecto-config.json');
-    const cypressConfigPath = path.join(testsRoot, 'cypress-config.json');
+    const cypressConfigPath = path.join(testsRoot, 'cypress.json');
 
     const testProjectName = 'test-project-name';
     const testCloud = 'test-cloud';
@@ -33,7 +33,7 @@ describe('Init', () => {
     expect(stub.writeFileSync.getCall(1)).to.have.calledWith(perfectoConfigPath, sinon.match({
       credentials: {cloud: testCloud},
       tests: {path: testsRoot},
-      reporting: {projectName: testProjectName}
+      reporting: {project: {name: testProjectName}}
     }));
 
     expect(stub.writeFileSync.getCall(2)).to.have.calledWith(cypressConfigPath, sinon.match({

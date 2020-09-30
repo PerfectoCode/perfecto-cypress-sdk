@@ -1,5 +1,6 @@
 .idea
 test
+example
 .eslintignore
 .eslintrc.json
 babel.config.json
