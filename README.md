@@ -71,4 +71,4 @@ it will skip the `pack` and `upload` steps and just execute the tests stored in 
 [perfecto_cypress_reporter]: https://www.npmjs.com/package/perfecto-cypress-reporter
 [perfecto_cypress_doc_config]: https://developers.perfectomobile.com/display/PD/Cypress#Cypress-perfecto-config.jsonPerfecto-config.json
 [cypress_doc_config]: https://docs.cypress.io/guides/references/configuration.html
-[perfecto_cypress_doc]: https://developers.perfectomobile.com/display/PD/Cypress#Cypress-perfecto-config.jsonPerfecto-config.json
+[perfecto_cypress_doc]: https://developers.perfectomobile.com/display/PD/Cypress
