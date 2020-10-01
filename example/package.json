@@ -1,9 +1,13 @@
 {
   "name": "perfecto-cypress-example",
   "version": "0.0.1",
+  "scripts": {
+    "local": "NASE_BACKEND_URL=http://localhost:8080/v1 npx perfecto-cypress run"
+  },
   "dependencies": {
     "cypress": "latest",
-    "perfecto-cypress-reporter": "latest"
+    "perfecto-cypress-reporter": "latest",
+    "perfecto-cypress-sdk": "latest"
   },
   "devDependencies": {}
 }
