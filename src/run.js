@@ -72,5 +72,5 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
     throw 'Failed to create  session: ' + error.message + '\n' + JSON.stringify(error?.response?.data, null, 2);
   }
 
-  return monitorSession(session);
+  return monitorSession(credentials, session);
 }
