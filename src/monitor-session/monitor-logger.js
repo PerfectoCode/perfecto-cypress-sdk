@@ -1,9 +1,8 @@
-import tty from 'tty';
 import interactiveLogger from './interactive-log'
 import simpleTextLogger from './simple-text-log'
 import { SessionState } from '../common/consts';
 
-const isTTY = tty.isatty(process.stdout.fd);
+const isTTY = process.stdout.isTTY;
 
 const getPrintTitle = (status, sessionId) => {
   return `
