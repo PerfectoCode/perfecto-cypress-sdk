@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { validateInitOptions } from './common/option-validation';
-import { SUPPORTED_FRAMEWORKS } from './common/defaults';
+import { SUPPORTED_FRAMEWORKS } from './common/consts';
 
 const getPackageObject = (projectName) => ({
   name: projectName || 'first-perfecto-cypress-project',
@@ -34,7 +34,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
   },
   framework: SUPPORTED_FRAMEWORKS.CYPRESS,
   tests: {
-    path: './',
+    path: testsPath || 'test/',
     artifactKey: '',
     ignore: [
       'screenshots/**',
