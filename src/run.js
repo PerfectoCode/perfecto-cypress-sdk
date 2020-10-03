@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import packCommand from './pack';
 import uploadCommand from './upload';
-import monitorSession from './monitor';
+import monitorSession from './monitor-session/monitor';
 import { getBackendBaseUrl, getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
 import { validateRunOptions } from './common/option-validation';

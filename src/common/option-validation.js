@@ -1,5 +1,5 @@
 import validator from 'argument-validator';
-import { REPOSITORY_FOLDER_TYPES, SUPPORTED_FRAMEWORKS } from './defaults';
+import { REPOSITORY_FOLDER_TYPES, SUPPORTED_FRAMEWORKS } from './consts';
 
 const validateCredentials = (credentials) => {
   validator.string(credentials?.cloud, 'credentials.cloud');
