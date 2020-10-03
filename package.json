@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "src/index.js",
   "scripts": {
-    "test": "mocha -r @babel/register -r ./test/util/setup.js ./test/**/*.spec.js",
+    "test": "mocha -r @babel/register -r ./test/util/setup.js ./test/ --recursive",
     "lint": "eslint .",
     "build": "./node_modules/.bin/babel src --out-dir lib"
   },
