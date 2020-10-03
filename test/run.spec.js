@@ -33,7 +33,7 @@ const mockRunCommand = (pack, upload, monitor, post) => {
     'axios': {post},
     './pack': {default: pack},
     './upload': {default: upload},
-    './monitor': {default: monitor}
+    './monitor-session/monitor': {default: monitor}
   }
     ).default;
 };
@@ -80,7 +80,7 @@ describe('Run', () => {
 
     expect(packStub).to.calledOnceWithExactly(tests.path, undefined, DEFAULT_ARCHIVE_PATH);
     expect(uploadStub).to.calledOnceWithExactly(mockPackResults, 'PRIVATE', true, credentials);
-    expect(monitorStub).to.calledOnceWithExactly(mockSessionId);
+    expect(monitorStub).to.calledOnceWithExactly(credentials, mockSessionId);
 
     expect(postStub).to.calledOnceWith(
       sinon.match('https://' + credentials.cloud),

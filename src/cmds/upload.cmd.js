@@ -5,9 +5,9 @@ import {
   DEFAULT_ARCHIVE_PATH,
   DEFAULT_ARCHIVE_FILE_NAME,
   DEFAULT_ARCHIVE_FOLDER_TYPE,
-  REPOSITORY_FOLDER_TYPES,
   DEFAULT_ARCHIVE_IS_TEMP
 } from '../common/defaults';
+import { REPOSITORY_FOLDER_TYPES } from '../common/consts';
 
 
 export const command = 'upload';
