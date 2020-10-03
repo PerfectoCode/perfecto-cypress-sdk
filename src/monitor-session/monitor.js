@@ -48,7 +48,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
       }
 
       if (sessionData.tests.length) {
-        onNewTestsArrived();
+        onNewTestsArrived(sessionData);
       }
 
       if (sessionData.sessionState !== SessionState.DONE) {
