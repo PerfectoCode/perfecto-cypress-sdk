@@ -18,7 +18,7 @@ const capabilities = [{
   "addHostsRecord": {
     "localhost": "10.0.0.138"
   },
-  "numOfDevices": 2
+  "maxNumOfDevices": 2
 }];
 const reporting = { jobName: 'some_job' };
 const framework = 'CYPRESS';
