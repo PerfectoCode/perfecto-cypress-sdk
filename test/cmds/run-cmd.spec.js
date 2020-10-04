@@ -92,7 +92,7 @@ describe('Run - cmd', () => {
               addHostsRecord: {
                 localhost: '10.0.0.138'
               },
-              numOfDevices: 2
+              maxNumOfDevices: 2
             },
             {
               deviceType: 'Web',
@@ -105,7 +105,7 @@ describe('Run - cmd', () => {
               addHostsRecord: {
                 localhost: '10.0.0.138'
               },
-              numOfDevices: 1
+              maxNumOfDevices: 1
             }
           ]
         }
@@ -176,7 +176,7 @@ describe('Run - cmd', () => {
               addHostsRecord: {
                 localhost: '10.0.0.138'
               },
-              numOfDevices: 2
+              maxNumOfDevices: 2
             },
             {
               deviceType: 'Web',
@@ -189,7 +189,7 @@ describe('Run - cmd', () => {
               addHostsRecord: {
                 localhost: '10.0.0.138'
               },
-              numOfDevices: 1
+              maxNumOfDevices: 1
             }
           ]
         }

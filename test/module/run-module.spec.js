@@ -85,7 +85,7 @@ describe('Run - module', () => {
             addHostsRecord: {
               localhost: '10.0.0.138'
             },
-            numOfDevices: 2
+            maxNumOfDevices: 2
           },
           {
             deviceType: 'Web',
@@ -98,7 +98,7 @@ describe('Run - module', () => {
             addHostsRecord: {
               localhost: '10.0.0.138'
             },
-            numOfDevices: 1
+            maxNumOfDevices: 1
           }
         ]
       });
@@ -143,7 +143,7 @@ describe('Run - module', () => {
             addHostsRecord: {
               localhost: 'test-10.0.0.138'
             },
-            numOfDevices: 3
+            maxNumOfDevices: 3
           }
         ]
       });
@@ -190,7 +190,7 @@ describe('Run - module', () => {
             addHostsRecord: {
               localhost: 'test-10.0.0.138'
             },
-            numOfDevices: 3
+            maxNumOfDevices: 3
           }
         ]
       });
@@ -234,7 +234,7 @@ describe('Run - module', () => {
             addHostsRecord: {
               localhost: 'test-10.0.0.138'
             },
-            numOfDevices: 3
+            maxNumOfDevices: 3
           }
         ]
       };
