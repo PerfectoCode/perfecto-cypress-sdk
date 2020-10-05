@@ -55,7 +55,7 @@ describe('Upload - module', () => {
     });
   });
   describe('without config file', () => {
-    it('should pass parameters to packCommand', async () => {
+    it('should pass parameters to uploadCommand', async () => {
       const credentials = {
         cloud: 'test-cloud-name',
         securityToken: 'test-token'

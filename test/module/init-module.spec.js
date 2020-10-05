@@ -12,9 +12,9 @@ const triggerInitCommandMock = async (...params) => {
 };
 
 describe('Init - module', () => {
-  it('should pass parameters to packCommand', async () => {
-    const stub = await triggerInitCommandMock('archive-path/', 'ABCDEF', 'test-cloud', 'test-project-name');
+  it('should pass parameters to initCommand', async () => {
+    const stub = await triggerInitCommandMock('archive-path/', 'test-cloud', 'test-project-name');
 
-    expect(stub).to.have.been.calledWithExactly('archive-path/', 'ABCDEF', 'test-cloud', 'test-project-name');
+    expect(stub).to.have.been.calledWithExactly('archive-path/', 'test-cloud', 'test-project-name');
   });
 });

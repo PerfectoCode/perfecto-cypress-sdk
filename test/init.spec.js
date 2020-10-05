@@ -19,12 +19,11 @@ describe('Init', () => {
 
     const testProjectName = 'test-project-name';
     const testCloud = 'test-cloud';
-    const cypressProjectId = 'ABCDEF';
 
     const JSONstub = sinon.stub(JSON, 'stringify');
     JSONstub.returnsArg(0);
 
-    mockInitCommand(testsRoot, cypressProjectId, testCloud, testProjectName);
+    mockInitCommand(testsRoot, testCloud, testProjectName);
 
     expect(stub.writeFileSync).to.have.been.callCount(3);
 
@@ -36,9 +35,7 @@ describe('Init', () => {
       reporting: {project: {name: testProjectName}}
     }));
 
-    expect(stub.writeFileSync.getCall(2)).to.have.calledWith(cypressConfigPath, sinon.match({
-      projectId: cypressProjectId
-    }));
+    expect(stub.writeFileSync.getCall(2)).to.have.calledWith(cypressConfigPath, '{}');
     JSONstub.restore();
   });
 
@@ -53,9 +50,8 @@ describe('Init', () => {
 
     const testProjectName = 'test-project-name';
     const testCloud = 'test-cloud';
-    const cypressProjectId = 'ABCDEF';
 
-    mockInitCommand(testsRoot, cypressProjectId, testCloud, testProjectName);
+    mockInitCommand(testsRoot, testCloud, testProjectName);
 
     expect(stub.writeFileSync).to.not.have.been.called;
   });

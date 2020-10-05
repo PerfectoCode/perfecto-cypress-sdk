@@ -68,7 +68,7 @@ const perfectoCypress = {
 
     return await runCommand(mergedParams);
   },
-  pack: async (testsRoot, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
+  pack: (testsRoot, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
     const config = getConfigFile();
     const mergedParams = {
       testsRoot: testsRoot || config?.tests?.path,
@@ -76,7 +76,7 @@ const perfectoCypress = {
       outPath: outPath || DEFAULT_ARCHIVE_PATH
     };
 
-    return await packCommand(
+    return packCommand(
       mergedParams.testsRoot,
       mergedParams.ignore,
       mergedParams.outPath
@@ -96,8 +96,8 @@ const perfectoCypress = {
 
     return await uploadCommand(archive, folderType, temporary, credentials);
   },
-  init: (testsRoot, cypressProjectId, cloud, projectName) => {
-    initCommand(testsRoot, cypressProjectId, cloud, projectName);
+  init: (testsRoot, cloud, projectName) => {
+    initCommand(testsRoot, cloud, projectName);
   }
 };
 

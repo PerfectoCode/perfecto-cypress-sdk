@@ -29,10 +29,9 @@ const triggerInitCommandMock = async (options) => {
 };
 
 describe('Init - cmd', () => {
-  it('should pass parameters to packCommand', async () => {
+  it('should pass parameters to initCommand', async () => {
     const commandOptions = {
       'tests.path': 'archive-path/',
-      cypressProjectId: 'ABCDEF',
       cloud: 'test-cloud',
       projectName: 'test-project-name'
     };
@@ -42,7 +41,6 @@ describe('Init - cmd', () => {
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
       commandOptions['tests.path'],
-      commandOptions.cypressProjectId,
       commandOptions.cloud,
       commandOptions.projectName
     );

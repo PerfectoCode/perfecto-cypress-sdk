@@ -39,9 +39,8 @@ export const validateUploadOptions = (archive, folderType, temporary, credential
   }
 };
 
-export const validateInitOptions = (testsRoot, cypressProjectId='', cloud='', projectName='') => {
+export const validateInitOptions = (testsRoot, cloud='', projectName='') => {
   validator.string(testsRoot, 'testsRoot');
-  validator.stringOrEmpty(cypressProjectId, 'cypressProjectId');
   validator.stringOrEmpty(cloud, 'cloud');
   validator.stringOrEmpty(projectName, 'projectName');
 };

@@ -58,11 +58,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
   }
 });
 
-const getCypressConfigObject = (projectId) => ({
-  projectId: projectId || ''
-});
-
-export default (testsRoot, cypressProjectId, cloud, projectName) => {
+export default (testsRoot, cloud, projectName) => {
   validateInitOptions(testsRoot);
 
   const packagePath = path.join(testsRoot, 'package.json');
@@ -79,7 +75,6 @@ export default (testsRoot, cypressProjectId, cloud, projectName) => {
 
   const cypressConfigPath = path.join(testsRoot, 'cypress.json');
   if (!fs.existsSync(cypressConfigPath)) {
-    const cypressConfigObject = getCypressConfigObject(cypressProjectId);
-    fs.writeFileSync(cypressConfigPath, JSON.stringify(cypressConfigObject, null, 2));
+    fs.writeFileSync(cypressConfigPath, '{}');
   }
 }
