@@ -5,6 +5,41 @@ import {
   DEFAULT_TESTS_SPECS_EXT
 } from '../../src/common/defaults';
 
+const capabilitiesMock = [
+  {
+    deviceType: 'test-Web',
+    platformName: 'test-Windows',
+    platformVersion: 'test-10',
+    browserName: 'test-Chrome',
+    browserVersion: 'test-80',
+    resolution: 'test-1024x768',
+    location: 'test-US East',
+    addHostsRecord: {
+      localhost: 'test-10.0.0.138'
+    },
+    maxNumOfDevices: 3
+  }
+];
+const reportingMock = {
+  jobName: 'test-some_job',
+  jobNumber: 2,
+  branch: 'test-some_branch',
+  projectName: 'test-My_Cypress_project',
+  projectVersion: 'test-v1.0',
+  customFields: ['b,test-c'],
+  author: 'test-sdet1@awesomecompany.com',
+  tags: ['test-tag']
+};
+const testsMock = {
+  path: 'foo-test/',
+  artifactKey: 'test-ArtifactId',
+  ignore: [
+    '1-tests/unit',
+    '2-tests/license-checker'
+  ],
+  specsExt: '**.spec1.js'
+};
+
 const mockRunCommand = (stub) => proxyquire('../../src/index', {'./run': {default: stub}}).default;
 const triggerRunCommandMock = async (options) => {
   const stub = sinon.stub();
@@ -33,6 +68,7 @@ describe('Run - module', () => {
         env: {},
         tests: {specsExt: DEFAULT_TESTS_SPECS_EXT},
         reporting: {customFields: undefined},
+        nodeVersion: undefined,
         capabilities: []
       });
     });
@@ -72,7 +108,8 @@ describe('Run - module', () => {
             'plugin'
           ]
         },
-        framework: 'cypress',
+        framework: 'CYPRESS',
+        nodeVersion: '12',
         capabilities: [
           {
             deviceType: 'Web',
@@ -112,40 +149,10 @@ describe('Run - module', () => {
         env: {
           ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
         },
-        tests: {
-          path: 'foo-test/',
-          artifactKey: 'test-ArtifactId',
-          ignore: [
-            '1-tests/unit',
-            '2-tests/license-checker'
-          ],
-          specsExt: '**.spec1.js'
-        },
-        reporting: {
-          jobName: 'test-some_job',
-          jobNumber: 2,
-          branch: 'test-some_branch',
-          projectName: 'test-My_Cypress_project',
-          projectVersion: 'test-v1.0',
-          customFields: ['b,test-c'],
-          author: 'test-sdet1@awesomecompany.com',
-          tags: ['test-tag']
-        },
-        capabilities: [
-          {
-            deviceType: 'test-Web',
-            platformName: 'test-Windows',
-            platformVersion: 'test-10',
-            browserName: 'test-Chrome',
-            browserVersion: 'test-80',
-            resolution: 'test-1024x768',
-            location: 'test-US East',
-            addHostsRecord: {
-              localhost: 'test-10.0.0.138'
-            },
-            maxNumOfDevices: 3
-          }
-        ]
+        nodeVersion: '13',
+        tests: testsMock,
+        reporting: reportingMock,
+        capabilities: capabilitiesMock
       });
 
       expect(stub).to.have.been.calledWithExactly({
@@ -156,15 +163,7 @@ describe('Run - module', () => {
         env: {
           ENV_VAR_1: 'VAR_1_OVERRIDE_VALUE'
         },
-        tests: {
-          path: 'foo-test/',
-          artifactKey: 'test-ArtifactId',
-          ignore: [
-            '1-tests/unit',
-            '2-tests/license-checker'
-          ],
-          specsExt: '**.spec1.js'
-        },
+        tests: testsMock,
         reporting: {
           jobName: 'test-some_job',
           jobNumber: 2,
@@ -177,22 +176,9 @@ describe('Run - module', () => {
             'test-tag'
           ]
         },
-        framework: 'cypress',
-        capabilities: [
-          {
-            deviceType: 'test-Web',
-            platformName: 'test-Windows',
-            platformVersion: 'test-10',
-            browserName: 'test-Chrome',
-            browserVersion: 'test-80',
-            resolution: 'test-1024x768',
-            location: 'test-US East',
-            addHostsRecord: {
-              localhost: 'test-10.0.0.138'
-            },
-            maxNumOfDevices: 3
-          }
-        ]
+        framework: 'CYPRESS',
+        nodeVersion: '13',
+        capabilities: capabilitiesMock
       });
     });
   });
@@ -203,40 +189,10 @@ describe('Run - module', () => {
           cloud: 'test-cloud-name',
           securityToken: 'test-*****'
         },
-        tests: {
-          path: 'foo-test/',
-          artifactKey: 'test-ArtifactId',
-          ignore: [
-            '1-tests/unit',
-            '2-tests/license-checker'
-          ],
-          specsExt: '**.spec1.js'
-        },
-        reporting: {
-          jobName: 'test-some_job',
-          jobNumber: 2,
-          branch: 'test-some_branch',
-          projectName: 'test-My_Cypress_project',
-          projectVersion: 'test-v1.0',
-          customFields: ['b,test-c'],
-          author: 'test-sdet1@awesomecompany.com',
-          tags: ['test-tag']
-        },
-        capabilities: [
-          {
-            deviceType: 'test-Web',
-            platformName: 'test-Windows',
-            platformVersion: 'test-10',
-            browserName: 'test-Chrome',
-            browserVersion: 'test-80',
-            resolution: 'test-1024x768',
-            location: 'test-US East',
-            addHostsRecord: {
-              localhost: 'test-10.0.0.138'
-            },
-            maxNumOfDevices: 3
-          }
-        ]
+        tests: testsMock,
+        reporting: reportingMock,
+        nodeVersion: '13',
+        capabilities: capabilitiesMock
       };
       const stub = await triggerRunCommandMock(params);
 

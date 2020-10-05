@@ -1,8 +1,5 @@
 {
   "name": "test-resources",
   "version": "1.0.0",
-  "engines": {
-    "node": "node-test-version"
-  },
   "dependencies": {}
 }

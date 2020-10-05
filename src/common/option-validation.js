@@ -21,6 +21,7 @@ export const validateRunOptions = (mergedParams) => {
   validator.string(mergedParams.tests?.specsExt, 'tests.specsExt');
   validator.array(mergedParams.capabilities, 'capabilities');
   validator.objectOrEmpty(mergedParams.reporting || {}, 'reporting');
+  validator.stringOrEmpty(mergedParams.nodeVersion || '', 'nodeVersion');
 
   if  (!Object.values(SUPPORTED_FRAMEWORKS).includes(mergedParams.framework)) {
     throw new Error(`Invalid string value: ${mergedParams.framework}\nArgument Name: framework.\nit has to be one of ${Object.values(SUPPORTED_FRAMEWORKS)}`);

@@ -5,7 +5,7 @@ import { getSpecs } from '../src/run';
 import { DEFAULT_ARCHIVE_PATH } from '../src/common/defaults';
 
 const credentials = {cloud: 'cloud-name-perfectomobile-com', securityToken: '***'};
-const engines = {node: 'node-test-version'}
+const nodeVersion = '13';
 const env = {ENV_VAR_1: 'VAR_1_VALUE'}
 const capabilities = [{
   "deviceType": "Web",
@@ -22,7 +22,7 @@ const capabilities = [{
 }];
 const reporting = { jobName: 'some_job' };
 const framework = 'CYPRESS';
-const defaultRunParams = {credentials, capabilities, reporting, framework, env};
+const defaultRunParams = {credentials, capabilities, reporting, framework, env, nodeVersion};
 
 const mockPackResults = 'resolves-zipFilePath';
 const mockUploadResults = 'resolves-artifactKey';
@@ -90,7 +90,7 @@ describe('Run', () => {
         artifactKey: mockUploadResults,
         framework,
         env,
-        engines,
+        nodeVersion,
         specsExt: tests.specsExt
       }),
       {

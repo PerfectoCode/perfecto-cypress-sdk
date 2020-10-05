@@ -33,6 +33,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
     CYPRESS_PAGE_LOAD_TIMEOUT: '10000'
   },
   framework: SUPPORTED_FRAMEWORKS.CYPRESS,
+  nodeVersion: '12',
   tests: {
     path: testsPath || 'test/',
     artifactKey: '',
