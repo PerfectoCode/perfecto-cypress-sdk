@@ -14,7 +14,7 @@
       "location": "US East"
     }
   ],
-  "environmentVariables": {
+  "env": {
     "CYPRESS_PAGE_LOAD_TIMEOUT": "10000"
   },
   "framework": "CYPRESS",
