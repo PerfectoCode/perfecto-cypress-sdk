@@ -92,7 +92,7 @@ describe('Upload - cmd', () => {
   });
 
   describe('without config file', () => {
-    it('should pass parameters to packCommand', async () => {
+    it('should pass parameters to uploadCommand', async () => {
       const options = {
         config: 'test/resources/empty-perfecto-config.json',
         archivePath: 'archive-test/',

@@ -31,6 +31,7 @@ export const mergeConfigWithParams = (argv) => {
       ...argv.env
     },
     tests: argv?.tests,
+    nodeVersion: argv?.nodeVersion,
     credentials: argv?.credentials
   };
 }

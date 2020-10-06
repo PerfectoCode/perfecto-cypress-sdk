@@ -36,6 +36,7 @@ describe('Run - cmd', () => {
         env: {},
         credentials: {cloud: 'foo', securityToken: 'bar'},
         reporting: {customFields: undefined},
+        nodeVersion: undefined,
         tests: {specsExt: '*.spec.js'}
       });
     });
@@ -79,7 +80,8 @@ describe('Run - cmd', () => {
               'plugin'
             ]
           },
-          framework: 'cypress',
+          framework: 'CYPRESS',
+          nodeVersion: '12',
           capabilities: [
             {
               deviceType: 'Web',
@@ -129,7 +131,8 @@ describe('Run - cmd', () => {
         'reporting.projectVersion': 'test-v1.0',
         'reporting.customFields': 'b,test-c',
         'reporting.author': 'test-sdet1@awesomecompany.com',
-        'reporting.tags': 'test-tag'
+        'reporting.tags': 'test-tag',
+        'nodeVersion': '13'
       };
       const runCommandStub = await triggerRunCommandMock(options);
 
@@ -163,7 +166,8 @@ describe('Run - cmd', () => {
               'test-tag'
             ]
           },
-          framework: 'cypress',
+          framework: 'CYPRESS',
+          nodeVersion: '13',
           capabilities: [
             {
               deviceType: 'Web',
@@ -240,6 +244,7 @@ describe('Run - cmd', () => {
             ],
             specsExt: '**.spec1.js'
           },
+          nodeVersion: undefined,
           reporting: {
             jobName: 'test-some_job',
             jobNumber: 2,

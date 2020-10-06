@@ -12,7 +12,6 @@ export const builder = {
 };
 
 const options = {
-  cypressProjectId: { type: 'input', describe: 'Enter Cypress projectId, see: https://docs.cypress.io/guides/dashboard/projects.html#Identification' },
   cloud: { type: 'input',describe: 'Enter your Perfecto cloud name' },
   projectName: { type: 'input', describe: 'Enter a project name for your test root folder (only if there is no package.json in this folder)' }
 };
@@ -20,5 +19,5 @@ const options = {
 export const handler = async (argv) => {
   const result = await yargsInteractive().interactive({...options, interactive: { default: argv.prompt }});
 
-  initCommand(argv?.tests?.path, result.cypressProjectId, result.cloud, result.projectName);
+  initCommand(argv?.tests?.path, result.cloud, result.projectName);
 };

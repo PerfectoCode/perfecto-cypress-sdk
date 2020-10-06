@@ -34,7 +34,8 @@
   "env": {
     "ENV_VAR_1": "VAR_1_VALUE"
   },
-  "framework": "cypress",
+  "nodeVersion": "12",
+  "framework": "CYPRESS",
   "tests": {
     "path": "test/",
     "artifactKey": "",

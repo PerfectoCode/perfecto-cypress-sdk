@@ -1,7 +1,6 @@
 import glob from 'glob';
 import axios from 'axios';
 import fs from 'fs';
-import path from 'path';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import monitorSession from './monitor-session/monitor';
@@ -27,20 +26,8 @@ export const getSpecs = (testsRoot, specExt) => {
   return specs;
 }
 
-const getEnginesDetails = (testRoot) => {
-  let testsPackageJson;
-
-  try {
-    testsPackageJson = require(path.resolve(testRoot, 'package.json'));
-  } catch (error){
-      throw new Error('testRoot: ' + testRoot + ' must have package.json file');
-  }
-
-  return testsPackageJson.engines;
-};
-
-export default async ({credentials, tests, capabilities, reporting, framework, env}) => {
-  validateRunOptions({credentials, tests, capabilities, reporting, framework, env})
+export default async ({credentials, tests, capabilities, reporting, framework, env, nodeVersion}) => {
+  validateRunOptions({credentials, tests, capabilities, reporting, framework, env, nodeVersion})
 
   let artifactKey = tests.artifactKey;
 
@@ -54,7 +41,6 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
   const specs = getSpecs(tests.path, tests.specsExt);
   let session;
   try {
-    const enginesDetails = getEnginesDetails(tests.path);
     session = await axios.post(getBackendBaseUrl(credentials.cloud) + '/sessions', {
       capabilities,
       reporting,
@@ -62,7 +48,7 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
       framework,
       env,
       sdkVersion,
-      engines: enginesDetails,
+      nodeVersion,
       specsExt: tests.specsExt,
       specs
     }, {

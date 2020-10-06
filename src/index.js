@@ -33,7 +33,7 @@ const perfectoCypress = {
   withConfigFile: (path=DEFAULT_CONFIG_PATH) => {
     configFilePath = path;
   },
-  run: async ({credentials={}, tests, capabilities, reporting, env}={}) => {
+  run: async ({credentials={}, tests, capabilities, reporting, env, nodeVersion}={}) => {
     const config = getConfigFile();
     const customFields = parseCustomFields(config?.reporting?.customFields, reporting?.customFields);
 
@@ -62,12 +62,13 @@ const perfectoCypress = {
         ...reporting,
         customFields,
       },
+      nodeVersion: nodeVersion || config?.nodeVersion,
       capabilities: capabilities || config?.capabilities || []
     };
 
     return await runCommand(mergedParams);
   },
-  pack: async (testsRoot, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
+  pack: (testsRoot, ignoreRegexList, outPath = DEFAULT_ARCHIVE_PATH) => {
     const config = getConfigFile();
     const mergedParams = {
       testsRoot: testsRoot || config?.tests?.path,
@@ -75,7 +76,7 @@ const perfectoCypress = {
       outPath: outPath || DEFAULT_ARCHIVE_PATH
     };
 
-    return await packCommand(
+    return packCommand(
       mergedParams.testsRoot,
       mergedParams.ignore,
       mergedParams.outPath
@@ -95,8 +96,8 @@ const perfectoCypress = {
 
     return await uploadCommand(archive, folderType, temporary, credentials);
   },
-  init: (testsRoot, cypressProjectId, cloud, projectName) => {
-    initCommand(testsRoot, cypressProjectId, cloud, projectName);
+  init: (testsRoot, cloud, projectName) => {
+    initCommand(testsRoot, cloud, projectName);
   }
 };
 
