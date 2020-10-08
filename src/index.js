@@ -1,3 +1,4 @@
+import path from 'path';
 import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';
@@ -21,7 +22,7 @@ const getConfigFile = () => {
 
   let config = {};
   try {
-    config = require(configFilePath);
+    config = require(path.resolve(configFilePath));
   } catch (error) {
     throw 'Config file not found: ' + error.message;
   }

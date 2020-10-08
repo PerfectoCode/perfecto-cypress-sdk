@@ -43,7 +43,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
     .then(async (res) => {
       const sessionData = res.data;
 
-      if (sessionData.tests.length && sessionStatus === SessionState.INITIALIZING) {
+      if (sessionStatus === SessionState.INITIALIZING && sessionData.sessionState !== SessionState.INITIALIZING) {
         await onExecutionStarts();
       }
 
@@ -57,7 +57,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
           PULLING_INTERVAL
         );
       } else {
-        onExecutionEnd();
+        onExecutionEnd(resolve, reject);
       }
     })
     .catch(reject);
@@ -65,7 +65,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
 
 export default async (credentials, session) => {
   monitorLogger.logNewSessionData({
-    sessionStatus: SessionState.INITIALIZING,
+    sessionState: SessionState.INITIALIZING,
     sessionId: session.data
   });
   tasksLogger.run();

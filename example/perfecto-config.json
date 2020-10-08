@@ -15,7 +15,8 @@
     }
   ],
   "env": {
-    "CYPRESS_PAGE_LOAD_TIMEOUT": "10000"
+    "CYPRESS_PAGE_LOAD_TIMEOUT": "10000000",
+    "CYPRESS_ENV_NIC_NAME": "Cool env"
   },
   "framework": "CYPRESS",
   "tests": {
