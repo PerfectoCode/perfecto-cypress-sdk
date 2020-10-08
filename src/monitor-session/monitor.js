@@ -45,6 +45,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
 
       if (sessionStatus === SessionState.INITIALIZING && sessionData.sessionState !== SessionState.INITIALIZING) {
         await onExecutionStarts();
+        monitorLogger.logNewSessionData(sessionData);
       }
 
       if (sessionData.tests.length) {
