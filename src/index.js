@@ -22,7 +22,7 @@ const getConfigFile = () => {
 
   let config = {};
   try {
-    config = require(path.resolve(configFilePath));
+    config = require(configFilePath);
   } catch (error) {
     throw 'Config file not found: ' + error.message;
   }
