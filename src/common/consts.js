@@ -15,3 +15,8 @@ export const StatusIcons = {
   FAILED: '✖'
 };
 export const REPOSITORY_FOLDER_TYPES = ['PRIVATE', 'PUBLIC', 'GROUP']
+
+export const globalIgnorePatterns = [
+  '**/node_modules/**',
+  '**/perfecto-cypress.zip'
+];

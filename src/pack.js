@@ -3,11 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { DEFAULT_ARCHIVE_FILE_NAME } from './common/defaults';
 import { validatePackOptions } from './common/option-validation';
-
-const globalIgnorePatterns = [
-  '**/node_modules/**',
-  '**/perfecto-cypress.zip'
-];
+import { getIgnoredFiles } from './common/utils';
 
 export default (testsRoot, ignoreRegexList = [], outPath) => new Promise((resolve, reject) => {
   validatePackOptions(testsRoot, ignoreRegexList, outPath);
@@ -55,7 +51,7 @@ export default (testsRoot, ignoreRegexList = [], outPath) => new Promise((resolv
   zipArchive.glob('**/**', {
     matchBase: true,
     cwd: testsRoot,
-    ignore: [...ignoreRegexList, ...globalIgnorePatterns]
+    ignore: getIgnoredFiles(ignoreRegexList)
   });
 
   zipArchive.finalize();
