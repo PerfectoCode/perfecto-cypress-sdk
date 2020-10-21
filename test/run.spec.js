@@ -64,7 +64,8 @@ describe('Run', () => {
   });
 
   it('Should find specs according to specsExt regex', () => {
-    const specs = getSpecs('test/resources/archive-files', '*.text');
+    const specs = getSpecs('test/resources/archive-files', '**/*.text');
+    expect(specs).to.have.lengthOf(3, "specs should contain 2 text files from root dir and one  from inner dir");
     specs.forEach(i => expect(i).to.have.match(/\.text/, 'found spec file without *.text'));
   });
 

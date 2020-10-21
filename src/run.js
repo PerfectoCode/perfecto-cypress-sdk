@@ -1,20 +1,26 @@
 import glob from 'glob';
 import axios from 'axios';
 import fs from 'fs';
+import path from 'path';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import monitorSession from './monitor-session/monitor';
 import { getBackendBaseUrl, getPerfectoHeaders } from './common/api';
 import { DEFAULT_ARCHIVE_PATH } from './common/defaults';
 import { validateRunOptions } from './common/option-validation';
+import { getIgnoredFiles } from './common/utils';
 
 const sdkVersion = require('../package.json').version;
 
-export const getSpecs = (testsRoot, specExt) => {
-  const specsPattern = testsRoot + '/' + specExt;
+export const getSpecs = (testsRoot, specExt, ignore) => {
+  const specsPattern = specExt;
   let specs;
   try {
-    specs = glob(specsPattern, {sync: true});
+    specs = glob(specsPattern, {
+      cwd: path.resolve(testsRoot),
+      ignore: getIgnoredFiles(ignore),
+      sync: true
+    });
   } catch (error) {
     throw new Error('Failed to fined spec files: ' + error);
   }
@@ -38,7 +44,7 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
     fs.unlink(zipFilePath, () => {/* Nothing to do here, is is ok if it failed */});
   }
 
-  const specs = getSpecs(tests.path, tests.specsExt);
+  const specs = getSpecs(tests.path, tests.specsExt, tests.ignore);
   let session;
   try {
     session = await axios.post(getBackendBaseUrl(credentials.cloud) + '/sessions', {
