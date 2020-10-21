@@ -1,6 +1,7 @@
 import glob from 'glob';
 import axios from 'axios';
 import fs from 'fs';
+import path from 'path';
 import packCommand from './pack';
 import uploadCommand from './upload';
 import monitorSession from './monitor-session/monitor';
@@ -15,7 +16,11 @@ export const getSpecs = (testsRoot, specExt, ignore) => {
   const specsPattern = specExt;
   let specs;
   try {
-    specs = glob(specsPattern, {ignore: getIgnoredFiles(ignore), sync: true, matchBase:true});
+    specs = glob(specsPattern, {
+      cwd: path.resolve(testsRoot),
+      ignore: getIgnoredFiles(ignore),
+      sync: true
+    });
   } catch (error) {
     throw new Error('Failed to fined spec files: ' + error);
   }

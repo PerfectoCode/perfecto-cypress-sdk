@@ -1,5 +1,5 @@
 import { globalIgnorePatterns } from './consts';
 
-export const getIgnoredFiles = (ignore) => {
+export const getIgnoredFiles = (ignore=[]) => {
   return [...ignore, ...globalIgnorePatterns];
 };
