@@ -39,7 +39,7 @@ const sessionHolder = {
 
   appendSessionData: (sessionData) => {
     sessionData.executions.forEach(execution => {
-      const platformHash = objectToHash(test.platform);
+      const platformHash = objectToHash(execution.platform);
 
       if (!sessionDataMap.get(execution.executionId)) {
         sessionDataMap.set(execution.executionId, {
@@ -48,14 +48,14 @@ const sessionHolder = {
           platform: execution.platform,
           executionState: execution.executionState,
           result: execution.result,
-          tests: [execution.tests]
+          tests: execution.tests
         });
       } else {
         const executionData = sessionDataMap.get(execution.executionId);
-        executionData.tests.push(execution.tests)
+        executionData.tests = [...executionData.tests, ...execution.tests]
       }
 
-      if (execution.executionState === SessionState.DONE && execution.result.resultState !== ExecutionResults.SUCCESS) {
+      if (execution.executionState === SessionState.DONE && execution.result?.resultState !== ExecutionResults.SUCCESS) {
         finalStatus = execution.result.resultState;
       }
       sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
