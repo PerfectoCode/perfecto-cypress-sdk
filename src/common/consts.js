@@ -5,6 +5,12 @@ export const TestResults = {
   PASSED: 'PASSED',
   FAILED: 'FAILED'
 };
+
+export const ExecutionResults = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  ABORTED: 'ABORTED'
+};
 export const SessionState = {
   INITIALIZING: 'INITIALIZING',
   EXECUTING: 'EXECUTING',

@@ -48,7 +48,7 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
         monitorLogger.logNewSessionData(sessionData);
       }
 
-      if (sessionData.tests.length) {
+      if (sessionData.executions.length) {
         onNewTestsArrived(sessionData);
       }
 
