@@ -1,12 +1,12 @@
 import { printDuration, objectToHash } from './log-helpers';
 import chalk from 'chalk';
 import sessionHolder from './session-data';
-import { StatusIcons, TestResults } from '../common/consts';
+import { SessionState, StatusIcons, TestResults } from '../common/consts';
 
 let isTitlePrinted = false;
 
-const renderTest = ({platform, testData}) => {
-  return `${StatusIcons[testData.status]} ${printDuration(testData.duration)} | TestName: ${testData.testName} | Platform: ${objectToHash(platform)}`;
+const renderTest = ({platform, test}) => {
+  return `${StatusIcons[test.status]} ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
 }
 
 const renderSpec = (spec) => {
@@ -20,15 +20,20 @@ export default (title, status, sessionData, ended) => {
     console.log(title);
   }
 
-  if (!sessionData.tests) {
+  if (!sessionData.executions) {
     return;
   }
 
-  sessionData.tests.forEach((test) => {
-    console.log(renderTest(test));
+  sessionData.executions.forEach((execution) => {
+    execution.tests.forEach((test) => {
+      console.log(renderTest({test, platform: execution.platform}));
 
-    if (test.testData.status === TestResults.FAILED) {
-      console.error(chalk.red(test.testData.message));
+      if (test.status === TestResults.FAILED) {
+        console.error(chalk.red(test.message));
+      }
+    });
+    if (execution.executionState === SessionState.DONE) {
+      console.error(execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage);
     }
   });
 

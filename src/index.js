@@ -1,3 +1,4 @@
+import './common/on-exit';
 import runCommand from './run';
 import packCommand from './pack';
 import uploadCommand from './upload';

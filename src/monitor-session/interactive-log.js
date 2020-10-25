@@ -16,9 +16,9 @@ const dotter = {
 }
 
 const getPrintableData = (title, status, sessionId, ended) => {
-  const testsPrintableData = sessionHolder.getSessionData().map((platformData) => {
+  const testsPrintableData = sessionHolder.getSessionData().map((execution) => {
     const testsTable = new Table({
-      title: platformData.platformHash,
+      title: execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage,
       columns: [
         {name: 'Test Name', alignment: 'left'},
         {name: 'Duration', alignment: 'left'},
@@ -26,7 +26,7 @@ const getPrintableData = (title, status, sessionId, ended) => {
       ]
     });
 
-    platformData.tests.forEach(test => {
+    execution.tests.forEach(test => {
       testsTable.addRow({
         'Test Name': StatusIcons[test.status] + ' ' + test.testName,
         Duration: logHelpers.printDuration(test.duration),
