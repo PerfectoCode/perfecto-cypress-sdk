@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import * as yargs from 'yargs';
+import './common/on-exit';
 
 // noinspection BadExpressionStatementJS
 yargs
