@@ -29,7 +29,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
       location: 'US East'
     }
   ],
-  environmentVariables: {
+  env: {
     CYPRESS_PAGE_LOAD_TIMEOUT: '10000'
   },
   framework: SUPPORTED_FRAMEWORKS.CYPRESS,
