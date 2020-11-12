@@ -3,6 +3,7 @@ import { Table } from 'console-table-printer';
 import logUpdate from 'log-update';
 import * as logHelpers from './log-helpers';
 import { StatusIcons, TestResults } from '../common/consts';
+import { getReportingExecutionLink } from './log-helpers';
 
 const dotter = {
   dotes: ['.', '.'],
@@ -18,7 +19,8 @@ const dotter = {
 const getPrintableData = (title, status, sessionId, ended) => {
   const testsPrintableData = sessionHolder.getSessionData().map((execution) => {
     const testsTable = new Table({
-      title: execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage,
+      title: execution.platformHash + '\n\t' + execution.result?.resultState + ' ' + (execution.result?.resultMessage || '') + '\n\t' +
+        getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId),
       columns: [
         {name: 'Test Name', alignment: 'left'},
         {name: 'Duration', alignment: 'left'},

@@ -12,3 +12,7 @@ export const objectToHash = data => {
   }
   return Object.values(data).map(item => typeof item === 'object' ? objectToHash(item) : item ).filter(item => item).join('-');
 };
+
+export const getReportingExecutionLink = (cloud, executionId) => {
+  return `https://${cloud}.app.perfectomobile.com/reporting/library/?externalId%5B0%5D=${executionId}`;
+};

@@ -31,11 +31,17 @@ const appendSpecsData = (executionId, platformKey, test) => {
     }
   }
 };
+let sessionCloudName = '';
 
 const sessionHolder = {
   getSessionData: () => [...sessionDataMap.values()],
   getSpecsSummary:  () => [...specsMap.values()].sort((a, b) => a.platformKey - b.platformKey),
   getFinalStatus: () => finalStatus,
+
+  getCloud: () => sessionCloudName,
+  setCloud: (cloudName) => {
+    sessionCloudName = cloudName;
+  },
 
   appendSessionData: (sessionData) => {
     sessionData.executions.forEach(execution => {
