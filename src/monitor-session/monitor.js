@@ -65,6 +65,8 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
 }
 
 export default async (credentials, session) => {
+  sessionHolder.setCloud(credentials.cloud);
+
   monitorLogger.logNewSessionData({
     sessionState: SessionState.INITIALIZING,
     sessionId: session.data

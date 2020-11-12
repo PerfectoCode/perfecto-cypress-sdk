@@ -1,4 +1,4 @@
-import { printDuration, objectToHash } from './log-helpers';
+import { printDuration, objectToHash, getReportingExecutionLink } from './log-helpers';
 import chalk from 'chalk';
 import sessionHolder from './session-data';
 import { SessionState, StatusIcons, TestResults } from '../common/consts';
@@ -33,7 +33,10 @@ export default (title, status, sessionData, ended) => {
       }
     });
     if (execution.executionState === SessionState.DONE) {
-      console.error(execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage);
+      console.log(
+        execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage + '\n' +
+        getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
+      );
     }
   });
 
