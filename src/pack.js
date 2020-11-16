@@ -11,7 +11,9 @@ export default (testsRoot, ignoreRegexList = [], outPath) => new Promise((resolv
   const zipArchive = archiver('zip', {});
 
   const zipFilePath = path.resolve(outPath, DEFAULT_ARCHIVE_FILE_NAME);
-  fs.mkdirSync(path.resolve(outPath), {recursive: true});
+  if(!fs.existsSync(path.resolve(outPath))) {
+    fs.mkdirSync(path.resolve(outPath), {recursive: true});
+  }
   const output = fs.createWriteStream(zipFilePath);
 
   // This event is fired when the data source is drained no matter what was the data source.

@@ -52,7 +52,6 @@
     "projectName": "My_Cypress_project",
     "projectVersion": "v1.0",
     "customFields": ["a,bbbb"],
-    "author": "sdet1@awesomecompany.com",
     "tags": [
       "cypress",
       "plugin"

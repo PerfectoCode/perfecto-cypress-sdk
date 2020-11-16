@@ -74,7 +74,6 @@ describe('Run - cmd', () => {
             projectName: 'My_Cypress_project',
             projectVersion: 'v1.0',
             customFields: [{name: 'a', value: 'bbbb'}],
-            author: 'sdet1@awesomecompany.com',
             tags: [
               'cypress',
               'plugin'
@@ -130,7 +129,6 @@ describe('Run - cmd', () => {
         'reporting.projectName': 'test-My_Cypress_project',
         'reporting.projectVersion': 'test-v1.0',
         'reporting.customFields': 'b,test-c',
-        'reporting.author': 'test-sdet1@awesomecompany.com',
         'reporting.tags': 'test-tag',
         'nodeVersion': '13'
       };
@@ -161,7 +159,6 @@ describe('Run - cmd', () => {
             projectName: 'test-My_Cypress_project',
             projectVersion: 'test-v1.0',
             customFields: [{name: 'a', value: 'bbbb'}, {name: 'b', value: 'test-c'}],
-            author: 'test-sdet1@awesomecompany.com',
             tags: [
               'test-tag'
             ]
@@ -217,7 +214,6 @@ describe('Run - cmd', () => {
         'reporting.projectName': 'test-My_Cypress_project',
         'reporting.projectVersion': 'test-v1.0',
         'reporting.customFields': 'b,test-c',
-        'reporting.author': 'test-sdet1@awesomecompany.com',
         'reporting.tags': 'test-tag'
       };
       const options = {
@@ -252,7 +248,6 @@ describe('Run - cmd', () => {
             projectName: 'test-My_Cypress_project',
             projectVersion: 'test-v1.0',
             customFields: [{name: 'b', value: 'test-c'}],
-            author: 'test-sdet1@awesomecompany.com',
             tags: [
               'test-tag'
             ]
