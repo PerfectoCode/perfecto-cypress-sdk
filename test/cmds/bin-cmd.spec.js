@@ -2,7 +2,7 @@ import child_process from 'child_process';
 import { expect } from 'chai';
 import { objectToCliOptions } from '../util/cli-util';
 
-const CLI_EXEC_TIMEOUT = 5000;
+const CLI_EXEC_TIMEOUT = 10000;
 const babelExec = 'npx babel-node --presets @babel/preset-env ';
 
 const execCliCommand = (command='', params={}) => {
