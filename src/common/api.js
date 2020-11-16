@@ -14,5 +14,5 @@ export const parseReportingError = (error) => {
 export const getBackendBaseUrl = (cloud='tenant') => {
   const NASE_BACKEND_URL = process.env.NASE_BACKEND_URL;
 
-  return NASE_BACKEND_URL || 'https://' + cloud + '.app.dev-goofy.perfectomobile.com/nase-webapp/v1'
+  return NASE_BACKEND_URL || 'https://' + cloud + '.perfectomobile.com/lab-execution/v1'
 }

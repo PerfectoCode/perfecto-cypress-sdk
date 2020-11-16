@@ -27,7 +27,6 @@ const reportingMock = {
   projectName: 'test-My_Cypress_project',
   projectVersion: 'test-v1.0',
   customFields: ['b,test-c'],
-  author: 'test-sdet1@awesomecompany.com',
   tags: ['test-tag']
 };
 const testsMock = {
@@ -102,7 +101,6 @@ describe('Run - module', () => {
           projectName: 'My_Cypress_project',
           projectVersion: 'v1.0',
           customFields: [{name: 'a', value: 'bbbb'}],
-          author: 'sdet1@awesomecompany.com',
           tags: [
             'cypress',
             'plugin'
@@ -171,7 +169,6 @@ describe('Run - module', () => {
           projectName: 'test-My_Cypress_project',
           projectVersion: 'test-v1.0',
           customFields: [{name: 'a', value: 'bbbb'}, {name: 'b', value: 'test-c'}],
-          author: 'test-sdet1@awesomecompany.com',
           tags: [
             'test-tag'
           ]

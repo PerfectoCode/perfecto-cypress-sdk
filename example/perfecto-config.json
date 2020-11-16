@@ -23,7 +23,7 @@
     "artifactKey": "",
     "ignore": [
       "**/screenshots/**",
-      "**/video/**"
+      "**/videos/**"
     ],
     "specsExt": "**/*_spec.js"
   },
