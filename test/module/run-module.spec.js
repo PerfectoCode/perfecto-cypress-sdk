@@ -21,11 +21,15 @@ const capabilitiesMock = [
   }
 ];
 const reportingMock = {
-  jobName: 'test-some_job',
-  jobNumber: 2,
-  branch: 'test-some_branch',
-  projectName: 'test-My_Cypress_project',
-  projectVersion: 'test-v1.0',
+  job: {
+    name: 'test-some_job',
+    number: 2,
+    branch: 'test-some_branch'
+  },
+  project: {
+    name: 'test-My_Cypress_project',
+    version: 'test-v1.0'
+  },
   customFields: ['b,test-c'],
   tags: ['test-tag']
 };
@@ -95,11 +99,15 @@ describe('Run - module', () => {
           specsExt: '**.spec.js'
         },
         reporting: {
-          jobName: 'some_job',
-          jobNumber: 1,
-          branch: 'some_branch',
-          projectName: 'My_Cypress_project',
-          projectVersion: 'v1.0',
+          job: {
+            name: 'some_job',
+            number: 1,
+            branch: 'some_branch',
+          },
+          project: {
+            name: 'My_Cypress_project',
+            version: 'v1.0'
+          },
           customFields: [{name: 'a', value: 'bbbb'}],
           tags: [
             'cypress',
@@ -163,11 +171,15 @@ describe('Run - module', () => {
         },
         tests: testsMock,
         reporting: {
-          jobName: 'test-some_job',
-          jobNumber: 2,
-          branch: 'test-some_branch',
-          projectName: 'test-My_Cypress_project',
-          projectVersion: 'test-v1.0',
+          job: {
+            name: 'test-some_job',
+            number: 2,
+            branch: 'test-some_branch'
+          },
+          project: {
+            name: 'test-My_Cypress_project',
+            version: 'test-v1.0'
+          },
           customFields: [{name: 'a', value: 'bbbb'}, {name: 'b', value: 'test-c'}],
           tags: [
             'test-tag'

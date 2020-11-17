@@ -46,11 +46,15 @@
     "specsExt": "**.spec.js"
   },
   "reporting": {
-    "jobName": "some_job",
-    "jobNumber": 1,
-    "branch": "some_branch",
-    "projectName": "My_Cypress_project",
-    "projectVersion": "v1.0",
+    "job": {
+      "name": "some_job",
+      "number": 1,
+      "branch": "some_branch"
+    },
+    "project": {
+      "name": "My_Cypress_project",
+      "version": "v1.0"
+    },
     "customFields": ["a,bbbb"],
     "tags": [
       "cypress",

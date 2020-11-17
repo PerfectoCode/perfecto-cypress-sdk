@@ -22,11 +22,11 @@ export const testsOptions = {
 };
 
 export const reportingOptions = {
-  'reporting.jobName': {alias: 'rjn', type: 'string', describe: 'reporting job name', group: reportingGroupName},
-  'reporting.jobNumber': {alias: 'rjNum', type: 'number', describe: 'reporting job number', group: reportingGroupName},
-  'reporting.branch': {alias: 'rb', type: 'string', describe: 'reporting branch', group: reportingGroupName},
-  'reporting.projectName': {alias: 'rpn', type: 'string', describe: 'reporting project name', group: reportingGroupName},
-  'reporting.projectVersion': {alias: 'rpv', type: 'string', describe: 'reporting project version', group: reportingGroupName},
+  'reporting.job.name': {alias: 'rjn', type: 'string', describe: 'reporting job name', group: reportingGroupName},
+  'reporting.job.number': {alias: 'rjNum', type: 'number', describe: 'reporting job number', group: reportingGroupName},
+  'reporting.job.branch': {alias: 'rb', type: 'string', describe: 'reporting branch', group: reportingGroupName},
+  'reporting.project.name': {alias: 'rpn', type: 'string', describe: 'reporting project name', group: reportingGroupName},
+  'reporting.project.version': {alias: 'rpv', type: 'string', describe: 'reporting project version', group: reportingGroupName},
   'reporting.author': {alias: 'ra', type: 'string', describe: 'reporting author', group: reportingGroupName},
   'reporting.tags': {alias: 'rt', describe: 'reporting tags, example: tag1 tag2', array: true, group: reportingGroupName},
   'reporting.customFields': {
