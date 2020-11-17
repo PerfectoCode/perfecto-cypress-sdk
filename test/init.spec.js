@@ -32,7 +32,7 @@ describe('Init', () => {
     expect(stub.writeFileSync.getCall(1)).to.have.calledWith(perfectoConfigPath, sinon.match({
       credentials: {cloud: testCloud},
       tests: {path: testsRoot},
-      reporting: {projectName: testProjectName}
+      reporting: {project: {name: testProjectName}}
     }));
 
     expect(stub.writeFileSync.getCall(2)).to.have.calledWith(cypressConfigPath, '{}');

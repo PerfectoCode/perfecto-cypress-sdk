@@ -44,11 +44,15 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
     specsExt: '**.spec.js'
   },
   reporting: {
-    jobName: 'cypress_first_job',
-    jobNumber: 1,
-    branch: '',
-    projectName: projectName || 'My_Cypress_project',
-    projectVersion: 'v1.0',
+    job: {
+      name: 'cypress_first_job',
+      number: 1,
+      branch: ''
+    },
+    project: {
+      name: projectName || 'My_Cypress_project',
+      version: 'v1.0'
+    },
     customFields: [],
     author: 'sdet1@awesomecompany.com',
     tags: [

@@ -68,11 +68,15 @@ describe('Run - cmd', () => {
             specsExt: '**.spec.js'
           },
           reporting: {
-            jobName: 'some_job',
-            jobNumber: 1,
-            branch: 'some_branch',
-            projectName: 'My_Cypress_project',
-            projectVersion: 'v1.0',
+            job: {
+              name: 'some_job',
+              number: 1,
+              branch: 'some_branch'
+            },
+            project: {
+              name: 'My_Cypress_project',
+              version: 'v1.0'
+            },
             customFields: [{name: 'a', value: 'bbbb'}],
             tags: [
               'cypress',
@@ -123,11 +127,11 @@ describe('Run - cmd', () => {
         'tests.artifactKey': 'test-ArtifactId',
         'tests.ignore': '1-tests/unit 2-tests/license-checker',
         'tests.specsExt': '**.spec1.js',
-        'reporting.jobName': 'test-some_job',
-        'reporting.jobNumber': 2,
-        'reporting.branch': 'test-some_branch',
-        'reporting.projectName': 'test-My_Cypress_project',
-        'reporting.projectVersion': 'test-v1.0',
+        'reporting.job.name': 'test-some_job',
+        'reporting.job.number': 2,
+        'reporting.job.branch': 'test-some_branch',
+        'reporting.project.name': 'test-My_Cypress_project',
+        'reporting.project.version': 'test-v1.0',
         'reporting.customFields': 'b,test-c',
         'reporting.tags': 'test-tag',
         'nodeVersion': '13'
@@ -153,11 +157,15 @@ describe('Run - cmd', () => {
             specsExt: '**.spec1.js'
           },
           reporting: {
-            jobName: 'test-some_job',
-            jobNumber: 2,
-            branch: 'test-some_branch',
-            projectName: 'test-My_Cypress_project',
-            projectVersion: 'test-v1.0',
+            job: {
+              name: 'test-some_job',
+              number: 2,
+              branch: 'test-some_branch'
+            },
+            project: {
+              name: 'test-My_Cypress_project',
+              version: 'test-v1.0'
+            },
             customFields: [{name: 'a', value: 'bbbb'}, {name: 'b', value: 'test-c'}],
             tags: [
               'test-tag'
@@ -208,11 +216,11 @@ describe('Run - cmd', () => {
         'env.ENV_VAR_1': 'VAR_1_OVERRIDE_VALUE',
         'tests.ignore': '1-tests/unit 2-tests/license-checker',
         'tests.specsExt': '**.spec1.js',
-        'reporting.jobName': 'test-some_job',
-        'reporting.jobNumber': 2,
-        'reporting.branch': 'test-some_branch',
-        'reporting.projectName': 'test-My_Cypress_project',
-        'reporting.projectVersion': 'test-v1.0',
+        'reporting.job.name': 'test-some_job',
+        'reporting.job.number': 2,
+        'reporting.job.branch': 'test-some_branch',
+        'reporting.project.name': 'test-My_Cypress_project',
+        'reporting.project.version': 'test-v1.0',
         'reporting.customFields': 'b,test-c',
         'reporting.tags': 'test-tag'
       };
@@ -242,11 +250,15 @@ describe('Run - cmd', () => {
           },
           nodeVersion: undefined,
           reporting: {
-            jobName: 'test-some_job',
-            jobNumber: 2,
-            branch: 'test-some_branch',
-            projectName: 'test-My_Cypress_project',
-            projectVersion: 'test-v1.0',
+            job: {
+              name: 'test-some_job',
+              number: 2,
+              branch: 'test-some_branch'
+            },
+            project: {
+              name: 'test-My_Cypress_project',
+              version: 'test-v1.0'
+            },
             customFields: [{name: 'b', value: 'test-c'}],
             tags: [
               'test-tag'
