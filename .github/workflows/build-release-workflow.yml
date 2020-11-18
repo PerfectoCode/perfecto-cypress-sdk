@@ -31,7 +31,6 @@ jobs:
     name: Publish
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v2
     - name: Cache node_modules
@@ -46,8 +45,34 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Publish
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
+    - name: Set npm branch releas version
+      if: steps.extract_branch.outputs.branch != 'master'
+      shell: bash
+      run: echo "##[set-output name=branch_version;]$(echo npm version prerelease --preid=${steps.extract_branch.outputs.branch}${github.run_id})"
+      id: set_branch_version
+
+    - name: Publish-branch
+      if: steps.extract_branch.outputs.branch != 'master'
+      run: npm publish
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+    - name: Set Publish output
+      if: steps.extract_branch.outputs.branch != 'master'
+      run: echo "::set-output name=version::${steps.set_branch_version.branch_version}"
+
+    - name: Publish-master
+      if: steps.extract_branch.outputs.branch == 'master'
       uses: mikeal/merge-release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+    - name: Set Publish output
+      if: steps.extract_branch.outputs.branch == 'master'
+      run: echo "::set-output name=version::latest"
