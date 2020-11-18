@@ -63,6 +63,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
+
     - name: Set Publish output
       if: steps.extract_branch.outputs.branch != 'master'
       run: echo "::set-output name=version::${steps.set_branch_version.branch_version}"
