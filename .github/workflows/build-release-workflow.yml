@@ -53,7 +53,7 @@ jobs:
     - name: Set npm branch releas version
       if: steps.extract_branch.outputs.branch != 'master'
       shell: bash
-      run: echo "##[set-output name=branch_version;]$(echo npm version prerelease --preid=${steps.extract_branch.outputs.branch}${github.run_id})"
+      run: echo "##[set-output name=branch_version;]$(echo npm version prerelease --preid=${{ steps.extract_branch.outputs.branch }})"
       id: set_branch_version
 
     - name: Publish-branch
