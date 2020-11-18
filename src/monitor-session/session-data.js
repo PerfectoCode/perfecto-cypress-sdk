@@ -62,8 +62,13 @@ const sessionHolder = {
       }
 
       if (execution.executionState === SessionState.DONE && execution.result?.resultState !== ExecutionResults.SUCCESS) {
-        finalStatus = execution.result.resultState;
+        finalStatus = ExecutionResults.FAILED;
       }
+      execution.tests?.forEach(test => {
+        if (test.status === ExecutionResults.FAILED) {
+          finalStatus = ExecutionResults.FAILED;
+        }
+      });
       sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
     });
   }
