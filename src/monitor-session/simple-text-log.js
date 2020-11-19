@@ -1,17 +1,17 @@
 import { printDuration, objectToHash, getReportingExecutionLink } from './log-helpers';
 import chalk from 'chalk';
 import sessionHolder from './session-data';
-import { SessionState, StatusIcons, TestResults } from '../common/consts';
+import { SessionState, TestResults } from '../common/consts';
 
 let isTitlePrinted = false;
 
 const renderTest = ({platform, test}) => {
-  return `${StatusIcons[test.status]} ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
+  return `${test.status} | ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
 }
 
 const renderSpec = (spec) => {
   const failingText = spec.Failing ? chalk.red(`| Failing: ${spec.Failing}`) : '';
-  return `${StatusIcons[spec.Status]} ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing} ` + failingText;
+  return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing} ` + failingText;
 };
 
 export default (title, status, sessionData, ended) => {
@@ -34,7 +34,7 @@ export default (title, status, sessionData, ended) => {
     });
     if (execution.executionState === SessionState.DONE) {
       console.log(
-        execution.platformHash + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage + '\n' +
+        objectToHash(execution.platformHash) + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage + '\n' +
         getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
       );
     }

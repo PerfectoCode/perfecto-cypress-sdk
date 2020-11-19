@@ -32,7 +32,7 @@ export const getSpecs = (testsRoot, specExt, ignore) => {
   return specs;
 }
 
-export default async ({credentials, tests, capabilities, reporting, framework, env, nodeVersion}) => {
+export default async ({credentials, tests, capabilities, reporting, scriptName, framework, env, nodeVersion}) => {
   validateRunOptions({credentials, tests, capabilities, reporting, framework, env, nodeVersion})
 
   let artifactKey = tests.artifactKey;
@@ -51,6 +51,7 @@ export default async ({credentials, tests, capabilities, reporting, framework, e
       capabilities,
       reporting,
       artifactKey,
+      scriptName,
       framework,
       env,
       sdkVersion,
