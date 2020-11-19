@@ -52,7 +52,7 @@ jobs:
       run: |
         git config user.email "you@example.com"
         git config user.name "Your Name"
-        npm version prerelease --preid=SNAPSHOT${{ github.run_id }}
+        npm version 0.0.1-alpha.${{ github.run_id }}
 
     - name: Auth npm
       if: steps.extract_branch.outputs.branch != 'master'
@@ -64,7 +64,7 @@ jobs:
 
     - name: Set Publish output
       if: steps.extract_branch.outputs.branch != 'master'
-      run: echo "::set-output name=version::0.0.1-SNAPSHOT${{ github.run_id }}.0"
+      run: echo "::set-output name=version::0.0.1-alpha.${{ github.run_id }}"
 
     - name: Publish-master
       if: steps.extract_branch.outputs.branch == 'master'
