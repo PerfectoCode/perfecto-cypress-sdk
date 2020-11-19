@@ -52,7 +52,7 @@ jobs:
       run: |
         git config user.email "you@example.com"
         git config user.name "Your Name"
-        npm version 0.0.1-alpha.${{ github.run_id }}
+        npm version 0.0.1-dev.${{ github.run_id }}
 
     - name: Auth npm
       if: steps.extract_branch.outputs.branch != 'master'
@@ -60,11 +60,11 @@ jobs:
 
     - name: Publish-branch
       if: steps.extract_branch.outputs.branch != 'master'
-      run: npm publish
+      run: npm publish --tag dev
 
     - name: Set Publish output
       if: steps.extract_branch.outputs.branch != 'master'
-      run: echo "::set-output name=version::0.0.1-alpha.${{ github.run_id }}"
+      run: echo "::set-output name=version::0.0.1-dev.${{ github.run_id }}"
 
     - name: Publish-master
       if: steps.extract_branch.outputs.branch == 'master'
