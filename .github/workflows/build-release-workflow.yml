@@ -45,15 +45,9 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-
     - name: Set npm branch releas version
       if: steps.extract_branch.outputs.branch != 'master'
-      shell: bash
-      run: npm version prerelease --preid=${{ steps.extract_branch.outputs.branch }}${{ github.run_id }}
+      run: npm version prerelease --preid=SNAPSHOT${{ github.run_id }}
 
     - name: Auth npm
       if: steps.extract_branch.outputs.branch != 'master'
@@ -65,7 +59,7 @@ jobs:
 
     - name: Set Publish output
       if: steps.extract_branch.outputs.branch != 'master'
-      run: echo "::set-output name=version::${{ steps.extract_branch.outputs.branch }}${{ github.run_id }}"
+      run: echo "::set-output name=version::0.0.1-SNAPSHOT${{ github.run_id }}.0"
 
     - name: Publish-master
       if: steps.extract_branch.outputs.branch == 'master'
