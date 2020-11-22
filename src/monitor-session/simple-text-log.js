@@ -33,8 +33,9 @@ export default (title, status, sessionData, ended) => {
       }
     });
     if (execution.executionState === SessionState.DONE) {
+      const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
       console.log(
-        objectToHash(execution.platformHash) + ' ' + execution.result?.resultState + ' ' + execution.result?.resultMessage + '\n' +
+        objectToHash(execution.platformHash) + ' ' + execution.result?.resultState + resultMessage + '\n' +
         getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
       );
     }
