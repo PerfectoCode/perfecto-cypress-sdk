@@ -6,7 +6,7 @@ import { SessionState, TestResults } from '../common/consts';
 let isTitlePrinted = false;
 
 const renderTest = ({platform, test}) => {
-  return `${test.status} | ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
+  return `Test summary: ${test.status} | ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
 }
 
 const renderSpec = (spec) => {
@@ -35,7 +35,7 @@ export default (title, status, sessionData, ended) => {
     if (execution.executionState === SessionState.DONE) {
       const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
       console.log(
-        objectToHash(execution.platformHash) + ' ' + execution.result?.resultState + resultMessage + '\n' +
+        '\nExecution summary: '  + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
         getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
       );
     }
