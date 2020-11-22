@@ -29,7 +29,7 @@ export default (title, status, sessionData, ended) => {
       console.log(renderTest({test, platform: execution.platform}));
 
       if (test.status === TestResults.FAILED) {
-        console.error(chalk.red(test.message));
+        console.log('Error message: ' + test.message);
       }
     });
     if (execution.executionState === SessionState.DONE) {
