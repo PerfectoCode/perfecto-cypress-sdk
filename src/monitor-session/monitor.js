@@ -82,7 +82,7 @@ export default async (credentials, session) => {
     console.log(sessionEndMessage);
     process.exit(0);
   } catch (error) {
-    console.error(error?.response?.data ? error.response.data : error);
+    console.log(error?.response?.data ? error.response.data : error);
     process.exit(1);
   }
 }

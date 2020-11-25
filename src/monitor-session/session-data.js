@@ -5,12 +5,12 @@ const sessionDataMap = new Map();
 const specsMap = new Map();
 let finalStatus = TestResults.PASSED;
 
-const appendSpecsData = (executionId, platformKey, test) => {
+const appendSpecsData = (executionId, platformHash, test) => {
   const specKey = executionId + '-' + test.specFile;
   const specData = specsMap.get(specKey);
   if (!specData) {
     specsMap.set(specKey, {
-      platformKey,
+      platformHash,
       executionId,
       SPEC: test.specFile,
       Tests: 1,
@@ -35,7 +35,7 @@ let sessionCloudName = '';
 
 const sessionHolder = {
   getSessionData: () => [...sessionDataMap.values()],
-  getSpecsSummary:  () => [...specsMap.values()].sort((a, b) => a.platformKey - b.platformKey),
+  getSpecsSummary:  () => [...specsMap.values()].sort((a, b) => a.platformHash - b.platformHash),
   getFinalStatus: () => finalStatus,
 
   getCloud: () => sessionCloudName,

@@ -11,7 +11,7 @@ const renderTest = ({platform, test}) => {
 
 const renderSpec = (spec) => {
   const failingText = spec.Failing ? chalk.red(`| Failing: ${spec.Failing}`) : '';
-  return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing} ` + failingText;
+  return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing}` + failingText + ' | Platform: ' + spec.platformHash;
 };
 
 export default (title, status, sessionData, ended) => {
