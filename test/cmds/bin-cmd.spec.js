@@ -17,7 +17,7 @@ const execCliCommand = (command='', params={}) => {
 describe('bin - cmd', () => {
   it('[sanity] add +x permissions to mock-bin file', () => {
     child_process.execSync('chmod +x src/bin.js');
-  });
+  }).timeout(CLI_EXEC_TIMEOUT);
 
   it('should throw error if command not provided', () => {
     expect(execCliCommand).to.throw('You need at least one command before moving on');
