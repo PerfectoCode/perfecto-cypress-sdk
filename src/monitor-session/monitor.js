@@ -17,7 +17,10 @@ const onExecutionStarts = () => {
 };
 
 const onNewTestsArrived = (sessionData) => {
-  sessionHolder.appendSessionData(sessionData);
+  if (sessionData.executions && sessionData.executions.length) {
+    sessionHolder.appendSessionData(sessionData);
+  }
+
   monitorLogger.logNewSessionData(sessionData);
 };
 
@@ -45,12 +48,9 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
 
       if (sessionStatus === SessionState.INITIALIZING && sessionData.sessionState !== SessionState.INITIALIZING) {
         await onExecutionStarts();
-        monitorLogger.logNewSessionData(sessionData);
       }
 
-      if (sessionData.executions.length) {
-        onNewTestsArrived(sessionData);
-      }
+      onNewTestsArrived(sessionData);
 
       if (sessionData.sessionState !== SessionState.DONE) {
         setTimeout(
@@ -82,7 +82,7 @@ export default async (credentials, session) => {
     console.log(sessionEndMessage);
     process.exit(0);
   } catch (error) {
-    console.error(error?.response?.data ? error.response.data : error);
+    console.log(error?.response?.data ? error.response.data : error);
     process.exit(1);
   }
 }

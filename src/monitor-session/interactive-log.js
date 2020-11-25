@@ -55,7 +55,7 @@ const getPrintableData = (title, status, sessionId, ended) => {
     Tests: spec.Tests,
     Passing: spec.Passing,
     Failing: spec.Failing || '',
-    Platform: spec.platformKey
+    Platform: spec.platformHash
   }))
 
   return title +
