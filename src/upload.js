@@ -4,7 +4,6 @@ import axios from 'axios';
 import { getPerfectoHeaders, getRepositoryUrl, parseReportingError } from './common/api';
 import { validateUploadOptions } from './common/option-validation';
 
-const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts';
 
 export default async (archive, folderType, temporary, {cloud, securityToken}) => {
   validateUploadOptions(archive, folderType, temporary, {cloud, securityToken});
