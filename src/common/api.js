@@ -18,9 +18,7 @@ export const getRepositoryUrl = (cloud) => {
     envPrefix = 'dev.';
   }
 
-  const repositoryServiceUrl = `https://${cloud}.app.${envPrefix}perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts`;
-
-  return repositoryServiceUrl;
+  return `https://${cloud}.app.${envPrefix}perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts`;
 };
 
 export const getBackendBaseUrl = (cloud='tenant') => {
