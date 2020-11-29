@@ -11,6 +11,18 @@ export const parseReportingError = (error) => {
   return (data && data.length > 0 && data[0].userMessage) || data;
 }
 
+export const getRepositoryUrl = (cloud) => {
+  let envPrefix = '';
+
+  if (process.env.NODE_ENV === 'staging') {
+    envPrefix = 'dev.';
+  }
+
+  const repositoryServiceUrl = `https://${cloud}.app.${envPrefix}perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts`;
+
+  return repositoryServiceUrl;
+};
+
 export const getBackendBaseUrl = (cloud='tenant') => {
   const NASE_BACKEND_URL = process.env.NASE_BACKEND_URL;
 

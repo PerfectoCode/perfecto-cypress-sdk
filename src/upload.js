@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
-import { getPerfectoHeaders, parseReportingError } from './common/api';
+import { getPerfectoHeaders, getRepositoryUrl, parseReportingError } from './common/api';
 import { validateUploadOptions } from './common/option-validation';
 
 const repositoryServiceUrl = '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts';
@@ -39,7 +39,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
 
   let getUploadUrlRes;
   try {
-    getUploadUrlRes = await axios.post('https://' + cloud + repositoryServiceUrl, requestPart, {
+    getUploadUrlRes = await axios.post(getRepositoryUrl(cloud), requestPart, {
       headers: getPerfectoHeaders(cloud, securityToken)
     });
   } catch (error) {
