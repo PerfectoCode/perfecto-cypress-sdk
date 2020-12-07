@@ -7,7 +7,7 @@ const getPackageObject = (projectName) => ({
   name: projectName || 'first-perfecto-cypress-project',
   version: '0.0.1',
   dependencies: {
-    'cypress': 'latest',
+    'cypress': '5.6.0',
     'perfecto-cypress-reporter': 'latest'
   },
   devDependencies: {}
