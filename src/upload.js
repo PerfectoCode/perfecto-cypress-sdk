@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import FormData from 'form-data';
+
 import { getPerfectoHeaders, getRepositoryUrl, parseReportingError } from './common/api';
 import { validateUploadOptions } from './common/option-validation';
 
@@ -25,6 +27,7 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   }
   const artifactKeyIdentifier = folderType + ':' + artifactId;
 
+  let formData = new FormData();
   const requestPart = {
     contentType: 'application/zip',
     artifactType: 'GENERAL',
@@ -36,19 +39,18 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
     fileName: artifactId
   };
 
-  let getUploadUrlRes;
+  formData.append('requestPart', JSON.stringify(requestPart));
+  formData.append('inputPart', archiveFile);
+
   try {
-    getUploadUrlRes = await axios.post(getRepositoryUrl(cloud), requestPart, {
-      headers: getPerfectoHeaders(cloud, securityToken)
+     await axios.put(getRepositoryUrl(cloud), formData, {
+      headers: {
+        ...formData.getHeaders(),
+        ...getPerfectoHeaders(cloud, securityToken)
+      }
     });
   } catch (error) {
     throw 'Upload tests archive failed: ' + parseReportingError(error);
-  }
-
-  try {
-    await axios.put(getUploadUrlRes.data.uploadUrl, archiveFile);
-  } catch (error) {
-    throw 'Upload tests archive failed: ' + error.message + '\n' + error?.response?.data || error;
   }
 
   console.log('Tests archive uploaded:', artifactKeyIdentifier);
