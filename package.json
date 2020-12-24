@@ -41,7 +41,8 @@
     "listr": "0.14.3",
     "log-update": "4.0.0",
     "yargs": "15.4.1",
-    "yargs-interactive": "3.0.0"
+    "yargs-interactive": "3.0.0",
+    "form-data": "3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.10.5",
