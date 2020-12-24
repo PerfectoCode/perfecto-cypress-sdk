@@ -61,7 +61,8 @@ const sessionHolder = {
         executionData.tests = [...executionData.tests, ...execution.tests]
       }
 
-      if (execution.executionState === SessionState.DONE && execution.result?.resultState !== ExecutionResults.SUCCESS) {
+      const resultState = execution.result?.resultState;
+      if (execution.executionState === SessionState.DONE && resultState && resultState !== ExecutionResults.SUCCESS) {
         finalStatus = ExecutionResults.FAILED;
       }
       execution.tests?.forEach(test => {
