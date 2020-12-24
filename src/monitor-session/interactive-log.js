@@ -16,7 +16,7 @@ const dotter = {
   }
 }
 
-const getPrintableData = (title, status, sessionId, ended) => {
+const getPrintableData = (title, status, ended) => {
   const testsPrintableData = sessionHolder.getSessionData().map((execution) => {
     const testsTable = new Table({
       title: execution.platformHash + '\n\t' + execution.result?.resultState + ' ' + (execution.result?.resultMessage || '') + '\n\t' +
@@ -64,8 +64,8 @@ const getPrintableData = (title, status, sessionId, ended) => {
     (!specsList.length || ended ? '' : '⏳  Waiting for tests results' + dotter.getDotes());
 };
 
-export default (title, status, sessionId, ended) => {
-  const logText = getPrintableData(title, status, sessionId, ended);
+export default (title, status, ended) => {
+  const logText = getPrintableData(title, status, ended);
 
   logUpdate(logText);
 

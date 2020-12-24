@@ -12,7 +12,7 @@ export const builder = {
   ...testsOptions,
   ...reportingOptions,
   nodeVersion: {alias: 'n', type: 'string', describe: 'Specify Node.js version for Cypress execution environment'},
-  env: {alias: 'e', type: 'object', usage: '--env.CYPRESS_BASE_URL=https://google.com', describe: 'environment variables to attach to `cypress run` command'},
+  env: {alias: 'e', type: 'object', usage: '--env.CYPRESS_BASE_URL=https://google.com', describe: 'environment variables to attach to `cypress run` command --env.CYPRESS_BASE_URL=https://google.com'},
   ...configOptions
 };
 

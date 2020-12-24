@@ -4,24 +4,38 @@ import { getBackendBaseUrl, getPerfectoHeaders } from '../common/api';
 import * as logHelpers from './log-helpers';
 import sessionHolder  from './session-data';
 import monitorLogger from './monitor-logger';
-import tasksLogger from './tasks-logger';
-import { SessionState, TestResults } from '../common/consts';
+import tasksLogger, {TASKS} from './tasks-logger';
+import {ExecutionState, SessionState, TestResults} from '../common/consts';
 
 const PULLING_INTERVAL = 3000;
 let executionStartTime;
-let sessionStatus = SessionState.INITIALIZING;
+let sessionStatus;
 
-const onExecutionStarts = () => {
-  sessionStatus = SessionState.EXECUTING;
-  return tasksLogger.endTasks();
-};
-
-const onNewTestsArrived = (sessionData) => {
-  if (sessionData.executions && sessionData.executions.length) {
-    sessionHolder.appendSessionData(sessionData);
+const updateSessionStatus = (isEnded) => {
+  if (sessionStatus === ExecutionState.EXECUTING || isEnded) {
+    return tasksLogger.endTasks();
   }
 
-  monitorLogger.logNewSessionData(sessionData);
+  const sessionData = sessionHolder.getSessionData();
+  const isExecuting = sessionData.find(execution => execution.executionState === ExecutionState.EXECUTING);
+  if (isExecuting && sessionStatus === SessionState.INITIALIZING) {
+    sessionStatus = ExecutionState.EXECUTING;
+    return tasksLogger.endTask(TASKS.EXECUTION_INITIALIZE);
+  }
+
+  const isInitializing = sessionData.find(execution => execution.executionState === ExecutionState.INITIALIZING);
+  if (isInitializing && sessionStatus  === ExecutionState.ALLOCATING) {
+    sessionStatus = ExecutionState.INITIALIZING;
+    return tasksLogger.endTask(TASKS.ALLOCATING_INSTANCES);
+  }
+
+  const isAllocating = sessionData.find(execution => execution.executionState === ExecutionState.ALLOCATING);
+  if (isAllocating && !sessionStatus) {
+    sessionStatus = ExecutionState.ALLOCATING;
+    return tasksLogger.endTask(TASKS.SESSION_INITIALIZE);
+  }
+
+  return Promise.resolve();
 };
 
 const onExecutionEnd = (resolve, reject) => {
@@ -29,8 +43,6 @@ const onExecutionEnd = (resolve, reject) => {
 
   const durationText = logHelpers.printDuration(new Date().getTime() - executionStartTime);
   const message = `Session ended with status: ${finalStatus}.` + `${chalk.gray(durationText)}`;
-
-  // TODO: (Elhay) NP-44722 print reporting link
 
   if (finalStatus === TestResults.PASSED) {
     resolve(chalk.green(message));
@@ -46,11 +58,13 @@ const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
     .then(async (res) => {
       const sessionData = res.data;
 
-      if (sessionStatus === SessionState.INITIALIZING && sessionData.sessionState !== SessionState.INITIALIZING) {
-        await onExecutionStarts();
+      if (sessionData.executions && sessionData.executions.length) {
+        sessionHolder.appendSessionData(sessionData);
       }
 
-      onNewTestsArrived(sessionData);
+      await updateSessionStatus(sessionData.sessionState === SessionState.DONE);
+
+      monitorLogger.logNewSessionData(sessionData);
 
       if (sessionData.sessionState !== SessionState.DONE) {
         setTimeout(

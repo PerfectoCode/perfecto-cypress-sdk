@@ -14,17 +14,22 @@ const renderSpec = (spec) => {
   return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing}` + failingText + ' | Platform: ' + spec.platformHash;
 };
 
-export default (title, status, sessionData, ended) => {
+export default (title, status, ended) => {
+  const executions = sessionHolder.getSessionData();
   if (!isTitlePrinted) {
     isTitlePrinted = true;
     console.log(title);
   }
 
-  if (!sessionData.executions) {
+  if (!executions || !executions.length) {
     return;
   }
 
-  sessionData.executions.forEach((execution) => {
+  executions.forEach((execution) => {
+    if (execution.executionState !== SessionState.DONE) {
+      return;
+    }
+
     execution.tests.forEach((test) => {
       console.log(renderTest({test, platform: execution.platform}));
 
@@ -32,11 +37,15 @@ export default (title, status, sessionData, ended) => {
         console.log('Error message: ' + test.message);
       }
     });
-    if (execution.executionState === SessionState.DONE) {
+
+    execution.tests = [];
+
+    if (execution.isPrinted) {
+      execution.isPrinted = true;
       const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
       console.log(
-        '\nExecution summary: '  + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
-        getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
+          '\nExecution summary: ' + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
+          getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
       );
     }
   });

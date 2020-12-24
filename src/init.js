@@ -38,8 +38,8 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
     path: testsPath || 'test/',
     artifactKey: '',
     ignore: [
-      'screenshots/**',
-      'video/**'
+      '**/screenshots/**',
+      '**/videos/**'
     ],
     specsExt: '**.spec.js'
   },

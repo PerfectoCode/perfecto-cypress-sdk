@@ -20,11 +20,11 @@ const monitorLogger  = {
     const sessionId = sessionData.sessionId;
     const title = getPrintTitle(status, sessionId);
 
-    if (isTTY) {
-      interactiveLogger(title, status, sessionId, isEnded);
-    } else {
-      simpleTextLogger(title, status, sessionData, isEnded);
-    }
+    simpleTextLogger(title, status, isEnded);
+    // if (isTTY) {
+    //   interactiveLogger(title, status, isEnded);
+    // } else {
+    // }
   }
 };
 

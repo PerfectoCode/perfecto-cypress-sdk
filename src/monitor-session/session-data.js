@@ -53,12 +53,18 @@ const sessionHolder = {
           executionId: execution.executionId,
           platform: execution.platform,
           executionState: execution.executionState,
+          isPrinted: false,
           result: execution.result,
           tests: execution.tests
         });
       } else {
-        const executionData = sessionDataMap.get(execution.executionId);
-        executionData.tests = [...executionData.tests, ...execution.tests]
+        const tests = sessionDataMap.get(execution.executionId).tests || [];
+        const executionData = {
+          ...sessionDataMap.get(execution.executionId),
+          ...execution,
+          tests: [...tests, ...execution.tests]
+        };
+        sessionDataMap.set(execution.executionId, executionData);
       }
 
       if (execution.executionState === SessionState.DONE && execution.result?.resultState !== ExecutionResults.SUCCESS) {

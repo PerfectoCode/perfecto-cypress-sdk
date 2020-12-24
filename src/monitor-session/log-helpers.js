@@ -1,4 +1,6 @@
-export const printDuration = duration => duration + 'ms';
+import prettyMilliseconds from 'pretty-ms';
+
+export const printDuration = duration => prettyMilliseconds(duration);
 export const truncate = (text, length) => {
   if (!text || text.length <= length) {
     return text;
