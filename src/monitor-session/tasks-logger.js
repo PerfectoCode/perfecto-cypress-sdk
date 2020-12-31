@@ -1,7 +1,6 @@
 import Listr from 'listr';
 import logUpdate from 'log-update';
 
-const SEC = 1000;
 export const TASKS = {
   SESSION_INITIALIZE: 0,
   ALLOCATING_INSTANCES: 1,

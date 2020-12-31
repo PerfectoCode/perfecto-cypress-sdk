@@ -1,8 +1,8 @@
-import interactiveLogger from './interactive-log'
+// import interactiveLogger from './interactive-log'
 import simpleTextLogger from './simple-text-log'
 import { SessionState } from '../common/consts';
 
-const isTTY = process.stdout.isTTY;
+// const isTTY = process.stdout.isTTY;
 
 const getPrintTitle = (status, sessionId) => {
   return `

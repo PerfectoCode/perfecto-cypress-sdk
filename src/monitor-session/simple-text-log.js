@@ -30,23 +30,18 @@ export default (title, status, ended) => {
       return;
     }
 
-    execution.tests.forEach((test) => {
-      console.log(renderTest({test, platform: execution.platform}));
-
-      if (test.status === TestResults.FAILED) {
-        console.log('Error message: ' + test.message);
-      }
-    });
-
-    execution.tests = [];
-
-    if (execution.isPrinted) {
+    if (!execution.isPrinted) {
       execution.isPrinted = true;
-      const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
-      console.log(
-          '\nExecution summary: ' + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
-          getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
-      );
+      execution.tests.forEach((test) => {
+        console.log(renderTest({test, platform: execution.platform}));
+          if (test.status === TestResults.FAILED) {
+            console.log('Error message: ' + test.message);
+          }
+        });
+        const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
+        console.log('\nExecution summary: ' + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
+            getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
+        );
     }
   });
 
