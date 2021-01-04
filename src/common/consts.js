@@ -16,6 +16,14 @@ export const SessionState = {
   EXECUTING: 'EXECUTING',
   DONE: 'DONE'
 };
+
+export const ExecutionState = {
+  ALLOCATING: 'ALLOCATING',
+  INITIALIZING: 'INITIALIZING',
+  EXECUTING: 'EXECUTING',
+  POST_EXECUTING: 'POST_EXECUTING',
+  DONE: 'DONE'
+};
 export const StatusIcons = {
   PASSED: '✔︎',
   FAILED: '✖'
