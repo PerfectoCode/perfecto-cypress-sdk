@@ -17,17 +17,21 @@ const appendSpecsData = (executionId, platformHash, test) => {
       Status: test.status,
       Duration: test.duration,
       Passing: test.status === TestResults.PASSED ? 1 : 0,
-      Failing: test.status !== TestResults.PASSED ? 1 : 0
+      Failing: test.status !== TestResults.PASSED ? 1 : 0,
+      testsName: [test.testName]
     });
   } else {
-    specData.Tests ++;
-    specData.Duration += test.duration;
+    if (!specData.testsName.includes(test.testName)){
+      specData.testsName.push(test.testName)
+      specData.Tests ++;
+      specData.Duration += test.duration;
 
-    if (test.status === TestResults.PASSED) {
-      specData.Passing ++;
-    } else {
-      specData.Failing ++;
-      specData.Status = test.status;
+      if (test.status === TestResults.PASSED) {
+        specData.Passing ++;
+      } else {
+        specData.Failing ++;
+        specData.Status = test.status;
+      }
     }
   }
 };
