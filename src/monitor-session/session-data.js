@@ -18,10 +18,11 @@ const appendSpecsData = (executionId, platformHash, test) => {
       Duration: test.duration,
       Passing: test.status === TestResults.PASSED ? 1 : 0,
       Failing: test.status !== TestResults.PASSED ? 1 : 0,
-      testName: test.testName
+      testsName: [test.testName]
     });
   } else {
-    if (test.testName !== specData.testName){
+    if (!specData.testsName.includes(test.testName)){
+      specData.testsName.push(test.testName)
       specData.Tests ++;
       specData.Duration += test.duration;
 
