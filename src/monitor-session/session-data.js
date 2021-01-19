@@ -1,9 +1,9 @@
 import { objectToHash } from './log-helpers';
-import { ExecutionResults, SessionState, TestResults } from '../common/consts';
+import { SessionState, TestResults, ResultState } from '../common/consts.js';
 
 const sessionDataMap = new Map();
 const specsMap = new Map();
-let finalStatus = TestResults.PASSED;
+let finalStatus = ResultState.PASSED;
 
 const appendSpecsData = (executionId, platformHash, test) => {
   const specKey = executionId + '-' + test.specFile;
@@ -71,15 +71,9 @@ const sessionHolder = {
         sessionDataMap.set(execution.executionId, executionData);
       }
 
-      const resultState = execution.result?.resultState;
-      if (execution.executionState === SessionState.DONE && resultState && resultState !== ExecutionResults.SUCCESS) {
-        finalStatus = ExecutionResults.FAILED;
+      if (execution.executionState === SessionState.DONE && sessionData && sessionData.resultState){
+        finalStatus = sessionData.resultState;
       }
-      execution.tests?.forEach(test => {
-        if (test.status === ExecutionResults.FAILED) {
-          finalStatus = ExecutionResults.FAILED;
-        }
-      });
       sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
     });
   }
