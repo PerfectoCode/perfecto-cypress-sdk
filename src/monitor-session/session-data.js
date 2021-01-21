@@ -62,11 +62,10 @@ const sessionHolder = {
           tests: execution.tests
         });
       } else {
-        const tests = sessionDataMap.get(execution.executionId).tests || [];
         const executionData = {
           ...sessionDataMap.get(execution.executionId),
           ...execution,
-          tests: [...tests, ...execution.tests]
+          tests: execution.tests
         };
         sessionDataMap.set(execution.executionId, executionData);
       }

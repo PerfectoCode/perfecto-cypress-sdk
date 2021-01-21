@@ -15,12 +15,11 @@ const renderSpec = (spec) => {
 };
 
 export default (title, status, ended) => {
-  const executions = sessionHolder.getSessionData();
   if (!isTitlePrinted) {
     isTitlePrinted = true;
     console.log(title);
   }
-
+  const executions = sessionHolder.getSessionData();
   if (!executions || !executions.length) {
     return;
   }
