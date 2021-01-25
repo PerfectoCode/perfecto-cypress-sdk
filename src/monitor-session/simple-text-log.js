@@ -20,32 +20,30 @@ export default (title, status, ended) => {
     console.log(title);
   }
   const executions = sessionHolder.getSessionData();
-  if (!executions || !executions.length) {
-    return;
-  }
+  if (executions && executions.length) {
 
-  executions.forEach((execution) => {
-    if (execution.executionState !== SessionState.DONE) {
-      return;
-    }
+    executions.forEach((execution) => {
+      if (execution.executionState !== SessionState.DONE) {
+        return;
+      }
 
-    if (!execution.isPrinted) {
-      execution.isPrinted = true;
-      execution.tests.forEach((test) => {
-        console.log(renderTest({test, platform: execution.platform}));
+      if (!execution.isPrinted) {
+        execution.isPrinted = true;
+        execution.tests.forEach((test) => {
+          console.log(renderTest({test, platform: execution.platform}));
           if (test.status === TestResults.FAILED) {
             console.log('Error message: ' + test.message);
           }
         });
         const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
         console.log('\nExecution summary: ' + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
-            getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId)
+            getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId) + '\n'
         );
-    }
-  });
-
+      }
+    });
+  }
   if (ended) {
-    console.log('\nSpecs Summary');
+    console.log('\nSpecs Summary:');
     sessionHolder.getSpecsSummary().forEach(spec => console.log(renderSpec(spec)))
   }
 };

@@ -18,11 +18,8 @@ const appendSpecsData = (executionId, platformHash, test) => {
       Duration: test.duration,
       Passing: test.status === TestResults.PASSED ? 1 : 0,
       Failing: test.status !== TestResults.PASSED ? 1 : 0,
-      testsName: [test.testName]
     });
   } else {
-    if (!specData.testsName.includes(test.testName)){
-      specData.testsName.push(test.testName)
       specData.Tests ++;
       specData.Duration += test.duration;
 
@@ -32,7 +29,6 @@ const appendSpecsData = (executionId, platformHash, test) => {
         specData.Failing ++;
         specData.Status = test.status;
       }
-    }
   }
 };
 let sessionCloudName = '';
@@ -53,27 +49,22 @@ const sessionHolder = {
 
       if (!sessionDataMap.get(execution.executionId)) {
         sessionDataMap.set(execution.executionId, {
-          platformHash: platformHash,
           executionId: execution.executionId,
-          platform: execution.platform,
           executionState: execution.executionState,
           isPrinted: false,
-          result: execution.result,
-          tests: execution.tests
         });
       } else {
         const executionData = {
           ...sessionDataMap.get(execution.executionId),
           ...execution,
-          tests: execution.tests
         };
         sessionDataMap.set(execution.executionId, executionData);
       }
 
       if (execution.executionState === SessionState.DONE && sessionData && sessionData.resultState){
         finalStatus = sessionData.resultState;
+        sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
       }
-      sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
     });
   }
 };
