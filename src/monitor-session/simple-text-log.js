@@ -29,12 +29,14 @@ export default (title, status, ended) => {
 
       if (!execution.isPrinted) {
         execution.isPrinted = true;
-        execution.tests.forEach((test) => {
-          console.log(renderTest({test, platform: execution.platform}));
-          if (test.status === TestResults.FAILED) {
-            console.log('Error message: ' + test.message);
-          }
-        });
+        if (execution.tests){
+          execution.tests.forEach((test) => {
+            console.log(renderTest({test, platform: execution.platform}));
+            if (test.status === TestResults.FAILED) {
+              console.log('Error message: ' + test.message);
+            }
+          });
+        }
         const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
         console.log('\nExecution summary: ' + objectToHash(execution.platform) + ' ' + execution.result?.resultState + resultMessage + '\n' +
             getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId) + '\n'
