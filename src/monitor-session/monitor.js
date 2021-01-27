@@ -5,7 +5,7 @@ import * as logHelpers from './log-helpers';
 import sessionHolder  from './session-data';
 import monitorLogger from './monitor-logger';
 import tasksLogger, {TASKS} from './tasks-logger';
-import {ExecutionState, SessionState, TestResults} from '../common/consts';
+import {ExecutionState, SessionState, ResultState} from '../common/consts';
 
 const PULLING_INTERVAL = 3000;
 let executionStartTime;
@@ -44,7 +44,7 @@ const onExecutionEnd = (resolve, reject) => {
   const durationText = logHelpers.printDuration(new Date().getTime() - executionStartTime);
   const message = `Session ended with status: ${finalStatus}.` + `${chalk.gray(durationText)}`;
 
-  if (finalStatus === TestResults.PASSED) {
+  if (finalStatus === ResultState.SUCCESS) {
     resolve(chalk.green(message));
   } else {
     reject(chalk.red(message));

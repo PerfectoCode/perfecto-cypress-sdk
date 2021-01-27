@@ -6,11 +6,13 @@ export const TestResults = {
   FAILED: 'FAILED'
 };
 
-export const ExecutionResults = {
+export const ResultState = {
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
+  BLOCKED: 'BLOCKED',
   ABORTED: 'ABORTED'
 };
+
 export const SessionState = {
   INITIALIZING: 'INITIALIZING',
   EXECUTING: 'EXECUTING',

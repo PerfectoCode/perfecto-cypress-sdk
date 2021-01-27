@@ -1,9 +1,9 @@
 import { objectToHash } from './log-helpers';
-import { ExecutionResults, SessionState, TestResults } from '../common/consts';
+import { SessionState, TestResults, ResultState } from '../common/consts.js';
 
 const sessionDataMap = new Map();
 const specsMap = new Map();
-let finalStatus = TestResults.PASSED;
+let finalStatus = ResultState.PASSED;
 
 const appendSpecsData = (executionId, platformHash, test) => {
   const specKey = executionId + '-' + test.specFile;
@@ -18,11 +18,8 @@ const appendSpecsData = (executionId, platformHash, test) => {
       Duration: test.duration,
       Passing: test.status === TestResults.PASSED ? 1 : 0,
       Failing: test.status !== TestResults.PASSED ? 1 : 0,
-      testsName: [test.testName]
     });
   } else {
-    if (!specData.testsName.includes(test.testName)){
-      specData.testsName.push(test.testName)
       specData.Tests ++;
       specData.Duration += test.duration;
 
@@ -32,7 +29,6 @@ const appendSpecsData = (executionId, platformHash, test) => {
         specData.Failing ++;
         specData.Status = test.status;
       }
-    }
   }
 };
 let sessionCloudName = '';
@@ -53,34 +49,22 @@ const sessionHolder = {
 
       if (!sessionDataMap.get(execution.executionId)) {
         sessionDataMap.set(execution.executionId, {
-          platformHash: platformHash,
           executionId: execution.executionId,
-          platform: execution.platform,
           executionState: execution.executionState,
           isPrinted: false,
-          result: execution.result,
-          tests: execution.tests
         });
       } else {
-        const tests = sessionDataMap.get(execution.executionId).tests || [];
         const executionData = {
           ...sessionDataMap.get(execution.executionId),
           ...execution,
-          tests: [...tests, ...execution.tests]
         };
         sessionDataMap.set(execution.executionId, executionData);
       }
 
-      const resultState = execution.result?.resultState;
-      if (execution.executionState === SessionState.DONE && resultState && resultState !== ExecutionResults.SUCCESS) {
-        finalStatus = ExecutionResults.FAILED;
+      if (execution.executionState === SessionState.DONE && sessionData && sessionData.resultState){
+        finalStatus = sessionData.resultState;
+        sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
       }
-      execution.tests?.forEach(test => {
-        if (test.status === ExecutionResults.FAILED) {
-          finalStatus = ExecutionResults.FAILED;
-        }
-      });
-      sessionDataMap.get(execution.executionId).tests.forEach(test => appendSpecsData(execution.executionId, platformHash, test));
     });
   }
 };
