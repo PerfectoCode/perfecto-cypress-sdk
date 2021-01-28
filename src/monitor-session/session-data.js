@@ -49,9 +49,8 @@ const sessionHolder = {
 
       if (!sessionDataMap.get(execution.executionId)) {
         sessionDataMap.set(execution.executionId, {
-          executionId: execution.executionId,
+          ...execution,
           platformHash: platformHash,
-          executionState: execution.executionState,
           isPrinted: false,
         });
       } else {
