@@ -1,0 +1,29 @@
+on: [pull_request]
+name: Build & Test
+jobs:
+  test:
+    name: Build & Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [10.x.x, 12.x, 14.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache node_modules
+      id: cache-modules
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+    - name: Install
+      if: steps.cache-modules.outputs.cache-hit != 'true'
+      run: npm ci
+    - name: Lint
+      run: npm run lint
+    - name: Test
+      run: npm test
