@@ -1,5 +1,5 @@
-on: [push]
-name: Build, Test and maybe Publish
+on: [workflow_dispatch]
+name: Build Test and Publish
 jobs:
   test:
     name: Build & Test
