@@ -29,21 +29,17 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
 
   let formData = new FormData();
   const requestPart = {
-    contentType: 'application/zip',
-    artifactType: 'GENERAL',
-    folderType,
-    keyDetails: {
-      artifactId: artifactId
-    },
-    temporary,
-    fileName: artifactId
+    contentType: 'application/json',
+    artifactLocator: artifactKeyIdentifier,
+    artifactType: 'GENERAL'
   };
 
   formData.append('requestPart', JSON.stringify(requestPart));
-  formData.append('inputPart', archiveFile);
+  formData.append('inputStream', archiveFile);
 
   try {
-     await axios.put(getRepositoryUrl(cloud), formData, {
+    
+     await axios.post(getRepositoryUrl(cloud), formData, {
       headers: {
         ...formData.getHeaders(),
         ...getPerfectoHeaders(cloud, securityToken)
