@@ -57,7 +57,7 @@ describe('Upload', () => {
     const archive = 'test/resources/archive-files/' + fileName;
     await uploadCommand(archive, folderType, temporary, credentials);
       expect(putStub).to.calledOnceWith(
-      sinon.match('https://' + credentials.cloud + '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts/direct'),
+      sinon.match('https://' + credentials.cloud + '.app.perfectomobile.com/repository/api/v1/artifacts'),
       sinon.match.any,
       sinon.match({
       headers: {
