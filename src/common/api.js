@@ -17,8 +17,8 @@ export const getRepositoryUrl = (cloud) => {
   if (process.env.NODE_ENV === 'staging') {
     envPrefix = 'dev.';
   }
-
-  return `https://${cloud}.app.${envPrefix}perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts/direct`;
+  
+  return `https://${cloud}.app.${envPrefix}perfectomobile.com/repository/api/v1/artifacts`;
 };
 
 export const getBackendBaseUrl = (cloud='tenant') => {
