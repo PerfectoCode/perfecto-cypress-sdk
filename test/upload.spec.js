@@ -56,7 +56,7 @@ describe('Upload', () => {
     const fileName = 'perfecto-cypress.zip';
     const archive = 'test/resources/archive-files/' + fileName;
     await uploadCommand(archive, folderType, temporary, credentials);
-      expect(putStub).to.calledOnceWith(
+      expect(postStub).to.calledOnceWith(
       sinon.match('https://' + credentials.cloud + '.app.perfectomobile.com/repository/api/v1/artifacts'),
       sinon.match.any,
       sinon.match({
@@ -72,15 +72,12 @@ describe('Upload', () => {
     const temporary = false;
     const fileName = 'perfecto-cypress.zip';
     const archive = 'test/resources/archive-files/' + fileName;
+    const parsedPath = path.parse(archive);
+    
     const requestPart = {
-      contentType: 'application/zip',
-      artifactType: 'GENERAL',
-      folderType: 'PRIVATE',
-      keyDetails: {
-        artifactId: 'perfecto-cypress.zip'
-      },
-      temporary: false,
-      fileName: 'perfecto-cypress.zip'
+      ontentType: 'application/json',
+      artifactLocator: folderType + ":" + parsedPath.name + parsedPath.ext,
+      artifactType: 'GENERAL'
     };
     console.log(requestPart);
     await uploadCommand(archive, folderType, temporary, credentials);
