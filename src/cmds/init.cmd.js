@@ -11,13 +11,18 @@ export const builder = {
   'tests.path': {...testsOptions['tests.path']}
 };
 
-const options = {
-  cloud: { type: 'input',describe: 'Enter your Perfecto cloud name' },
-  projectName: { type: 'input', describe: 'Enter a project name for your test root folder (only if there is no package.json in this folder)' }
-};
+const getInitOptions = (argv) => {
+  return {
+    ...(!argv?.tests?.path) && {testsPath : { type: 'input', describe: 'Enter your tests path' }},
+    cloud: { type: 'input',describe: 'Enter your Perfecto cloud name' },
+    projectName: { type: 'input', describe: 'Enter a project name for your test root folder (only if there is no package.json in this folder)' },
+  };
+}
 
 export const handler = async (argv) => {
+  const options = getInitOptions(argv);
+  
   const result = await yargsInteractive().interactive({...options, interactive: { default: argv.prompt }});
 
-  initCommand(argv?.tests?.path, result.cloud, result.projectName);
+  initCommand(argv?.tests?.path ?? result.testsPath, result.cloud, result.projectName);
 };

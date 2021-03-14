@@ -106,6 +106,7 @@ dist
 lib/
 .idea/
 perfecto-cypress-sdk.iml
+.history/
 
 # generated and development files
 **/perfecto-config.json
