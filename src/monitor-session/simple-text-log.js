@@ -39,7 +39,7 @@ export default (title, status, ended) => {
         }
         const resultMessage = execution.result?.resultMessage ? ' ' + execution.result?.resultMessage : '';
         const resultState = execution.result?.resultState ? ' ' + execution.result?.resultState : '';
-        console.log('\nExecution summary: ' + objectToHash(execution.platform) + ' ' + resultState + resultMessage + '\n' +
+        console.log('\nExecution summary: ' + objectToHash(execution.platform) + resultState + resultMessage + '\n' +
             getReportingExecutionLink(sessionHolder.getCloud(), execution.executionId) + '\n'
         );
       }
