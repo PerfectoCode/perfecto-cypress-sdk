@@ -1,7 +1,7 @@
 {
   "credentials": {
     "cloud": "<REPLACE_WITH_CLOUD_NAME>",
-    "securityToken": ""
+    "securityToken": "<REPLACE_WITH_SECURITY_TOKEN_VALUE>"
   },
   "capabilities": [
     {
