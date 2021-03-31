@@ -1,17 +1,5 @@
-import path from "path";
 import fs from "fs";
-import { validateInitOptions } from './common/option-validation';
 import { SUPPORTED_FRAMEWORKS } from './common/consts';
-
-const getPackageObject = (projectName) => ({
-  name: projectName || 'first-perfecto-cypress-project',
-  version: '0.0.1',
-  dependencies: {
-    'cypress': '5.6.0',
-    'perfecto-cypress-reporter': 'latest'
-  },
-  devDependencies: {}
-});
 
 const getPerfectoConfigObject = (cloud, securityToken, testsPath) => ({
   credentials: {
