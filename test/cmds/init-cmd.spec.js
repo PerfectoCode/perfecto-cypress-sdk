@@ -33,16 +33,79 @@ describe('Init - cmd', () => {
     const commandOptions = {
       'tests.path': 'archive-path/',
       cloud: 'test-cloud',
-      projectName: 'test-project-name'
+      token: 'tokeeeeeeeen'
     };
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
 
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      commandOptions['tests.path'],
       commandOptions.cloud,
-      commandOptions.projectName
+      commandOptions.token,
+      commandOptions['tests.path'],
+    );
+  });
+
+  it('should skip all parameters', async () => {
+    const commandOptions = {
+      'skip': true,
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      undefined,
+      undefined,
+      undefined
+    );
+  });
+
+  it('should override cloud', async () => {
+    const commandOptions = {
+      'skip': true,
+      cloud: 'test-cloud'
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      commandOptions.cloud,
+      undefined,
+      undefined
+    );
+  });
+
+  it('should override token', async () => {
+    const commandOptions = {
+      'skip': true,
+      token: 'test-token'
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      undefined,
+      commandOptions.token,
+      undefined
+    );
+  });
+
+  it('should override tests path', async () => {
+    const commandOptions = {
+      'skip': true,
+      'tests.path': 'archive-path/',
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      undefined,
+      undefined,
+      commandOptions['tests.path']
     );
   });
 });
