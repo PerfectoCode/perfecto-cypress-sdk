@@ -4,10 +4,9 @@ import { expect } from 'chai';
 
 describe('Init', () => {
 
-  it('Should pass params to config files and add reporter', () => {
+  it('Should pass params to config files', () => {
     const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
+      writeFileSync: sinon.stub()
     };
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
 
@@ -15,12 +14,11 @@ describe('Init', () => {
     const testsRoot = 'archive-path/';
     const testCloud = 'test-cloud';
     const testToken = 'test-token';
-    const addReporter = true;
 
     const JSONstub = sinon.stub(JSON, 'stringify');
     JSONstub.returnsArg(0);
 
-    mockInitCommand(testCloud, testToken, testsRoot, addReporter);
+    mockInitCommand(testCloud, testToken, testsRoot);
 
     expect(stub.writeFileSync).to.have.been.callCount(1);
 
@@ -28,16 +26,13 @@ describe('Init', () => {
       credentials: {cloud: testCloud, securityToken: testToken},
       tests: {path: testsRoot}
     }));
-
-    expect(stub.appendFileSync).to.have.been.callCount(1);
 
     JSONstub.restore();
   });
 
-  it('Should pass params to config files without add reporter', () => {
+  it('Should pass params to config files', () => {
     const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
+      writeFileSync: sinon.stub()
     };
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
 
@@ -45,12 +40,11 @@ describe('Init', () => {
     const testsRoot = 'archive-path/';
     const testCloud = 'test-cloud';
     const testToken = 'test-token';
-    const addReporter = false;
 
     const JSONstub = sinon.stub(JSON, 'stringify');
     JSONstub.returnsArg(0);
 
-    mockInitCommand(testCloud, testToken, testsRoot, addReporter);
+    mockInitCommand(testCloud, testToken, testsRoot);
 
     expect(stub.writeFileSync).to.have.been.callCount(1);
 
@@ -58,22 +52,18 @@ describe('Init', () => {
       credentials: {cloud: testCloud, securityToken: testToken},
       tests: {path: testsRoot}
     }));
-
-    expect(stub.appendFileSync).to.have.been.callCount(0);
 
     JSONstub.restore();
   });
 
   it('Should pass only cloud to config files', () => {
     const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
+      writeFileSync: sinon.stub()
     };
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
     
     const perfectoConfigPath = 'perfecto-config.json';
     const testCloud = 'test-cloud';
-
     const JSONstub = sinon.stub(JSON, 'stringify');
     JSONstub.returnsArg(0);
 
@@ -86,15 +76,12 @@ describe('Init', () => {
       tests: {path: '<REPLACE_THIS_WITH_PATH_TO_CYPRESS_FOLDER>'}
     }));
 
-    expect(stub.appendFileSync).to.have.been.callCount(0);
-
     JSONstub.restore();
   });
 
   it('Should pass only token to config file', () => {
     const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
+      writeFileSync: sinon.stub()
     };
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
     
@@ -113,26 +100,22 @@ describe('Init', () => {
       tests: {path: '<REPLACE_THIS_WITH_PATH_TO_CYPRESS_FOLDER>'}
     }));
 
-    expect(stub.appendFileSync).to.have.been.callCount(0);
-
     JSONstub.restore();
   });
 
-  it('Should pass only tests path to config file with add reporter', () => {
+  it('Should pass only tests path to config file', () => {
     const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
+      writeFileSync: sinon.stub()
     };
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
     
     const perfectoConfigPath = 'perfecto-config.json';
     const testsRoot = 'archive-path/';
-    const addReporter = true;
 
     const JSONstub = sinon.stub(JSON, 'stringify');
     JSONstub.returnsArg(0);
 
-    mockInitCommand(undefined, undefined, testsRoot, addReporter);
+    mockInitCommand(undefined, undefined, testsRoot);
 
     expect(stub.writeFileSync).to.have.been.callCount(1);
 
@@ -140,63 +123,6 @@ describe('Init', () => {
       credentials: {cloud: '<REPLACE_THIS_WITH_CLOUD_NAME>', securityToken: '<REPLACE_THIS_WITH_SECURITY_TOKEN>'},
       tests: {path: testsRoot}
     }));
-
-    expect(stub.appendFileSync).to.have.been.callCount(1);
-
-    JSONstub.restore();
-  });
-
-  it('Should pass only tests path to config file without add reporter', () => {
-    const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
-    };
-    const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
-    
-    const perfectoConfigPath = 'perfecto-config.json';
-    const testsRoot = 'archive-path/';
-    const addReporter = false;
-
-    const JSONstub = sinon.stub(JSON, 'stringify');
-    JSONstub.returnsArg(0);
-
-    mockInitCommand(undefined, undefined, testsRoot, addReporter);
-
-    expect(stub.writeFileSync).to.have.been.callCount(1);
-
-    expect(stub.writeFileSync.getCall(0)).to.have.calledWith(perfectoConfigPath, sinon.match({
-      credentials: {cloud: '<REPLACE_THIS_WITH_CLOUD_NAME>', securityToken: '<REPLACE_THIS_WITH_SECURITY_TOKEN>'},
-      tests: {path: testsRoot}
-    }));
-
-    expect(stub.appendFileSync).to.have.been.callCount(0);
-
-    JSONstub.restore();
-  });
-  
-  it('Should not add reporter if tests path not provided', () => {
-    const stub = {
-      writeFileSync: sinon.stub(),
-      appendFileSync: sinon.stub()
-    };
-    const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
-    
-    const perfectoConfigPath = 'perfecto-config.json';
-    const addReporter = false;
-
-    const JSONstub = sinon.stub(JSON, 'stringify');
-    JSONstub.returnsArg(0);
-
-    mockInitCommand(undefined, undefined, undefined, addReporter);
-
-    expect(stub.writeFileSync).to.have.been.callCount(1);
-
-    expect(stub.writeFileSync.getCall(0)).to.have.calledWith(perfectoConfigPath, sinon.match({
-      credentials: {cloud: '<REPLACE_THIS_WITH_CLOUD_NAME>', securityToken: '<REPLACE_THIS_WITH_SECURITY_TOKEN>'},
-      tests: {path: '<REPLACE_THIS_WITH_PATH_TO_CYPRESS_FOLDER>'}
-    }));
-
-    expect(stub.appendFileSync).to.have.been.callCount(0);
 
     JSONstub.restore();
   });

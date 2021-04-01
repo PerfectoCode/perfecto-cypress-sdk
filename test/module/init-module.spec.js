@@ -48,13 +48,4 @@ describe('Init - module', () => {
     const stub = await triggerInitCommandMock(testCloud, testToken, testsPath);
     expect(stub).to.have.been.calledWithExactly(testCloud, testToken, testsPath);
   });
-
-  it('should pass only add reporter to initCommand', async () => {
-    const testCloud = undefined;
-    const testToken = undefined;
-    const testsPath = undefined;
-
-    const stub = await triggerInitCommandMock(testCloud, testToken, testsPath);
-    expect(stub).to.have.been.calledWithExactly(testCloud, testToken, testsPath);
-  });
 });

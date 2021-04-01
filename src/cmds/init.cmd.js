@@ -10,7 +10,6 @@ export const builder = {
   prompt: { default: true, hidden: true, boolean: true },
   'tests.path': { ...testsOptions['tests.path']},
   ...credentialsOptions,
-  "add-reporter" : {alias:'ar', type: 'boolean', default: true, describe: 'Add perfecto-cypress-reporter automatically'},
   skip: { alias: 's', type: 'boolean', default: false, describe: 'Skip interactive questions' },
 };
 
@@ -18,17 +17,16 @@ const getInitOptions = (argv) => {
   return {
     cloud: { type: 'input', default: argv.credentials?.cloud, describe: 'Enter Perfecto cloud name' },
     securityToken : {type: 'input', default: argv.credentials?.securityToken, describe: 'Enter your Perfecto security token'},
-    testsPath: { type: 'input', default: argv.tests?.path || './', describe: 'Enter path for cypress folder', ...argv.tests?.path ? {} : {prompt: 'always'} },
-    'add-reporter': { type: 'input', default: argv['add-reporter'], describe: 'Add perfecto-cypress-reporter automatically?', prompt: 'always' },
+    testsPath: { type: 'input', default: argv.tests?.path || './', describe: 'Enter path for cypress folder', ...argv.tests?.path ? {} : {prompt: 'always'} }
   };
 }
 
 export const handler = async (argv) => {
   if (argv.skip) {
-    initCommand(argv.credentials?.cloud, argv.credentials?.securityToken, argv.tests?.path, argv['add-reporter']);
+    initCommand(argv.credentials?.cloud, argv.credentials?.securityToken, argv.tests?.path);
   } else {
     const options = getInitOptions(argv);
     const result = await yargsInteractive().interactive({ ...options, interactive: { default: argv.prompt } });
-    initCommand(result.cloud, result.securityToken, result.testsPath, result['add-reporter']);
+    initCommand(result.cloud, result.securityToken, result.testsPath);
   }
 };
