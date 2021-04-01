@@ -56,7 +56,7 @@ describe('Init - cmd', () => {
     const initCommandStub = await triggerInitCommandMock(commandOptions);
     const cloud = undefined;
     const token = undefined;
-    const testsPath = undefined;
+    const testsPath = './';
     const addReporter = true;
 
     expect(initCommandStub).to.have.been.calledOnce;
@@ -77,7 +77,7 @@ describe('Init - cmd', () => {
     const initCommandStub = await triggerInitCommandMock(commandOptions);
     const cloud = commandOptions.cloud;
     const token = undefined;
-    const testsPath = undefined;
+    const testsPath = './';
     const addReporter = true;
 
     expect(initCommandStub).to.have.been.calledOnce;
@@ -99,7 +99,7 @@ describe('Init - cmd', () => {
 
     const cloud = undefined;
     const token = commandOptions.token;
-    const testsPath = undefined;
+    const testsPath = './';
     const addReporter = true;
 
     expect(initCommandStub).to.have.been.calledOnce;
@@ -143,7 +143,7 @@ describe('Init - cmd', () => {
 
     const cloud = undefined;
     const token = undefined;
-    const testsPath = undefined;
+    const testsPath = './';
     const addReporter = commandOptions['add-reporter'];
 
     expect(initCommandStub).to.have.been.calledOnce;
