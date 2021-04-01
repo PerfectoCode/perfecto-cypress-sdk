@@ -37,12 +37,14 @@ describe('Init - cmd', () => {
     };
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
-
+    const addreporter = true;
+    
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
       commandOptions.cloud,
       commandOptions.token,
       commandOptions['tests.path'],
+      addreporter
     );
   });
 
@@ -52,12 +54,17 @@ describe('Init - cmd', () => {
     };
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
+    const cloud = undefined;
+    const token = undefined;
+    const testsPath = undefined;
+    const addReporter = true;
 
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      undefined,
-      undefined,
-      undefined
+      cloud,
+      token,
+      testsPath,
+      addReporter
     );
   });
 
@@ -68,12 +75,17 @@ describe('Init - cmd', () => {
     };
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
+    const cloud = commandOptions.cloud;
+    const token = undefined;
+    const testsPath = undefined;
+    const addReporter = true;
 
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      commandOptions.cloud,
-      undefined,
-      undefined
+      cloud,
+      token,
+      testsPath,
+      addReporter
     );
   });
 
@@ -85,11 +97,17 @@ describe('Init - cmd', () => {
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
 
+    const cloud = undefined;
+    const token = commandOptions.token;
+    const testsPath = undefined;
+    const addReporter = true;
+
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      undefined,
-      commandOptions.token,
-      undefined
+      cloud,
+      token,
+      testsPath,
+      addReporter
     );
   });
 
@@ -101,11 +119,39 @@ describe('Init - cmd', () => {
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
 
+    const cloud = undefined;
+    const token = undefined;
+    const testsPath = commandOptions['tests.path'];
+    const addReporter = true;
+
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      undefined,
-      undefined,
-      commandOptions['tests.path']
+      cloud,
+      token,
+      testsPath,
+      addReporter
+    );
+  });
+
+  it('should override add reporter', async () => {
+    const commandOptions = {
+      'skip': true,
+      'add-reporter': false
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    const cloud = undefined;
+    const token = undefined;
+    const testsPath = undefined;
+    const addReporter = commandOptions['add-reporter'];
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      cloud,
+      token,
+      testsPath,
+      addReporter
     );
   });
 });
