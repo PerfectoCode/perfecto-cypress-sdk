@@ -8,7 +8,7 @@ export const desc = 'init Perfecto and Cypress configuration files';
 
 export const builder = {
   prompt: { default: true, hidden: true, boolean: true },
-  'tests.path': { ...testsOptions['tests.path'] },
+  'tests.path': { ...testsOptions['tests.path'], default: './'},
   ...credentialsOptions,
   "add-reporter" : {alias:'ar', type: 'boolean', default: true, describe: 'Add perfecto-cypress-reporter automatically'},
   skip: { alias: 's', type: 'boolean', default: false, describe: 'Skip interactive questions' },
