@@ -182,7 +182,6 @@ describe('Init', () => {
     const mockInitCommand = proxyquire('../src/init', {'fs': {...stub}}).default;
     
     const perfectoConfigPath = 'perfecto-config.json';
-    const testsRoot = 'archive-path/';
     const addReporter = false;
 
     const JSONstub = sinon.stub(JSON, 'stringify');
@@ -198,7 +197,7 @@ describe('Init', () => {
     }));
 
     expect(stub.appendFileSync).to.have.been.callCount(0);
-    
+
     JSONstub.restore();
   });
 

@@ -16,7 +16,6 @@ describe('Init - module', () => {
     const testCloud = 'test-cloud';
     const testToken = 'test-token';
     const testsPath = 'archive-path/';
-    const addReporter = true;
 
     const stub = await triggerInitCommandMock(testCloud, testToken, testsPath);
 

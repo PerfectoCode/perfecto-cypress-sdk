@@ -62,7 +62,7 @@ export default (cloud, securityToken, testsRoot, addReporter) => {
       fs.appendFileSync(cypressSupportFile, 'import \'perfecto-cypress-reporter\'; \n');
       console.log('perfecto-cypress-reporter has been imported in file', cypressSupportFile, 'successfully');
     }catch(e){
-      console.log('Failed to update file', cypressSupportFile, ', cause:' , e);
+      console.log('Failed to update file', cypressSupportFile, ', cause:' , e.message);
     }
   }
 };
