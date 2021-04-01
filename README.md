@@ -38,10 +38,7 @@ perfectoCypress.run({...});
 ```shell
 perfecto-cypress init --tests.path=./tests
 ```
-`Init` command will create the necessarily configuration files: (if they not exist)
-1. package.json
-2. [perfecto-config.json][perfecto_cypress_doc_config]
-3. [cypress.json][cypress_doc_config]
+`Init` command will create [perfecto-config.json][perfecto_cypress_doc_config] file.
 
 💡 This is the time to follow the instruction [here][perfecto_cypress_reporter]. This step is important to allow us creating the execution report.
 

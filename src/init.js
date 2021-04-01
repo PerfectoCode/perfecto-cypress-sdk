@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from 'path';
 import { SUPPORTED_FRAMEWORKS } from './common/consts';
 
 const getPerfectoConfigObject = (cloud, securityToken, testsPath) => ({
