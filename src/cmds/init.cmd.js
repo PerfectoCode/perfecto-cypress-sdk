@@ -10,7 +10,7 @@ export const builder = {
   prompt: { default: true, hidden: true, boolean: true },
   'tests.path': { ...testsOptions['tests.path']},
   ...credentialsOptions,
-  skip: { alias: 's', type: 'boolean', default: false, describe: 'Skip interactive questions' },
+  skip: { type: 'boolean', default: false, describe: 'Skip interactive questions' },
 };
 
 const getInitOptions = (argv) => {
