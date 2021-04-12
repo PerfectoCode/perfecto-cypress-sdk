@@ -1,22 +1,10 @@
-import path from "path";
 import fs from "fs";
-import { validateInitOptions } from './common/option-validation';
 import { SUPPORTED_FRAMEWORKS } from './common/consts';
 
-const getPackageObject = (projectName) => ({
-  name: projectName || 'first-perfecto-cypress-project',
-  version: '0.0.1',
-  dependencies: {
-    'cypress': '5.6.0',
-    'perfecto-cypress-reporter': 'latest'
-  },
-  devDependencies: {}
-});
-
-const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
+const getPerfectoConfigObject = (cloud, securityToken, testsPath) => ({
   credentials: {
     cloud: cloud || '<REPLACE_THIS_WITH_CLOUD_NAME>',
-    securityToken: ''
+    securityToken: securityToken || '<REPLACE_THIS_WITH_SECURITY_TOKEN>'
   },
   capabilities: [
     {
@@ -35,13 +23,13 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
   framework: SUPPORTED_FRAMEWORKS.CYPRESS,
   nodeVersion: '12',
   tests: {
-    path: testsPath || 'test/',
+    path: testsPath || '<REPLACE_THIS_WITH_PATH_TO_CYPRESS_FOLDER>',
     artifactKey: '',
     ignore: [
       '**/screenshots/**',
       '**/videos/**'
     ],
-    specsExt: '**.spec.js'
+    specsExt: '**/*.spec.js'
   },
   reporting: {
     job: {
@@ -50,7 +38,7 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
       branch: ''
     },
     project: {
-      name: projectName || 'My_Cypress_project',
+      name: 'My_Cypress_project',
       version: 'v1.0'
     },
     customFields: [],
@@ -61,23 +49,11 @@ const getPerfectoConfigObject = (cloud, testsPath, projectName) => ({
   }
 });
 
-export default (testsRoot, cloud, projectName) => {
-  validateInitOptions(testsRoot);
+export default (cloud, securityToken, testsRoot) => {
 
-  const packagePath = path.join(testsRoot, 'package.json');
-  if (!fs.existsSync(packagePath)) {
-    const packageObject = getPackageObject(projectName);
-    fs.writeFileSync(packagePath, JSON.stringify(packageObject, null, 2));
-  }
+  const perfectoConfigPath = 'perfecto-config.json';
+  const perfectoConfigObject = getPerfectoConfigObject(cloud, securityToken, testsRoot);
+  fs.writeFileSync(perfectoConfigPath, JSON.stringify(perfectoConfigObject, null, 2));
 
-  const perfectoConfigPath = path.join(testsRoot, 'perfecto-config.json');
-  if (!fs.existsSync(perfectoConfigPath)) {
-    const perfectoConfigObject = getPerfectoConfigObject(cloud, testsRoot, projectName);
-    fs.writeFileSync(perfectoConfigPath, JSON.stringify(perfectoConfigObject, null, 2));
-  }
-
-  const cypressConfigPath = path.join(testsRoot, 'cypress.json');
-  if (!fs.existsSync(cypressConfigPath)) {
-    fs.writeFileSync(cypressConfigPath, '{}');
-  }
-}
+  console.warn('Make sure to import perfecto-cypress-reporter -> https://www.npmjs.com/package/perfecto-cypress-reporter');
+};

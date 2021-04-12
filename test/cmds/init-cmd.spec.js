@@ -33,16 +33,95 @@ describe('Init - cmd', () => {
     const commandOptions = {
       'tests.path': 'archive-path/',
       cloud: 'test-cloud',
-      projectName: 'test-project-name'
+      token: 'tokeeeeeeeen'
+    };
+    
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+    
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      commandOptions.cloud,
+      commandOptions.token,
+      commandOptions['tests.path']
+    );
+  });
+
+  it('should skip all parameters', async () => {
+    const commandOptions = {
+      'skip': true,
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+    const cloud = undefined;
+    const token = undefined;
+    const testsPath = undefined;
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      cloud,
+      token,
+      testsPath
+    );
+  });
+
+  it('should override cloud', async () => {
+    const commandOptions = {
+      'skip': true,
+      cloud: 'test-cloud'
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+    const cloud = commandOptions.cloud;
+    const token = undefined;
+    const testsPath = undefined;
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      cloud,
+      token,
+      testsPath
+    );
+  });
+
+  it('should override token', async () => {
+    const commandOptions = {
+      'skip': true,
+      token: 'test-token'
     };
 
     const initCommandStub = await triggerInitCommandMock(commandOptions);
 
+    const cloud = undefined;
+    const token = commandOptions.token;
+    const testsPath = undefined;
+
     expect(initCommandStub).to.have.been.calledOnce;
     expect(initCommandStub).to.have.been.calledWithExactly(
-      commandOptions['tests.path'],
-      commandOptions.cloud,
-      commandOptions.projectName
+      cloud,
+      token,
+      testsPath
     );
   });
+
+  it('should override tests path', async () => {
+    const commandOptions = {
+      'skip': true,
+      'tests.path': 'archive-path/',
+    };
+
+    const initCommandStub = await triggerInitCommandMock(commandOptions);
+
+    const cloud = undefined;
+    const token = undefined;
+    const testsPath = commandOptions['tests.path'];
+
+    expect(initCommandStub).to.have.been.calledOnce;
+    expect(initCommandStub).to.have.been.calledWithExactly(
+      cloud,
+      token,
+      testsPath
+    );
+  });
+
+  
 });

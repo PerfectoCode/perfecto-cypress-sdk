@@ -1,6 +1,6 @@
 import yargsInteractive from 'yargs-interactive'
 import initCommand from '../init';
-import { testsOptions } from './options-builder';
+import { testsOptions, credentialsOptions } from './options-builder';
 
 export const command = 'init';
 
@@ -8,21 +8,25 @@ export const desc = 'init Perfecto and Cypress configuration files';
 
 export const builder = {
   prompt: { default: true, hidden: true, boolean: true },
-  'tests.path': {...testsOptions['tests.path']}
+  'tests.path': { ...testsOptions['tests.path']},
+  ...credentialsOptions,
+  skip: { type: 'boolean', default: false, describe: 'Skip interactive questions' },
 };
 
 const getInitOptions = (argv) => {
   return {
-    ...(!argv?.tests?.path) && {testsPath : { type: 'input', describe: 'Enter your tests path' }},
-    cloud: { type: 'input',describe: 'Enter your Perfecto cloud name' },
-    projectName: { type: 'input', describe: 'Enter a project name for your test root folder (only if there is no package.json in this folder)' },
+    cloud: { type: 'input', default: argv.credentials?.cloud, describe: 'Enter Perfecto cloud name' },
+    securityToken : {type: 'input', default: argv.credentials?.securityToken, describe: 'Enter your Perfecto security token'},
+    testsPath: { type: 'input', default: argv.tests?.path || './', describe: 'Enter path for cypress folder', ...argv.tests?.path ? {} : {prompt: 'always'} }
   };
 }
 
 export const handler = async (argv) => {
-  const options = getInitOptions(argv);
-  
-  const result = await yargsInteractive().interactive({...options, interactive: { default: argv.prompt }});
-
-  initCommand(argv?.tests?.path ?? result.testsPath, result.cloud, result.projectName);
+  if (argv.skip) {
+    initCommand(argv.credentials?.cloud, argv.credentials?.securityToken, argv.tests?.path);
+  } else {
+    const options = getInitOptions(argv);
+    const result = await yargsInteractive().interactive({ ...options, interactive: { default: argv.prompt } });
+    initCommand(result.cloud, result.securityToken, result.testsPath);
+  }
 };
