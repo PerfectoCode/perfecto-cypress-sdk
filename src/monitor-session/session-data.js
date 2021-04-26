@@ -31,11 +31,27 @@ const appendSpecsData = (executionId, platformHash, test) => {
       }
   }
 };
+
+const getBlockedExecutionData = () => {
+  let blockedExecutions = [];
+  sessionDataMap.forEach(sessionData => {
+    if (sessionData.result?.resultState === "BLOCKED"){
+      blockedExecutions.push({
+        executionId: sessionData.executionId,
+        platformHash: sessionData.platformHash,
+        Status: "BLOCKED"
+      });
+    }
+  });
+  return blockedExecutions;
+}
+
 let sessionCloudName = '';
 
 const sessionHolder = {
   getSessionData: () => [...sessionDataMap.values()],
   getSpecsSummary:  () => [...specsMap.values()].sort((a, b) => a.platformHash - b.platformHash),
+  getBlockedExecutionsSummary:  () => [...getBlockedExecutionData()].sort((a, b) => a.platformHash - b.platformHash),
   getFinalStatus: () => finalStatus,
 
   getCloud: () => sessionCloudName,
