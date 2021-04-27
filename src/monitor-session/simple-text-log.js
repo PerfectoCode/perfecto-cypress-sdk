@@ -14,10 +14,18 @@ const renderSpec = (spec) => {
   return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing}` + failingText + ' | Platform: ' + spec.platformHash;
 };
 
+const renderBlockedExecution = (blockedExecution) => {
+  return `${blockedExecution.Status} | Platform:` + blockedExecution.platformHash;
+}
+
+const renderExecutionsSummery = (sessionData) => {
+  return '\nExecutions Summery: executions: ' + sessionData.length + '| Passed: ' + sessionData.filter(d => d.result?.resultState === "SUCCESS").length + ' | Failed: ' + sessionData.filter(d => d.result?.resultState === "FAILED").length + ' | blocked: ' + sessionData.filter(d => d.result?.resultState === "BLOCKED").length;
+}
+
 export default (title, status, ended) => {
   if (!isTitlePrinted) {
-    isTitlePrinted = true;
     console.log(title);
+    isTitlePrinted = true;
   }
   const executions = sessionHolder.getSessionData();
   if (executions && executions.length) {
@@ -46,7 +54,18 @@ export default (title, status, ended) => {
     });
   }
   if (ended) {
-    console.log('\nSpecs Summary:');
-    sessionHolder.getSpecsSummary().forEach(spec => console.log(renderSpec(spec)))
+    const specList = sessionHolder.getSpecsSummary();
+    if (specList.length > 0) {
+      console.log('\nSpecs Summary:');
+      specList.forEach(spec => console.log(renderSpec(spec)))
+    }
+
+    const blockedExecutions = sessionHolder.getBlockedExecutionsSummary();
+    if (blockedExecutions.length > 0 ){
+      console.log('\nPlease note, some of the executions has blocked status:');
+      blockedExecutions.forEach(execution => console.log(renderBlockedExecution(execution)))
+    }
+
+    console.log(renderExecutionsSummery(sessionHolder.getSessionData()));
   }
 };
