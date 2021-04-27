@@ -62,7 +62,11 @@ export default async ({credentials, tests, capabilities, reporting, scriptName, 
       headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)
     });
   } catch (error)  {
-    throw 'Failed to create  session: ' + error.message + '\n' + JSON.stringify(error?.response?.data, null, 2);
+    if (error?.response?.status === 404 && error?.response?.data === "") {
+      //error from ngnix
+      throw '\nFailed to create session: ' + error.message + ' - ' + "cypress is not enabled on this cloud, please contact support";
+    }
+    throw '\nFailed to create session: ' + error.message + '\n' + JSON.stringify(error?.response?.data, null, 2);
   }
 
   return monitorSession(credentials, session);
