@@ -1,6 +1,7 @@
 import { printDuration, objectToHash, getReportingExecutionLink } from './log-helpers';
 import chalk from 'chalk';
 import sessionHolder from './session-data';
+import tasksLogger from './tasks-logger';
 import { SessionState, TestResults } from '../common/consts';
 
 let isTitlePrinted = false;
@@ -35,7 +36,7 @@ export default (title, status, ended) => {
         return;
       }
 
-      if (!execution.isPrinted) {
+      if (tasksLogger.resolveAllTasks() && !execution.isPrinted) {
         execution.isPrinted = true;
         if (execution.tests){
           execution.tests.forEach((test) => {

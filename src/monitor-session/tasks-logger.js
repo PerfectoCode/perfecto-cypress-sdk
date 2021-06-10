@@ -98,6 +98,9 @@ const tasksLogger  = {
       logUpdate.done();
       resolve();
     }, 200))
+  },
+  resolveAllTasks: () => {
+    return tasksResolvers.resolved;
   }
 };
 
