@@ -53,6 +53,7 @@ export default (testsRoot, ignoreRegexList = [], outPath) => new Promise((resolv
   zipArchive.glob('**/**', {
     matchBase: true,
     cwd: testsRoot,
+    dot:true,
     ignore: getIgnoredFiles(ignoreRegexList)
   });
 
