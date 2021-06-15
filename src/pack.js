@@ -50,9 +50,10 @@ export default (testsRoot, ignoreRegexList = [], outPath) => new Promise((resolv
 // pipe archive data to the file
   zipArchive.pipe(output);
 
-  zipArchive.glob('**/**', {
+  zipArchive.glob('**/+([!.]*|.npmrc)', {
     matchBase: true,
     cwd: testsRoot,
+    dot:true,
     ignore: getIgnoredFiles(ignoreRegexList)
   });
 
