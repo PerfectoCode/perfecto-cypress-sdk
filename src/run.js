@@ -32,9 +32,15 @@ export const getSpecs = (testsRoot, specExt, ignore) => {
   return specs;
 }
 
+const validatePackageFile = () => {
+  if (!fs.existsSync('package.json')) {
+    throw '\nError: package.json file not found, you can use init command to create it or create it manually.\n';
+  }
+};
+
 export default async ({credentials, tests, capabilities, reporting, scriptName, framework, env, nodeVersion}) => {
   validateRunOptions({credentials, tests, capabilities, reporting, framework, env, nodeVersion})
-
+  validatePackageFile();
   let artifactKey = tests.artifactKey;
 
   if (!artifactKey) {
