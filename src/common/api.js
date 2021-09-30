@@ -15,7 +15,7 @@ export const getRepositoryUrl = (cloud) => {
   let envPrefix = '';
 
   if (process.env.NODE_ENV === 'staging') {
-    envPrefix = 'dev.';
+    envPrefix = 'dev-stg.';
   }
 
   return `https://${cloud}.app.${envPrefix}perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts/direct`;
