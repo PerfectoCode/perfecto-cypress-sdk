@@ -16,5 +16,10 @@ export const objectToHash = data => {
 };
 
 export const getReportingExecutionLink = (cloud, executionId) => {
-  return `https://${cloud}.app.perfectomobile.com/reporting/library/?externalId%5B0%5D=${executionId}`;
+  let envPrefix = '';
+
+  if (process.env.NODE_ENV === 'preProd') {
+    envPrefix = 'dev-stg.';
+  }
+  return `https://${cloud}.app.${envPrefix}perfectomobile.com/reporting/library/?externalId%5B0%5D=${executionId}`;
 };
