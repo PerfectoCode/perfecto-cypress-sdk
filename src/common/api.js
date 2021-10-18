@@ -14,7 +14,7 @@ export const parseReportingError = (error) => {
 export const getRepositoryUrl = (cloud) => {
   let envPrefix = '';
 
-  if (process.env.NODE_ENV === 'preProd') {
+  if (process.env.NODE_ENV === 'preprod') {
     envPrefix = 'dev-stg.';
   }
 
