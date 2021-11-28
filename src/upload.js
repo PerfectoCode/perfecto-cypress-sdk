@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import axios from 'axios';
+import fetch from 'node-fetch';
 import FormData from 'form-data';
 
 import { getPerfectoHeaders, getRepositoryUrl, parseReportingError } from './common/api';
@@ -43,7 +43,9 @@ export default async (archive, folderType, temporary, {cloud, securityToken}) =>
   formData.append('inputPart', archiveFile);
 
   try {
-     await axios.put(getRepositoryUrl(cloud), formData, {
+    await fetch(getRepositoryUrl(cloud), {
+      method: 'PUT',
+      body: formData,
       headers: {
         ...formData.getHeaders(),
         ...getPerfectoHeaders(cloud, securityToken)
