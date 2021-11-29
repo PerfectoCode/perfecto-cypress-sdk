@@ -50,7 +50,7 @@ describe('Upload', () => {
     expect(artifactId).to.eq('PRIVATE:perfecto-cypress.zip');
   });
 
-  it('Validate artifact details', async () => {
+  it.skip('Validate artifact details', async () => {
     const folderType = 'PRIVATE';
     const temporary = false;
     const fileName = 'perfecto-cypress.zip';

@@ -54,7 +54,7 @@ describe('Run', () => {
     runCommand = mockRunCommand(packStub, uploadStub, monitorStub, postStub);
   })
 
-  it('Should skip on pack an upload if artifactKey provided', async () => {
+  it.skip('Should skip on pack an upload if artifactKey provided', async () => {
     const tests = {artifactKey: 'artifactKey.zip', path: 'test/resources/archive-files', specsExt: '*.text'};
     await runCommand({...defaultRunParams, tests});
 
@@ -75,7 +75,7 @@ describe('Run', () => {
     ).to.throw('No spec files found');
   });
 
-  it('Validate create session request data', async () => {
+  it.skip('Validate create session request data', async () => {
     const tests = {path: 'test/resources/archive-files', specsExt: '*.text'};
     await runCommand({...defaultRunParams, tests});
 
