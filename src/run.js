@@ -1,5 +1,5 @@
 import glob from 'glob';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch-with-proxy';
 import fs from 'fs';
 import path from 'path';
 import packCommand from './pack';

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch-with-proxy';
 import FormData from 'form-data';
 
 import { getPerfectoHeaders, getRepositoryUrl, parseReportingError } from './common/api';

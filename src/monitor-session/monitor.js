@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch-with-proxy';
 import { getBackendBaseUrl, getPerfectoHeaders } from '../common/api';
 import * as logHelpers from './log-helpers';
 import sessionHolder  from './session-data';
