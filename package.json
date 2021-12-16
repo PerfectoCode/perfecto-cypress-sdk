@@ -40,7 +40,6 @@
     "glob": "7.1.6",
     "listr": "0.14.3",
     "log-update": "4.0.0",
-    "node-fetch": "^2.6.6",
     "node-fetch-with-proxy": "^0.1.6",
     "pretty-ms": "7.0.1",
     "yargs": "15.4.1",
