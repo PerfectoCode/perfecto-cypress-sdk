@@ -13,6 +13,7 @@
       "location": "US East"
     }
   ],
+  "nodeVersion": "12",
   "env": {
     "CYPRESS_PAGE_LOAD_TIMEOUT": "10000000",
     "CYPRESS_ENV_NIC_NAME": "Cool env"
@@ -34,7 +35,7 @@
       "branch": ""
     },
     "project": {
-      "name": "perfecto-cypress-exampl",
+      "name": "perfecto-cypress-example",
       "version": "v1.0"
     },
     "customFields": [],
