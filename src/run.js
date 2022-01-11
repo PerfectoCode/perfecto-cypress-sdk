@@ -38,7 +38,7 @@ const validatePackageFile = () => {
   }
 };
 
-export default async ({credentials, tests, capabilities, reporting, scriptName, framework, env, nodeVersion}) => {
+export default async ({credentials, tests, capabilities, reporting, scriptName, framework, runScripts, env, nodeVersion}) => {
   validateRunOptions({credentials, tests, capabilities, reporting, framework, env, nodeVersion})
   validatePackageFile();
   let artifactKey = tests.artifactKey;
@@ -61,6 +61,7 @@ export default async ({credentials, tests, capabilities, reporting, scriptName, 
               artifactKey,
               scriptName,
               framework,
+              runScripts,
               env,
               sdkVersion,
               nodeVersion,
