@@ -34,13 +34,13 @@
   "dependencies": {
     "archiver": "5.0.2",
     "argument-validator": "0.1.0",
-    "axios": "0.21.1",
     "chalk": "4.1.0",
     "console-table-printer": "2.4.12",
     "form-data": "3.0.0",
     "glob": "7.1.6",
     "listr": "0.14.3",
     "log-update": "4.0.0",
+    "node-fetch-with-proxy": "^0.1.6",
     "pretty-ms": "7.0.1",
     "yargs": "15.4.1",
     "yargs-interactive": "3.0.0"

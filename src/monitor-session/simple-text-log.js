@@ -20,7 +20,10 @@ const renderBlockedExecution = (blockedExecution) => {
 }
 
 const renderExecutionsSummery = (sessionData) => {
-  return '\nExecutions Summery: executions: ' + sessionData.length + '| Passed: ' + sessionData.filter(d => d.result?.resultState === "SUCCESS").length + ' | Failed: ' + sessionData.filter(d => d.result?.resultState === "FAILED").length + ' | blocked: ' + sessionData.filter(d => d.result?.resultState === "BLOCKED").length;
+  return '\nExecutions Summery: executions: ' + sessionData.length
+      + '| Passed: ' + sessionData.filter(d => d.result?.resultState === "SUCCESS").length
+      + ' | Failed: ' + sessionData.filter(d => d.result?.resultState === "FAILED").length
+      + ' | blocked: ' + sessionData.filter(d => d.result?.resultState === "BLOCKED").length;
 }
 
 export default (title, status, ended) => {

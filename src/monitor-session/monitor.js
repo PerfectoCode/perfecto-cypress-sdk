@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import axios from 'axios';
+import fetch from 'node-fetch-with-proxy';
 import { getBackendBaseUrl, getPerfectoHeaders } from '../common/api';
 import * as logHelpers from './log-helpers';
 import sessionHolder  from './session-data';
@@ -52,38 +52,37 @@ const onExecutionEnd = (resolve, reject) => {
 };
 
 const getSessionDataLoop = (credentials, sessionId, resolve, reject) => {
-  axios.get(getBackendBaseUrl(credentials.cloud) + '/sessions/' + sessionId, {
+  fetch(getBackendBaseUrl(credentials.cloud) + '/sessions/' + sessionId, {
+    method: 'GET',
     headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)
-  })
-    .then(async (res) => {
-      const sessionData = res.data;
+    }).then(async response => await response.json()).then(async sessionData => {
 
-      if (sessionData.executions && sessionData.executions.length) {
-        sessionHolder.appendSessionData(sessionData);
-      }
+    if (sessionData.executions && sessionData.executions.length) {
+      sessionHolder.appendSessionData(sessionData);
+    }
 
-      await updateSessionStatus(sessionData.sessionState === SessionState.DONE);
+    await updateSessionStatus(sessionData.sessionState === SessionState.DONE);
 
-      monitorLogger.logNewSessionData(sessionData);
+    monitorLogger.logNewSessionData(sessionData);
 
-      if (sessionData.sessionState !== SessionState.DONE) {
-        setTimeout(
+    if (sessionData && sessionData.sessionState !== SessionState.DONE) {
+      setTimeout(
           () => getSessionDataLoop(credentials, sessionId, resolve, reject),
           PULLING_INTERVAL
-        );
-      } else {
-        onExecutionEnd(resolve, reject);
-      }
-    })
+      );
+    } else {
+      onExecutionEnd(resolve, reject);
+    }
+  })
     .catch(reject);
 }
 
-export default async (credentials, session) => {
+export default async (credentials, sessionId) => {
   sessionHolder.setCloud(credentials.cloud);
 
   monitorLogger.logNewSessionData({
     sessionState: SessionState.INITIALIZING,
-    sessionId: session.data
+    sessionId: sessionId
   });
   tasksLogger.run();
 
@@ -91,7 +90,7 @@ export default async (credentials, session) => {
 
   try {
     const sessionEndMessage = await new Promise((resolve, reject) => {
-      getSessionDataLoop(credentials, session.data, resolve, reject);
+      getSessionDataLoop(credentials, sessionId, resolve, reject);
     });
     console.log(sessionEndMessage);
     process.exit(0);

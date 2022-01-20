@@ -1,5 +1,5 @@
 import glob from 'glob';
-import axios from 'axios';
+import fetch from 'node-fetch-with-proxy';
 import fs from 'fs';
 import path from 'path';
 import packCommand from './pack';
@@ -51,23 +51,30 @@ export default async ({credentials, tests, capabilities, reporting, scriptName, 
   }
 
   const specs = getSpecs(tests.path, tests.specsExt, tests.ignore);
-  let session;
+  let sessionId;
   try {
-    session = await axios.post(getBackendBaseUrl(credentials.cloud) + '/sessions', {
-      capabilities,
-      reporting,
-      artifactKey,
-      scriptName,
-      framework,
-      runScripts,
-      env,
-      sdkVersion,
-      nodeVersion,
-      specsExt: tests.specsExt,
-      specs
-    }, {
-      headers: getPerfectoHeaders(credentials.cloud, credentials.securityToken)
-    });
+      await fetch(getBackendBaseUrl(credentials.cloud) + '/sessions', {
+          method: 'POST',
+          body: JSON.stringify({
+              capabilities,
+              reporting,
+              artifactKey,
+              scriptName,
+              framework,
+              runScripts,
+              env,
+              sdkVersion,
+              nodeVersion,
+              specsExt: tests.specsExt,
+              specs
+          }),
+          headers: {
+              'Accept':'application/json, text/plain, */*',
+              'Content-Type':'application/json',
+              ...getPerfectoHeaders(credentials.cloud, credentials.securityToken)
+          },
+    }).then(response => response.text()).then(data => sessionId = data);
+
   } catch (error)  {
     if (error?.response?.status === 404 && error?.response?.data === "") {
       //error from ngnix
@@ -75,6 +82,5 @@ export default async ({credentials, tests, capabilities, reporting, scriptName, 
     }
     throw '\nFailed to create session: ' + error.message + '\n' + JSON.stringify(error?.response?.data, null, 2);
   }
-
-  return monitorSession(credentials, session);
+  return monitorSession(credentials, sessionId);
 }

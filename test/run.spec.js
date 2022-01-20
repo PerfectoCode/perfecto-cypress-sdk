@@ -3,9 +3,12 @@ import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 import { getSpecs } from '../src/run';
 import { DEFAULT_ARCHIVE_PATH } from '../src/common/defaults';
+import {version as sdkVersion} from "../package.json";
 
 const credentials = {cloud: 'cloud-name-perfectomobile-com', securityToken: '***'};
 const nodeVersion = '13';
+const scriptName = 'scriptName';
+const runScripts = null;
 const env = {ENV_VAR_1: 'VAR_1_VALUE'}
 const capabilities = [{
   "deviceType": "Web",
@@ -22,15 +25,17 @@ const capabilities = [{
 }];
 const reporting = { jobName: 'some_job' };
 const framework = 'CYPRESS';
-const defaultRunParams = {credentials, capabilities, reporting, framework, env, nodeVersion};
+const defaultRunParams = {credentials, capabilities, reporting, scriptName, framework, runScripts, env, nodeVersion};
 
 const mockPackResults = 'resolves-zipFilePath';
 const mockUploadResults = 'resolves-artifactKey';
 const mockSessionId = 'session-id';
+const specs = ["test-file.text","test-file2.text"];
 
-const mockRunCommand = (pack, upload, monitor, post) => {
+
+const mockRunCommand = (pack, upload, monitor, fetch) => {
   return proxyquire('../src/run', {
-    'axios': {post},
+    'node-fetch-with-proxy': fetch,
     './pack': {default: pack},
     './upload': {default: upload},
     './monitor-session/monitor': {default: monitor}
@@ -38,20 +43,26 @@ const mockRunCommand = (pack, upload, monitor, post) => {
     ).default;
 };
 
+const mockFetchResponse = {
+  text: () => {
+    return mockSessionId;
+  }
+};
+
 describe('Run', () => {
   let runCommand;
   let uploadStub;
   let packStub;
   let monitorStub;
-  let postStub;
+  let fetchStub;
 
   beforeEach(() => {
     packStub = sinon.stub().resolves(mockPackResults);
     uploadStub = sinon.stub().resolves(mockUploadResults);
-    postStub = sinon.stub().resolves(mockSessionId);
+    fetchStub = sinon.stub().resolves(mockFetchResponse);
     monitorStub = sinon.stub();
 
-    runCommand = mockRunCommand(packStub, uploadStub, monitorStub, postStub);
+    runCommand = mockRunCommand(packStub, uploadStub, monitorStub, fetchStub);
   })
 
   it('Should skip on pack an upload if artifactKey provided', async () => {
@@ -60,7 +71,31 @@ describe('Run', () => {
 
     expect(packStub).to.not.called;
     expect(uploadStub).to.not.called;
-    expect(postStub).to.calledOnceWith(sinon.match('https://'), sinon.match({artifactKey: tests.artifactKey}));
+
+    expect(fetchStub).to.calledOnceWith(
+        sinon.match('https://' + credentials.cloud),
+        {
+          method: 'POST',
+          body: sinon.match(JSON.stringify({
+            capabilities,
+            reporting,
+            artifactKey: tests.artifactKey,
+            scriptName,
+            framework,
+            runScripts,
+            env,
+            sdkVersion,
+            nodeVersion,
+            specsExt: tests.specsExt,
+            specs: specs
+          })),
+          headers: sinon.match({
+            'Accept': "application/json, text/plain, */*",
+            'Content-Type': "application/json",
+            'perfecto-tenantid': credentials.cloud,
+            'Perfecto-Authorization': credentials.securityToken
+          })
+        });
   });
 
   it('Should find specs according to specsExt regex', () => {
@@ -83,24 +118,29 @@ describe('Run', () => {
     expect(uploadStub).to.calledOnceWithExactly(mockPackResults, 'PRIVATE', true, credentials);
     expect(monitorStub).to.calledOnceWithExactly(credentials, mockSessionId);
 
-    expect(postStub).to.calledOnceWith(
-      sinon.match('https://' + credentials.cloud),
-      sinon.match({
-        capabilities,
-        reporting,
-        artifactKey: mockUploadResults,
-        framework,
-        env,
-        nodeVersion,
-        specsExt: tests.specsExt
-      }),
-      {
-        headers: {
-          'perfecto-tenantid': credentials.cloud,
-          'Perfecto-Authorization': credentials.securityToken
-        }
-      }
-    );
+    expect(fetchStub).to.calledOnceWith(
+        sinon.match('https://' + credentials.cloud),
+        {
+          method: 'POST',
+          body: sinon.match(JSON.stringify({
+            capabilities,
+            reporting,
+            artifactKey: mockUploadResults,
+            scriptName,
+            framework,
+            runScripts,
+            env,
+            sdkVersion,
+            nodeVersion,
+            specsExt: tests.specsExt,
+            specs: specs
+          })),
+          headers: sinon.match({
+            'Accept': "application/json, text/plain, */*",
+            'Content-Type': "application/json",
+            'perfecto-tenantid': credentials.cloud,
+            'Perfecto-Authorization': credentials.securityToken
+          })
+        });
   });
-
 });
