@@ -4,12 +4,12 @@ import proxyquire from 'proxyquire';
 import fs from 'fs';
 import path from 'path';
 
-const mockUploadCommand = (post, put, getFormDataStub) => {
+const mockUploadCommand = (fetch, getFormDataStub) => {
   function formDataMock() {
     this.append = getFormDataStub;
   }
 
-  return proxyquire('../src/upload', {'axios': {post, put}, 'form-data': formDataMock}).default;
+  return proxyquire('../src/upload', {'node-fetch-with-proxy': fetch, 'form-data': formDataMock}).default;
 };
 
 const credentials = {cloud: 'cloud-name-perfectomobile-com', securityToken: '***'};
@@ -17,15 +17,13 @@ const mockUploadUrl = 'uploadUrl.s3.com';
 
 describe('Upload', () => {
   let uploadCommand;
-  let postStub;
-  let putStub;
+  let fetchStub;
   let getFormDataStub;
 
   beforeEach(() => {
-    postStub = sinon.stub().resolves({data: {uploadUrl: mockUploadUrl}});
-    putStub = sinon.stub().resolves();
+    fetchStub = sinon.stub().resolves();
     getFormDataStub = sinon.stub().resolves();
-    uploadCommand = mockUploadCommand(postStub, putStub, getFormDataStub);
+    uploadCommand = mockUploadCommand(fetchStub, getFormDataStub);
   });
 
   it('Should throw an exception if archive not found', async () => {
@@ -50,21 +48,21 @@ describe('Upload', () => {
     expect(artifactId).to.eq('PRIVATE:perfecto-cypress.zip');
   });
 
-  it.skip('Validate artifact details', async () => {
+  it('Validate artifact details', async () => {
     const folderType = 'PRIVATE';
     const temporary = false;
     const fileName = 'perfecto-cypress.zip';
     const archive = 'test/resources/archive-files/' + fileName;
-    await uploadCommand(archive, folderType, temporary, credentials);
-      expect(putStub).to.calledOnceWith(
-      sinon.match('https://' + credentials.cloud + '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts/direct'),
-      sinon.match.any,
-      sinon.match({
-      headers: {
-        'perfecto-tenantid': credentials.cloud,
-        'Perfecto-Authorization': credentials.securityToken
-      }
-    }));
+
+    await uploadCommand(archive, folderType, temporary, credentials)
+    expect(fetchStub).to.calledOnceWith(sinon.match('https://' + credentials.cloud + '.app.perfectomobile.com/repository-management-webapp/rest/v1/repository-management/artifacts/direct'), {
+        method: 'PUT',
+        body: sinon.match.any,
+        headers: sinon.match({
+          'perfecto-tenantid': credentials.cloud,
+          'Perfecto-Authorization': credentials.securityToken
+        })
+      });
   });
 
   it('Validate formData data', async () => {
