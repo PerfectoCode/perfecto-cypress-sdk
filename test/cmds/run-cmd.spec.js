@@ -37,7 +37,7 @@ describe('Run - cmd', () => {
         credentials: {cloud: 'foo', securityToken: 'bar'},
         reporting: {customFields: undefined},
         nodeVersion: undefined,
-        tests: {specsExt: '*.+(cy|specs).js'}
+        tests: {specsExt: '*.+(cy|spec).js'}
       });
     });
   });
@@ -65,7 +65,7 @@ describe('Run - cmd', () => {
               'tests/unit',
               'tests/license-checker'
             ],
-            specsExt: '**/*.+(cy|specs).js'
+            specsExt: '**/*.+(cy|spec).js'
           },
           reporting: {
             job: {

@@ -29,7 +29,7 @@ const getPerfectoConfigObject = (cloud, securityToken, testsPath) => ({
       '**/screenshots/**',
       '**/videos/**'
     ],
-    specsExt: '**/*.+(cy|specs).js'
+    specsExt: '**/*.+(cy|spec).js'
   },
   reporting: {
     job: {
