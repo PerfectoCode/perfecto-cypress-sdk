@@ -96,7 +96,7 @@ describe('Run - module', () => {
             'tests/unit',
             'tests/license-checker'
           ],
-          specsExt: '**.spec.js'
+          specsExt: '**/*.+(cy|specs).js'
         },
         reporting: {
           job: {
