@@ -26,7 +26,7 @@
       "**/screenshots/**",
       "**/videos/**"
     ],
-    "specsExt": "**/*_spec.js"
+    "specsExt": "**/*.+(cy|spec).js"
   },
   "reporting": {
     "job": {
