@@ -10,7 +10,7 @@ export const truncate = (text, length) => {
 };
 export const objectToHash = data => {
   if (!data) {
-    return 'N/A';
+    return '';
   }
   return Object.values(data).map(item => typeof item === 'object' ? objectToHash(item) : item ).filter(item => item).join('-');
 };

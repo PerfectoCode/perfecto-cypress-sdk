@@ -7,8 +7,9 @@ import { SessionState, TestResults } from '../common/consts';
 let isTitlePrinted = false;
 
 const renderTest = ({platform, test}) => {
-  return `Test summary: ${test.status} | ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${platform.deviceId}-${platform.deviceType}-${platform.os}-${platform.osVersion}-${platform.screenResolution}-${platform.location}-${platform.browserInfo}`;
+  return `Test summary: ${test.status} | ${printDuration(test.duration)} | TestName: ${test.testName} | Platform: ${objectToHash(platform)}`;
 }
+
 const renderSpec = (spec) => {
   const failingText = spec.Failing ? chalk.red(`| Failing: ${spec.Failing}`) : '';
   return `${spec.Status} | ${printDuration(spec.Duration)} ${spec.SPEC} | Tests: ${spec.Tests} | Passing: ${spec.Passing}` + failingText + ' | Platform: ' + spec.platformHash;
