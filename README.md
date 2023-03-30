@@ -51,7 +51,7 @@ Run command will save this archive  in the client Perfecto repository and start 
 
 💡 Yo may override all config options from CLI/API interface except `capabilities`. Also it is not recommended to store securityToken in the `perfecto-config.json` file. 
 
-### Pac and Upload commands
+### Pack and Upload commands
 if you want to create the archive and use it later, for example if you have tests that running  periodically.
 you can create the archive:
 ```shell
